@@ -96,12 +96,6 @@ const Schedule: React.FC = () => {
             </div>
           </div>
         </div>
-        
-        <div className="mt-12 text-center">
-          <p className="text-lg text-brand-gray/80 font-montserrat mb-8">
-            Každý den kurzu začíná v 9:00 a končí v 17:00 s hodinovou přestávkou na oběd
-          </p>
-        </div>
       </div>
     </section>
   );
