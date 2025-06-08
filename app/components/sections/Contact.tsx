@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
-import { MessageCircle, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 const MONTHS_CZ = [
   'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen',
@@ -243,12 +243,6 @@ const Contact: React.FC = () => {
             <ContactForm />
           </div>
         </div>
-      </div>
-      
-      <div className="fixed bottom-6 right-6 z-50">
-        <button className="bg-brand-red hover:bg-opacity-90 text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:scale-105">
-          <MessageCircle className="w-6 h-6" />
-        </button>
       </div>
     </section>
   );
