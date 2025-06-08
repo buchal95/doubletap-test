@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     const currentDate = new Date();
     const selectorFrom = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD format
     
-    // Build URL with proper encoding - try different parameter combinations
+    // Build URL with proper encoding
     const url = new URL('https://brj.app/api/v1/calendar/event-list');
     url.searchParams.set('apiKey', apiKey);
     url.searchParams.set('code', calendarCode);
