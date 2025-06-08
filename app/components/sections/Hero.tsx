@@ -104,15 +104,15 @@ const Hero: React.FC = () => {
           
           {/* Dynamic next event display */}
           {isLoading ? (
-            <p className="mt-6 text-brand-beige/60 text-sm font-montserrat animate-pulse">
+            <p className="mt-6 text-brand-beige/60 font-montserrat animate-pulse">
               Načítání termínů...
             </p>
           ) : nextEvent ? (
-            <p className="mt-6 text-brand-beige text-sm font-montserrat animate-fade-in">
+            <p className="mt-6 text-brand-beige font-montserrat animate-fade-in">
               Příští termín: {nextEvent}
             </p>
           ) : (
-            <p className="mt-6 text-brand-beige/80 text-sm font-montserrat animate-fade-in">
+            <p className="mt-6 text-brand-beige/80 font-montserrat animate-fade-in">
               Nové termíny budou brzy vyhlášeny
             </p>
           )}

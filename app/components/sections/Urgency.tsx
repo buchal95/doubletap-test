@@ -47,7 +47,7 @@ const Urgency: React.FC = () => {
                     </div>
                     <div>
                       <h4 className="font-anton text-lg mb-1">30minutová konzultace</h4>
-                      <p className="text-brand-beige/80 text-sm">Před kurzem si probereme vaše cíle</p>
+                      <p className="text-brand-beige/80">Před kurzem si probereme vaše cíle</p>
                     </div>
                   </div>
                   
@@ -57,7 +57,7 @@ const Urgency: React.FC = () => {
                     </div>
                     <div>
                       <h4 className="font-anton text-lg mb-1">Personalizovaný plán</h4>
-                      <p className="text-brand-beige/80 text-sm">Individuální strategie rozvoje</p>
+                      <p className="text-brand-beige/80">Individuální strategie rozvoje</p>
                     </div>
                   </div>
                 </div>
