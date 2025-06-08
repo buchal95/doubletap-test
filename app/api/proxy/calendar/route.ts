@@ -62,13 +62,13 @@ export async function GET(request: NextRequest) {
     const url = new URL('https://brj.app/api/v1/calendar/event-list');
     url.searchParams.set('apiKey', apiKey);
     url.searchParams.set('code', calendarCode);
-    url.searchParams.set('step', 'month'); // Get events for the whole month
+    url.searchParams.set('step', 'year'); // Changed from 'month' to 'year' to get events for the whole year
     url.searchParams.set('selectorFrom', selectorFrom);
     url.searchParams.set('returnPlainList', 'true'); // Try with plain list format
 
     console.log('Calling BRJ API with params:', {
       code: calendarCode,
-      step: 'month',
+      step: 'year', // Updated log to reflect the change
       selectorFrom: selectorFrom,
       url: url.toString().replace(apiKey, 'HIDDEN_API_KEY')
     });
