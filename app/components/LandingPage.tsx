@@ -19,9 +19,8 @@ const LandingPage: React.FC = () => {
     <div className="min-h-screen bg-white">
       <Hero />
       <SocialProof />
-      <PainPoints />
       <CourseOverview />
-      <Benefits />
+      <PainPoints />
       <Schedule />
       <Testimonials />
       <Subsidy />

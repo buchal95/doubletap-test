@@ -40,32 +40,32 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, toggle }) =
 const FAQ: React.FC = () => {
   const faqs = [
     {
-      question: "Pro koho je kurz určen?",
-      answer: "Kurz je vhodný pro začátečníky i mírně pokročilé. Je ideální pro marketéry, podnikatele, content creatory a všechny, kdo chtějí vylepšit svá videa pro osobní či firemní prezentaci."
+      question: "Kde kurz probíhá?",
+      answer: "Kurz probíhá v Praze v moderních prostorách vybavených vším potřebným pro praktickou výuku. Přesnou adresu a pokyny k dopravě zašleme po potvrzení registrace."
     },
     {
-      question: "Potřebuji vlastní vybavení?",
-      answer: "Ne, veškeré vybavení vám zapůjčíme. Pokud ale máte vlastní kameru, smartphone nebo notebook s editačním softwarem, můžete si je přinést a naučit se pracovat přímo s nimi."
+      question: "Kolik je v kurzu lidí?",
+      answer: "Maximálně 12 účastníků. Každému se věnujeme individuálně a zajišťujeme personalizovaný přístup k výuce."
     },
     {
-      question: "Jak funguje dotace na kurz?",
-      answer: "Díky podpoře našich partnerů můžeme nabídnout kurz za zvýhodněnou cenu 2 700 Kč místo plné ceny 15 000 Kč. Dotaci vyřizujeme my, vy platíte pouze sníženou částku."
+      question: "Dostanu certifikát?",
+      answer: "Ano, oficiální certifikát o absolvování kurzu, který můžete využít ve svém CV nebo při prezentaci svých dovedností."
+    },
+    {
+      question: "Co když něco nestihnu?",
+      answer: "Máte 30 dní podpory po kurzu přes online komunitu absolventů, kde můžete klást dotazy a získat dodatečnou pomoc."
+    },
+    {
+      question: "Jaké aplikace používáte?",
+      answer: "CapCut, InShot a další - všechny zdarma. Naučíme vás v nich pracovat a ukážeme vám nejefektivnější postupy pro rychlý střih."
+    },
+    {
+      question: "Jak funguje dotace?",
+      answer: "Stát hradí 82% nákladů kurzu (12 300 Kč), vy platíte pouze 2 700 Kč. Dotaci vyřizujeme za vás, nemusíte řešit žádnou byrokracii."
     },
     {
       question: "Co když se mi termín nebude hodit?",
-      answer: "Nabízíme několik termínů v průběhu roku. Pokud vám navržený termín nevyhovuje, kontaktujte nás a domluvíme vám jiný. V případě, že se nemůžete zúčastnit po zaplacení, můžete svou účast přesunout na jiný termín nebo poslat náhradníka."
-    },
-    {
-      question: "Získám certifikát o absolvování?",
-      answer: "Ano, po úspěšném absolvování kurzu získáte certifikát o dokončení, který můžete využít ve svém CV."
-    },
-    {
-      question: "Jak probíhá platba za kurz?",
-      answer: "Po vyplnění registračního formuláře vás kontaktujeme s potvrzením místa a zašleme vám platební údaje. Platbu můžete provést převodem na účet nebo kartou online. Kurz je potřeba uhradit nejpozději 5 dní před jeho začátkem."
-    },
-    {
-      question: "Mohu získat fakturu pro firmu?",
-      answer: "Ano, na vyžádání vám vystavíme fakturu pro firemní účely. V takovém případě prosím uveďte fakturační údaje při registraci."
+      answer: "Nabízíme několik termínů v průběhu roku. Pokud vám navržený termín nevyhovuje, můžete svou účast přesunout na jiný dostupný termín."
     }
   ];
 
@@ -79,8 +79,8 @@ const FAQ: React.FC = () => {
     <section className="py-20 bg-brand-beige">
       <div className="container mx-auto px-4">
         <SectionHeading 
-          title="Často kladené otázky" 
-          subtitle="Našli jste odpověď na svou otázku? Pokud ne, neváhejte nás kontaktovat"
+          title="Praktické informace" 
+          subtitle="Odpovědi na nejčastější otázky o kurzu a dotaci"
         />
         
         <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-md border border-brand-gray/10 divide-y divide-brand-gray/10">

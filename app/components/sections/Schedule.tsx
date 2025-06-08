@@ -5,42 +5,42 @@ const Schedule: React.FC = () => {
   const days = [
     {
       day: "Den 1",
-      title: "Základy profesionálního videa",
+      title: "Základy obrazu",
       topics: [
-        "Práce s kamerou a základní nastavení",
-        "Kompozice záběrů a vizuální storytelling",
-        "Osvětlení a práce se světlem",
-        "Praktické cvičení: Natočení prvních záběrů"
+        "Kompozice záběru - kam co umístit",
+        "Práce se světlem - okno jako nejlepší kamarád",
+        "Pohyb kamery - kdy statika, kdy dynamika",
+        "Praxe: 5 základních typů záběrů"
       ]
     },
     {
       day: "Den 2",
       title: "Zvuk a střih",
       topics: [
-        "Základy kvalitního zvuku při natáčení",
-        "Úvod do střihu a práce s programem",
-        "Techniky střihu pro udržení pozornosti",
-        "Praktické cvičení: Střih krátkého videa"
+        "Čistý zvuk z telefonu - kde a jak točit",
+        "Střihové aplikace - CapCut a další zdarma",
+        "Tempo a rytmus - jak udržet pozornost",
+        "Praxe: První kompletní video"
       ]
     },
     {
       day: "Den 3",
-      title: "Tvorba komplexního videa",
+      title: "Storytelling a formáty",
       topics: [
-        "Scénář a příprava natáčení",
-        "Pokročilé techniky natáčení",
-        "Efekty a vizuální prvky ve videu",
-        "Praktické cvičení: Tvorba promočního videa"
+        "Hook - první 3 vteřiny rozhodují",
+        "Struktura videa pro různé platformy",
+        "Titulky, grafika, hudba",
+        "Praxe: Video podle zadání"
       ]
     },
     {
       day: "Den 4",
-      title: "Publikace a strategie",
+      title: "Finální projekty",
       topics: [
-        "Optimalizace videí pro sociální sítě",
-        "Strategie publikování a růst kanálu",
-        "Měření úspěšnosti a analytika",
-        "Praktické cvičení: Vytvoření obsahového plánu"
+        "Prezentace vlastních videí",
+        "Zpětná vazba od lektorů",
+        "Publikační strategie",
+        "Content plán na další měsíc"
       ]
     }
   ];
@@ -49,8 +49,8 @@ const Schedule: React.FC = () => {
     <section className="py-20 bg-brand-beige">
       <div className="container mx-auto px-4">
         <SectionHeading 
-          title="Průběh kurzu" 
-          subtitle="Kompletní 4-denní program plný praktických cvičení a expertních rad"
+          title="4 dny, které vás posunou" 
+          subtitle="Kompletní program plný praktických cvičení a expertních rad"
         />
         
         <div className="max-w-4xl mx-auto">

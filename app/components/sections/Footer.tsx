@@ -7,9 +7,9 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <div>
-            <h3 className="text-xl font-anton mb-4">Double Tap</h3>
+            <h3 className="text-xl font-anton mb-4">Video Workshop</h3>
             <p className="text-brand-beige font-montserrat mb-4">
-              Profesionální vzdělávání v oblasti tvorby videí.
+              Naučíme vás řemeslo videa
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-brand-beige hover:text-white transition-colors">
@@ -41,7 +41,7 @@ const Footer: React.FC = () => {
         
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-brand-beige/60 font-montserrat mb-4 md:mb-0">
-            &copy; 2025 Double Tap. Všechna práva vyhrazena.
+            &copy; 2025 Video Workshop. Všechna práva vyhrazena.
           </p>
           
           <div className="flex flex-wrap justify-center gap-4">
