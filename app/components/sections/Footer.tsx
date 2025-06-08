@@ -47,8 +47,7 @@ const Footer: React.FC = () => {
           
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/obchodni-podminky" className="text-brand-beige/60 hover:text-white transition-colors font-montserrat">Obchodní podmínky</Link>
-            <a href="#" className="text-brand-beige/60 hover:text-white transition-colors font-montserrat">Zásady ochrany osobních údajů</a>
-            <a href="#" className="text-brand-beige/60 hover:text-white transition-colors font-montserrat">Cookies</a>
+            <Link href="/zasady-ochrany-osobnich-udaju" className="text-brand-beige/60 hover:text-white transition-colors font-montserrat">Zásady ochrany osobních údajů</Link>
           </div>
         </div>
       </div>
