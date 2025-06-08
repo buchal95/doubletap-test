@@ -1,13 +1,25 @@
 import React from 'react';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
-import { BadgeCheck, AlertTriangle } from 'lucide-react';
+import { BadgeCheck, AlertTriangle, CheckCircle } from 'lucide-react';
 
 const Subsidy: React.FC = () => {
   const eligibleGroups = [
-    "Zaměstnanci firem",
+    "Zaměstnanci",
     "OSVČ a podnikatelé", 
-    "Studenti a nezaměstnaní (speciální podmínky)"
+    "Studenti",
+    "Nezaměstnaní",
+    "Rodiče na mateřské/rodičovské",
+    "Důchodci"
+  ];
+
+  const subsidySteps = [
+    "Registrujete se online přes datovou schránku nebo bankovní identitu",
+    "Zařadíte se do evidence zájemců o zaměstnání (po kurzu se můžete odhlásit)",
+    "Požádáte o dotaci minimálně 30 dní před kurzem",
+    "Zaplatíte jen 18% (2 700 Kč) před začátkem kurzu",
+    "Absolvujete kurz s min. 80% účastí",
+    "Stát zaplatí zbytek (12 300 Kč) po úspěšném dokončení"
   ];
 
   return (
@@ -92,27 +104,50 @@ const Subsidy: React.FC = () => {
           <div className="flex items-start">
             <AlertTriangle className="w-6 h-6 text-brand-red mt-1 mr-4 flex-shrink-0" />
             <div>
-              <h4 className="font-anton text-lg text-white mb-2">Dotační program brzy končí</h4>
+              <h4 className="font-anton text-lg text-white mb-2">Dotační program končí koncem roku 2025</h4>
               <p className="text-brand-beige font-montserrat">
-                Po jeho ukončení bude kurz za plnou cenu 15 000 Kč. Využijte dotaci, dokud je k dispozici.
+                Státní dotace z Národního plánu obnovy EU jsou omezené a brzy skončí.
               </p>
             </div>
           </div>
         </div>
 
         {/* Eligibility */}
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto mb-12">
           <h3 className="text-2xl font-anton text-center mb-6">Kdo může dotaci využít:</h3>
-          <div className="grid md:grid-cols-3 gap-4">
+          <p className="text-center text-brand-beige font-montserrat mb-8 text-lg">
+            Prakticky každý občan ČR starší 18 let:
+          </p>
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
             {eligibleGroups.map((group, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20">
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20 flex items-center">
+                <CheckCircle className="w-5 h-5 text-brand-olive mr-3 flex-shrink-0" />
                 <p className="font-montserrat text-brand-beige">{group}</p>
               </div>
             ))}
           </div>
-          <p className="text-center text-brand-beige/80 font-montserrat mt-6">
-            Konkrétní podmínky dotace vám sdělíme při registraci
-          </p>
+        </div>
+
+        {/* How it works */}
+        <div className="max-w-4xl mx-auto">
+          <h3 className="text-2xl font-anton text-center mb-8">Jak to funguje:</h3>
+          <div className="space-y-4 mb-8">
+            {subsidySteps.map((step, index) => (
+              <div key={index} className="flex items-start bg-white/5 rounded-lg p-4 border border-white/10">
+                <div className="bg-brand-olive text-white rounded-full w-8 h-8 flex items-center justify-center font-anton text-sm mr-4 mt-1 flex-shrink-0">
+                  {index + 1}
+                </div>
+                <p className="text-brand-beige font-montserrat">{step}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-brand-red/20 border border-brand-red/30 rounded-xl p-6 text-center">
+            <AlertTriangle className="w-8 h-8 text-brand-red mx-auto mb-4" />
+            <p className="text-brand-beige font-montserrat">
+              <strong>Pozor:</strong> Můžete čerpat max. 50 000 Kč za 3 roky na vzdělávací kurzy
+            </p>
+          </div>
         </div>
       </div>
     </section>

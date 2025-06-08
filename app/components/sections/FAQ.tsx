@@ -45,27 +45,27 @@ const FAQ: React.FC = () => {
     },
     {
       question: "Kolik je v kurzu lidí?",
-      answer: "Maximálně 12 účastníků. Každému se věnujeme individuálně a zajišťujeme personalizovaný přístup k výuce."
+      answer: "Maximálně 10. Každému se věnujeme individuálně."
+    },
+    {
+      question: "Musím být nezaměstnaný, abych získal dotaci?",
+      answer: "Ne! Dotaci může získat prakticky každý - zaměstnanci, OSVČ, studenti, rodiče na mateřské i důchodci. Stačí se zaregistrovat do evidence zájemců o zaměstnání, po kurzu se můžete odhlásit."
+    },
+    {
+      question: "Jak dlouho trvá schválení dotace?",
+      answer: "Oficiálně má Úřad práce 30 dní, ale doporučujeme podat žádost co nejdříve. Registrace musí být minimálně 30 dní před začátkem kurzu."
+    },
+    {
+      question: "Co když kurz nedokončím?",
+      answer: "Musíte mít minimálně 80% účast a splnit finální projekt. Jinak byste museli doplatit zbývajících 82% ceny kurzu (12 300 Kč)."
     },
     {
       question: "Dostanu certifikát?",
-      answer: "Ano, oficiální certifikát o absolvování kurzu, který můžete využít ve svém CV nebo při prezentaci svých dovedností."
-    },
-    {
-      question: "Co když něco nestihnu?",
-      answer: "Máte 30 dní podpory po kurzu přes online komunitu absolventů, kde můžete klást dotazy a získat dodatečnou pomoc."
+      answer: "Ano, oficiální certifikát o absolvování kurzu."
     },
     {
       question: "Jaké aplikace používáte?",
-      answer: "CapCut, InShot a další - všechny zdarma. Naučíme vás v nich pracovat a ukážeme vám nejefektivnější postupy pro rychlý střih."
-    },
-    {
-      question: "Jak funguje dotace?",
-      answer: "Stát hradí 82% nákladů kurzu (12 300 Kč), vy platíte pouze 2 700 Kč. Dotaci vyřizujeme za vás, nemusíte řešit žádnou byrokracii."
-    },
-    {
-      question: "Co když se mi termín nebude hodit?",
-      answer: "Nabízíme několik termínů v průběhu roku. Pokud vám navržený termín nevyhovuje, můžete svou účast přesunout na jiný dostupný termín."
+      answer: "CapCut, InShot a další - všechny zdarma. Naučíme vás v nich pracovat."
     }
   ];
 

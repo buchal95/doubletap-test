@@ -1,29 +1,34 @@
 import React from 'react';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
-import { Camera, Scissors, BookOpen, Target } from 'lucide-react';
+import { Smartphone, Scissors, BookOpen, Target, Palette } from 'lucide-react';
 
 const CourseOverview: React.FC = () => {
   const modules = [
     {
-      icon: <Camera className="w-8 h-8 text-brand-olive" />,
-      title: "Kompozice a světlo",
-      description: "Kde stát, kam dát telefon, jak využít denní světlo. Základy, bez kterých to nejde."
-    },
-    {
-      icon: <Scissors className="w-8 h-8 text-brand-olive" />,
-      title: "Rychlý střih v mobilu",
-      description: "30 minut od natočení po publikaci. V aplikacích, které máte zdarma."
+      icon: <Smartphone className="w-8 h-8 text-brand-olive" />,
+      title: "Profesionální nastavení telefonu",
+      description: "Jak vytěžit maximum z kamery, kterou nosíte v kapse. Nastavení, o kterých jste nevěděli."
     },
     {
       icon: <BookOpen className="w-8 h-8 text-brand-olive" />,
-      title: "Struktura, která funguje",
-      description: "Jak postavit video, aby ho lidi dokoukali. Od první vteřiny po závěrečný titulek."
+      title: "Světlo, zvuk, kompozice",
+      description: "Základy, které dělají rozdíl mezi amatérem a profíkem. Kde stát, kam svítit, jak natočit čistý zvuk."
+    },
+    {
+      icon: <Palette className="w-8 h-8 text-brand-olive" />,
+      title: "Efekty a postprodukce",
+      description: "Barevné korekce, vizuální efekty, střih. Všechno v telefonu, v aplikacích zdarma."
+    },
+    {
+      icon: <Scissors className="w-8 h-8 text-brand-olive" />,
+      title: "Obsah pro sociální sítě",
+      description: "Co funguje, co ne. Trendy, analýza publika, struktura videí. Zkrátka jak zaujmout."
     },
     {
       icon: <Target className="w-8 h-8 text-brand-olive" />,
       title: "Váš finální projekt",
-      description: "Na konci kurzu představíte vlastní video. Hotové, ostré, připravené k publikaci."
+      description: "Během kurzu natočíte vlastní video. Od scénáře po finální export. Hotové, připravené k publikaci."
     }
   ];
 
@@ -32,10 +37,10 @@ const CourseOverview: React.FC = () => {
       <div className="container mx-auto px-4">
         <SectionHeading 
           title="Řemeslo videa. S telefonem v ruce." 
-          subtitle="4 dny intenzivní praxe. Žádná teorie, jen točení."
+          subtitle="4 dny intenzivní praxe. Od základů po hotové video."
         />
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {modules.map((module, index) => (
             <div 
               key={index} 

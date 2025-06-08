@@ -1,46 +1,47 @@
 import React from 'react';
 import SectionHeading from '../common/SectionHeading';
+import { AlertTriangle } from 'lucide-react';
 
 const Schedule: React.FC = () => {
   const days = [
     {
       day: "Den 1",
-      title: "Základy obrazu",
+      title: "Základy natáčení",
       topics: [
-        "Kompozice záběru - kam co umístit",
-        "Práce se světlem - okno jako nejlepší kamarád",
-        "Pohyb kamery - kdy statika, kdy dynamika",
-        "Praxe: 5 základních typů záběrů"
+        "Nastavení kamery v telefonu jako profesionál",
+        "Práce se světlem, zvukem a kompozicí",
+        "Co dělá záběr vizuálně silným",
+        "Praxe: Vaše první profesionální záběry"
       ]
     },
     {
       day: "Den 2",
-      title: "Zvuk a střih",
+      title: "Zvuk, efekty a scénář",
       topics: [
-        "Čistý zvuk z telefonu - kde a jak točit",
-        "Střihové aplikace - CapCut a další zdarma",
-        "Tempo a rytmus - jak udržet pozornost",
-        "Praxe: První kompletní video"
+        "Kvalitní zvuk pomocí základní postprodukce",
+        "Vizuální efekty a barevné korekce",
+        "Příprava scénáře pro videoprojekt",
+        "Praxe: Práce s efekty a zvukem"
       ]
     },
     {
       day: "Den 3",
-      title: "Storytelling a formáty",
+      title: "Obsah, který zaujme",
       topics: [
-        "Hook - první 3 vteřiny rozhodují",
-        "Struktura videa pro různé platformy",
-        "Titulky, grafika, hudba",
-        "Praxe: Video podle zadání"
+        "Co a jak točit pro sociální sítě",
+        "Práce s aktuálními trendy",
+        "Analýza publika a cílení obsahu",
+        "Start natáčení vlastního projektu"
       ]
     },
     {
       day: "Den 4",
-      title: "Finální projekty",
+      title: "Finální úpravy a analýza",
       topics: [
-        "Prezentace vlastních videí",
-        "Zpětná vazba od lektorů",
-        "Publikační strategie",
-        "Content plán na další měsíc"
+        "Postprodukce v dostupných aplikacích",
+        "Dokončení a úprava vašeho videoprojektu",
+        "Vyhodnocení a zpětná vazba",
+        "Výstup: Hotové video připravené k publikaci"
       ]
     }
   ];
@@ -81,6 +82,19 @@ const Schedule: React.FC = () => {
               )}
             </div>
           ))}
+        </div>
+        
+        {/* Important notice */}
+        <div className="mt-12 bg-brand-red/10 border border-brand-red/20 rounded-xl p-6 max-w-3xl mx-auto">
+          <div className="flex items-start">
+            <AlertTriangle className="w-6 h-6 text-brand-red mt-1 mr-4 flex-shrink-0" />
+            <div>
+              <h4 className="font-anton text-lg text-brand-red mb-2">Důležité</h4>
+              <p className="text-brand-gray/80 font-montserrat">
+                Úspěšné dokončení projektu je podmínkou pro získání dotace
+              </p>
+            </div>
+          </div>
         </div>
         
         <div className="mt-12 text-center">

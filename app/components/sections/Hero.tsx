@@ -94,7 +94,7 @@ const Hero: React.FC = () => {
           </h1>
           
           <p className="text-xl md:text-2xl mb-10 text-brand-beige font-montserrat animate-fade-in font-semibold">
-            Poslední dotované kurzy před ukončením programu.
+            Státní dotace brzy končí. Využijte je, dokud existují.
           </p>
           
           <CTAButton 

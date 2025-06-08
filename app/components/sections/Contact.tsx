@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
-import { Loader2 } from 'lucide-react';
+import { Loader2, AlertTriangle } from 'lucide-react';
 
 const MONTHS_CZ = [
   'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen',
@@ -221,7 +221,7 @@ const ContactForm: React.FC = () => {
             Zpracovávám...
           </>
         ) : (
-          'Chci se přihlásit'
+          'Chci se přihlásit s dotací'
         )}
       </button>
     </form>
@@ -233,9 +233,22 @@ const Contact: React.FC = () => {
     <section id="contact" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <SectionHeading 
-          title="Zajistěte si místo s dotací" 
-          subtitle="Jak se přihlásit a využít 82% dotaci od státu"
+          title="Zajistěte si místo s 82% dotací" 
+          subtitle="Jak se přihlásit a využít státní dotaci"
         />
+
+        {/* Warning about program ending */}
+        <div className="bg-brand-red/10 border border-brand-red/20 rounded-xl p-6 mb-8 max-w-3xl mx-auto">
+          <div className="flex items-start">
+            <AlertTriangle className="w-6 h-6 text-brand-red mt-1 mr-4 flex-shrink-0" />
+            <div className="text-center w-full">
+              <h4 className="font-anton text-lg text-brand-red mb-2">⏰ Dotace končí koncem roku 2025</h4>
+              <p className="text-brand-gray/80 font-montserrat">
+                Po ukončení dotačního programu bude kurz stát 15 000 Kč
+              </p>
+            </div>
+          </div>
+        </div>
         
         <div className="max-w-2xl mx-auto mb-12">
           <div className="bg-brand-beige p-8 md:p-10 rounded-2xl shadow-md">
@@ -253,22 +266,29 @@ const Contact: React.FC = () => {
               <div className="flex items-start">
                 <div className="bg-brand-olive text-white rounded-full w-8 h-8 flex items-center justify-center font-anton text-sm mr-4 mt-1">2</div>
                 <div>
-                  <h4 className="font-anton text-brand-gray">Ozveme se do 24 hodin</h4>
-                  <p className="text-brand-gray/80 font-montserrat text-sm">Potvrdíme místo a termín kurzu</p>
+                  <h4 className="font-anton text-brand-gray">Připravíme vám podklady</h4>
+                  <p className="text-brand-gray/80 font-montserrat text-sm">Pro žádost o dotaci</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <div className="bg-brand-olive text-white rounded-full w-8 h-8 flex items-center justify-center font-anton text-sm mr-4 mt-1">3</div>
                 <div>
-                  <h4 className="font-anton text-brand-gray">Potvrdíme místo a pošleme fakturu</h4>
-                  <p className="text-brand-gray/80 font-montserrat text-sm">Všechny potřebné informace o kurzu</p>
+                  <h4 className="font-anton text-brand-gray">Registrujete se</h4>
+                  <p className="text-brand-gray/80 font-montserrat text-sm">Na portálu jsemvkurzu.cz</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <div className="bg-brand-olive text-white rounded-full w-8 h-8 flex items-center justify-center font-anton text-sm mr-4 mt-1">4</div>
                 <div>
-                  <h4 className="font-anton text-brand-gray">Platíte jen 2 700 Kč díky dotaci</h4>
-                  <p className="text-brand-gray/80 font-montserrat text-sm">Zbytek hradí stát</p>
+                  <h4 className="font-anton text-brand-gray">Čekáte na schválení</h4>
+                  <p className="text-brand-gray/80 font-montserrat text-sm">(max. 30 dní)</p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-brand-olive text-white rounded-full w-8 h-8 flex items-center justify-center font-anton text-sm mr-4 mt-1">5</div>
+                <div>
+                  <h4 className="font-anton text-brand-gray">Platíte jen 2 700 Kč</h4>
+                  <p className="text-brand-gray/80 font-montserrat text-sm">místo 15 000 Kč</p>
                 </div>
               </div>
             </div>
