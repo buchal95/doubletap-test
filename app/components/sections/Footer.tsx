@@ -1,5 +1,6 @@
 import React from 'react';
 import { Facebook, Instagram, Youtube, Twitter } from 'lucide-react';
+import Link from 'next/link';
 
 const Footer: React.FC = () => {
   return (
@@ -45,7 +46,7 @@ const Footer: React.FC = () => {
           </p>
           
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="#" className="text-brand-beige/60 hover:text-white transition-colors font-montserrat">Obchodní podmínky</a>
+            <Link href="/obchodni-podminky" className="text-brand-beige/60 hover:text-white transition-colors font-montserrat">Obchodní podmínky</Link>
             <a href="#" className="text-brand-beige/60 hover:text-white transition-colors font-montserrat">Zásady ochrany osobních údajů</a>
             <a href="#" className="text-brand-beige/60 hover:text-white transition-colors font-montserrat">Cookies</a>
           </div>
