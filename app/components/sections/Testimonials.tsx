@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import SectionHeading from '../common/SectionHeading';
 import { Star } from 'lucide-react';
@@ -33,56 +35,6 @@ const TestimonialCard: React.FC<{
           <p className="text-brand-gray/60 text-sm font-montserrat">{role}</p>
         </div>
       </div>
-    </div>
-  );
-};
-
-const CaseStudy: React.FC = () => {
-  return (
-    <div className="bg-brand-beige rounded-xl p-6 md:p-8">
-      <h3 className="text-xl font-anton mb-4 text-brand-gray">Case Study: e-shop PetroShop</h3>
-      
-      <div className="grid md:grid-cols-2 gap-6 mb-6">
-        <div>
-          <h4 className="font-anton mb-2 text-brand-gray">Před kurzem:</h4>
-          <ul className="space-y-2">
-            <li className="flex items-start">
-              <span className="inline-block w-2 h-2 rounded-full bg-brand-red mt-2 mr-3"></span>
-              <span className="text-brand-gray/80 font-montserrat">2 000 zhlédnutí měsíčně</span>
-            </li>
-            <li className="flex items-start">
-              <span className="inline-block w-2 h-2 rounded-full bg-brand-red mt-2 mr-3"></span>
-              <span className="text-brand-gray/80 font-montserrat">Průměrná délka zhlédnutí 0:42</span>
-            </li>
-            <li className="flex items-start">
-              <span className="inline-block w-2 h-2 rounded-full bg-brand-red mt-2 mr-3"></span>
-              <span className="text-brand-gray/80 font-montserrat">Konverzní poměr 1.2%</span>
-            </li>
-          </ul>
-        </div>
-        
-        <div>
-          <h4 className="font-anton mb-2 text-brand-gray">Po kurzu (30 dní):</h4>
-          <ul className="space-y-2">
-            <li className="flex items-start">
-              <span className="inline-block w-2 h-2 rounded-full bg-brand-olive mt-2 mr-3"></span>
-              <span className="text-brand-gray/80 font-montserrat">12 500 zhlédnutí měsíčně (+525%)</span>
-            </li>
-            <li className="flex items-start">
-              <span className="inline-block w-2 h-2 rounded-full bg-brand-olive mt-2 mr-3"></span>
-              <span className="text-brand-gray/80 font-montserrat">Průměrná délka zhlédnutí 2:18 (+226%)</span>
-            </li>
-            <li className="flex items-start">
-              <span className="inline-block w-2 h-2 rounded-full bg-brand-olive mt-2 mr-3"></span>
-              <span className="text-brand-gray/80 font-montserrat">Konverzní poměr 4.7% (+292%)</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      
-      <p className="text-brand-gray/80 font-montserrat italic">
-        "Kurz změnil náš přístup k videomarketingu. Návratnost investice byla méně než 14 dní díky zvýšeným prodejům."
-      </p>
     </div>
   );
 };
@@ -124,10 +76,6 @@ const Testimonials: React.FC = () => {
           {testimonials.map((testimonial, index) => (
             <TestimonialCard key={index} {...testimonial} />
           ))}
-        </div>
-        
-        <div className="mb-16">
-          <CaseStudy />
         </div>
         
         <div className="bg-brand-beige rounded-xl p-6 md:p-8 text-center">
