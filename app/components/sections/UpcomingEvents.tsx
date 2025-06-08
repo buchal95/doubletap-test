@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
-import { Calendar, Clock } from 'lucide-react';
+import { Calendar, Clock, MapPin } from 'lucide-react';
 
 interface CalendarEvent {
   id: string;
@@ -108,17 +108,18 @@ const UpcomingEvents: React.FC = () => {
                     <div className="mb-4 md:mb-0">
                       <h3 className="text-xl font-anton text-brand-gray mb-2">{event.title}</h3>
                       <div className="flex items-center text-brand-gray/80 font-montserrat mb-2">
-                        <Calendar className="w-5 h-5 mr-2 text-brand-olive" />
+                        <Calendar className="w-5 h-5 mr-2 text-brand-olive flex-shrink-0" />
                         <span>{formatDate(event.startTime)}</span>
                       </div>
-                      <div className="flex items-center text-brand-gray/80 font-montserrat">
-                        <Clock className="w-5 h-5 mr-2 text-brand-olive" />
+                      <div className="flex items-center text-brand-gray/80 font-montserrat mb-2">
+                        <Clock className="w-5 h-5 mr-2 text-brand-olive flex-shrink-0" />
                         <span>{formatTime(event.startTime)} - {formatTime(event.endTime)}</span>
                       </div>
                       {event.locationTitle && (
-                        <p className="mt-2 text-brand-gray/80 font-montserrat">
-                          <span className="font-semibold">Místo:</span> {event.locationTitle}
-                        </p>
+                        <div className="flex items-start text-brand-gray/80 font-montserrat">
+                          <MapPin className="w-5 h-5 mr-2 text-brand-olive mt-0.5 flex-shrink-0" />
+                          <span>{event.locationTitle}</span>
+                        </div>
                       )}
                     </div>
                     <CTAButton text="Rezervovat" className="whitespace-nowrap" />
