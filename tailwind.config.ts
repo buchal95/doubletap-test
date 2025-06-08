@@ -9,9 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'anton': ['Anton', 'sans-serif'],
-        'montserrat': ['Montserrat', 'sans-serif'],
+        'anton': ['var(--font-anton)', 'sans-serif'],
+        'montserrat': ['var(--font-montserrat)', 'sans-serif'],
         sans: [
+          'var(--font-montserrat)',
           '-apple-system',
           'BlinkMacSystemFont',
           '"Segoe UI"',
@@ -95,6 +96,7 @@ const config: Config = {
       },
     },
     container: {
+      center: true,
       padding: {
         DEFAULT: '1rem',
         sm: '2rem',
