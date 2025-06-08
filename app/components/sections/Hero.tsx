@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import CTAButton from '../common/CTAButton';
-import { Camera } from 'lucide-react';
+import { Camera, MapPin } from 'lucide-react';
 
 interface CalendarEvent {
   id: string;
@@ -93,9 +93,15 @@ const Hero: React.FC = () => {
             Naučte se točit profesionální videa telefonem za 4 dny
           </h1>
           
-          <p className="text-xl md:text-2xl mb-10 text-brand-beige font-montserrat animate-fade-in font-semibold">
+          <p className="text-xl md:text-2xl mb-6 text-brand-beige font-montserrat animate-fade-in font-semibold">
             Státní dotace brzy končí. Využijte je, dokud existují.
           </p>
+
+          {/* Location info */}
+          <div className="inline-flex items-center justify-center mb-8 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
+            <MapPin className="w-5 h-5 mr-2 text-brand-olive" />
+            <span className="font-montserrat font-semibold">Kurz probíhá osobně v Praze</span>
+          </div>
           
           <CTAButton 
             text="Chci využít dotaci" 

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
-import { Loader2, AlertTriangle } from 'lucide-react';
+import { Loader2, AlertTriangle, MapPin } from 'lucide-react';
 
 const MONTHS_CZ = [
   'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen',
@@ -96,7 +96,7 @@ const ContactForm: React.FC = () => {
     <form className="space-y-6" onSubmit={handleSubmit}>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="firstName" className="block text-sm font-montserrat font-medium text-brand-gray mb-2">
+          <label htmlFor="firstName" className="block font-montserrat font-medium text-brand-gray mb-2">
             Jméno *
           </label>
           <input
@@ -111,7 +111,7 @@ const ContactForm: React.FC = () => {
         </div>
         
         <div>
-          <label htmlFor="lastName" className="block text-sm font-montserrat font-medium text-brand-gray mb-2">
+          <label htmlFor="lastName" className="block font-montserrat font-medium text-brand-gray mb-2">
             Příjmení *
           </label>
           <input
@@ -127,7 +127,7 @@ const ContactForm: React.FC = () => {
       </div>
       
       <div>
-        <label htmlFor="email" className="block text-sm font-montserrat font-medium text-brand-gray mb-2">
+        <label htmlFor="email" className="block font-montserrat font-medium text-brand-gray mb-2">
           E-mail *
         </label>
         <input
@@ -142,7 +142,7 @@ const ContactForm: React.FC = () => {
       </div>
       
       <div>
-        <label htmlFor="phone" className="block text-sm font-montserrat font-medium text-brand-gray mb-2">
+        <label htmlFor="phone" className="block font-montserrat font-medium text-brand-gray mb-2">
           Telefon *
         </label>
         <input
@@ -157,7 +157,7 @@ const ContactForm: React.FC = () => {
       </div>
       
       <div>
-        <p className="block text-sm font-montserrat font-medium text-brand-gray mb-4">
+        <p className="block font-montserrat font-medium text-brand-gray mb-4">
           Preferovaný měsíc pro absolvování kurzu *
         </p>
         <div className="grid grid-cols-2 gap-4">
@@ -174,7 +174,7 @@ const ContactForm: React.FC = () => {
                 disabled={isSubmitting}
                 className="mr-3 w-4 h-4 text-brand-olive focus:ring-brand-olive disabled:opacity-50"
               />
-              <label htmlFor={`month-${month}`} className="text-sm text-brand-gray/80 font-montserrat">
+              <label htmlFor={`month-${month}`} className="text-brand-gray/80 font-montserrat">
                 {month}
               </label>
             </div>
@@ -191,17 +191,17 @@ const ContactForm: React.FC = () => {
           disabled={isSubmitting}
           className="mt-1 mr-3 disabled:opacity-50"
         />
-        <label htmlFor="consent" className="text-sm text-brand-gray/80 font-montserrat">
+        <label htmlFor="consent" className="text-brand-gray/80 font-montserrat">
           Souhlasím se zpracováním osobních údajů dle zásad ochrany osobních údajů *
         </label>
       </div>
       
-      <div className="text-sm text-brand-gray/60 font-montserrat mb-6">
+      <div className="text-brand-gray/60 font-montserrat mb-6">
         * Povinné pole
       </div>
 
       {submitMessage && (
-        <div className={`p-4 rounded-lg text-sm font-montserrat ${
+        <div className={`p-4 rounded-lg font-montserrat ${
           submitMessage.includes('chyb') || submitMessage.includes('Musíte') 
             ? 'bg-red-50 text-red-700 border border-red-200' 
             : 'bg-green-50 text-green-700 border border-green-200'
@@ -246,6 +246,17 @@ const Contact: React.FC = () => {
               <p className="text-brand-gray/80 font-montserrat">
                 Po ukončení dotačního programu bude kurz stát 15 000 Kč
               </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Location highlight */}
+        <div className="bg-brand-beige border border-brand-olive/20 rounded-xl p-6 mb-8 max-w-3xl mx-auto">
+          <div className="flex items-center justify-center">
+            <MapPin className="w-8 h-8 text-brand-olive mr-4" />
+            <div className="text-center">
+              <h4 className="font-anton text-xl text-brand-gray mb-1">Kurz probíhá osobně v Praze</h4>
+              <p className="text-brand-gray/80 font-montserrat">Moderní prostory vybavené vším potřebným pro praktickou výuku</p>
             </div>
           </div>
         </div>

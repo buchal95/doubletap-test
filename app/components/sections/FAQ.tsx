@@ -41,7 +41,7 @@ const FAQ: React.FC = () => {
   const faqs = [
     {
       question: "Kde kurz probíhá?",
-      answer: "Kurz probíhá v Praze v moderních prostorách vybavených vším potřebným pro praktickou výuku. Přesnou adresu a pokyny k dopravě zašleme po potvrzení registrace."
+      answer: "Kurz probíhá osobně v Praze v moderních prostorách vybavených vším potřebným pro praktickou výuku. Přesnou adresu a pokyny k dopravě zašleme po potvrzení registrace."
     },
     {
       question: "Kolik je v kurzu lidí?",
