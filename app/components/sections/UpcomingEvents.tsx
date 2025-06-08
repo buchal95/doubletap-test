@@ -38,7 +38,10 @@ const UpcomingEvents: React.FC = () => {
       });
       
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        console.error(`Calendar API error: ${response.status} ${response.statusText}`);
+        setEvents([]); // Set empty array instead of throwing
+        setError('Nepodařilo se načíst události z kalendáře');
+        return;
       }
       
       const data = await response.json();
@@ -58,7 +61,7 @@ const UpcomingEvents: React.FC = () => {
     } catch (err) {
       console.error('Error fetching calendar events:', err);
       setError('Nepodařilo se načíst události z kalendáře');
-      setEvents([]);
+      setEvents([]); // Fallback to empty array
     } finally {
       setIsLoading(false);
     }

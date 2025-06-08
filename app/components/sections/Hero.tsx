@@ -35,7 +35,10 @@ const Hero: React.FC = () => {
         });
         
         if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          console.error(`Calendar API error: ${response.status} ${response.statusText}`);
+          setError('Nepodařilo se načíst termíny');
+          setNextEvent(null);
+          return;
         }
         
         const data = await response.json();
