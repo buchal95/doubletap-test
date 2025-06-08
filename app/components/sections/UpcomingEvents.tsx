@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
-import { Calendar, Clock, MapPin, RefreshCw } from 'lucide-react';
+import { Calendar, RefreshCw, MapPin } from 'lucide-react';
 
 interface CalendarEvent {
   id: string;
@@ -82,7 +82,7 @@ const UpcomingEvents: React.FC = () => {
     }
   };
 
-  // Format date to Czech format
+  // Format date to Czech format - only day and month, no time
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('cs-CZ', {
@@ -92,13 +92,23 @@ const UpcomingEvents: React.FC = () => {
     });
   };
 
-  // Format time to HH:MM format
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString('cs-CZ', {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+  // Format date range for multi-day events
+  const formatDateRange = (startDateString: string, endDateString: string) => {
+    const startDate = new Date(startDateString);
+    const endDate = new Date(endDateString);
+    
+    // If same day, return single date
+    if (startDate.toDateString() === endDate.toDateString()) {
+      return formatDate(startDateString);
+    }
+    
+    // If different days, return range
+    const startDay = startDate.getDate();
+    const endDay = endDate.getDate();
+    const month = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
+    const year = startDate.getFullYear();
+    
+    return `${startDay}. - ${endDay}. ${month} ${year}`;
   };
 
   return (
@@ -154,11 +164,7 @@ const UpcomingEvents: React.FC = () => {
                       <h3 className="text-xl font-anton text-brand-gray mb-2">{event.title}</h3>
                       <div className="flex items-center text-brand-gray/80 font-montserrat mb-2">
                         <Calendar className="w-5 h-5 mr-2 text-brand-olive flex-shrink-0" />
-                        <span>{formatDate(event.startTime)}</span>
-                      </div>
-                      <div className="flex items-center text-brand-gray/80 font-montserrat mb-2">
-                        <Clock className="w-5 h-5 mr-2 text-brand-olive flex-shrink-0" />
-                        <span>{formatTime(event.startTime)} - {formatTime(event.endTime)}</span>
+                        <span>{formatDateRange(event.startTime, event.endTime)}</span>
                       </div>
                       <div className="flex items-start text-brand-gray/80 font-montserrat">
                         <MapPin className="w-5 h-5 mr-2 text-brand-olive mt-0.5 flex-shrink-0" />

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import CTAButton from '../common/CTAButton';
-import { Camera, MapPin } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 
 interface CalendarEvent {
   id: string;
@@ -56,7 +56,7 @@ const Hero: React.FC = () => {
             const startDate = new Date(nextEventData.startTime);
             const endDate = new Date(nextEventData.endTime);
             
-            // Format the date range properly
+            // Format the date - only show day and month, not time
             const formatDate = (date: Date) => {
               return date.toLocaleDateString('cs-CZ', {
                 day: 'numeric',

@@ -129,58 +129,18 @@ export async function GET(request: NextRequest) {
     try {
       result = JSON.parse(responseText);
       
-      // If the API returns an empty events array or no events property, create a fallback
+      // If the API returns an empty events array or no events property, return empty events
       if (!result.events || !Array.isArray(result.events)) {
-        console.log('No events found in API response, creating fallback events');
-        
-        // Create fallback events for testing/display purposes
-        const fallbackEvents = [
-          {
-            id: "fallback1",
-            title: "Kurz tvorby videí - Praha",
-            startTime: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 days from now
-            endTime: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000).toISOString(), // 8 hours later
-            isAllDay: false,
-            locationTitle: "Praha - Vinohrady"
-          },
-          {
-            id: "fallback2",
-            title: "Kurz tvorby videí - Praha",
-            startTime: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(), // 28 days from now
-            endTime: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000).toISOString(), // 8 hours later
-            isAllDay: false,
-            locationTitle: "Praha - Vinohrady"
-          }
-        ];
-        
-        result = { events: fallbackEvents };
+        console.log('No events found in API response');
+        result = { events: [] };
       }
       
     } catch (parseError) {
       console.error('Failed to parse BRJ API response as JSON:', parseError);
       console.error('Response text:', responseText);
       
-      // Create fallback events if parsing fails
-      const fallbackEvents = [
-        {
-          id: "fallback1",
-          title: "Kurz tvorby videí - Praha",
-          startTime: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 days from now
-          endTime: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000).toISOString(), // 8 hours later
-          isAllDay: false,
-          locationTitle: "Praha - Vinohrady"
-        },
-        {
-          id: "fallback2",
-          title: "Kurz tvorby videí - Praha",
-          startTime: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(), // 28 days from now
-          endTime: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000).toISOString(), // 8 hours later
-          isAllDay: false,
-          locationTitle: "Praha - Vinohrady"
-        }
-      ];
-      
-      result = { events: fallbackEvents };
+      // Return empty events array if parsing fails
+      result = { events: [] };
     }
 
     console.log('Successfully processed events:', {
@@ -212,30 +172,11 @@ export async function GET(request: NextRequest) {
       }
     }
     
-    // Create fallback events for error cases
-    const fallbackEvents = [
-      {
-        id: "fallback1",
-        title: "Kurz tvorby videí - Praha",
-        startTime: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 days from now
-        endTime: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000).toISOString(), // 8 hours later
-        isAllDay: false,
-        locationTitle: "Praha - Vinohrady"
-      },
-      {
-        id: "fallback2",
-        title: "Kurz tvorby videí - Praha",
-        startTime: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(), // 28 days from now
-        endTime: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000).toISOString(), // 8 hours later
-        isAllDay: false,
-        locationTitle: "Praha - Vinohrady"
-      }
-    ];
-    
+    // Return empty events array for error cases
     return NextResponse.json(
-      { events: fallbackEvents },
+      { events: [] },
       { 
-        status: 200, // Return 200 with fallback data instead of error
+        status: 200, // Return 200 with empty data instead of error
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
