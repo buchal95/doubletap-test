@@ -254,45 +254,6 @@ const Contact: React.FC = () => {
           <div className="bg-brand-beige p-8 md:p-10 rounded-2xl shadow-md">
             <h3 className="text-2xl font-anton mb-8 text-brand-gray">Registrace na kurz</h3>
             
-            {/* Steps */}
-            <div className="mb-8 space-y-4">
-              <div className="flex items-start">
-                <div className="bg-brand-olive text-white rounded-full w-8 h-8 flex items-center justify-center font-anton text-sm mr-4 mt-1">1</div>
-                <div>
-                  <h4 className="font-anton text-brand-gray">Vyplňte kontaktní formulář</h4>
-                  <p className="text-brand-gray/80 font-montserrat text-sm">Základní údaje a preferovaný termín</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="bg-brand-olive text-white rounded-full w-8 h-8 flex items-center justify-center font-anton text-sm mr-4 mt-1">2</div>
-                <div>
-                  <h4 className="font-anton text-brand-gray">Připravíme vám podklady</h4>
-                  <p className="text-brand-gray/80 font-montserrat text-sm">Pro žádost o dotaci</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="bg-brand-olive text-white rounded-full w-8 h-8 flex items-center justify-center font-anton text-sm mr-4 mt-1">3</div>
-                <div>
-                  <h4 className="font-anton text-brand-gray">Registrujete se</h4>
-                  <p className="text-brand-gray/80 font-montserrat text-sm">Na portálu jsemvkurzu.cz</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="bg-brand-olive text-white rounded-full w-8 h-8 flex items-center justify-center font-anton text-sm mr-4 mt-1">4</div>
-                <div>
-                  <h4 className="font-anton text-brand-gray">Čekáte na schválení</h4>
-                  <p className="text-brand-gray/80 font-montserrat text-sm">(max. 30 dní)</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="bg-brand-olive text-white rounded-full w-8 h-8 flex items-center justify-center font-anton text-sm mr-4 mt-1">5</div>
-                <div>
-                  <h4 className="font-anton text-brand-gray">Platíte jen 2 700 Kč</h4>
-                  <p className="text-brand-gray/80 font-montserrat text-sm">místo 15 000 Kč</p>
-                </div>
-              </div>
-            </div>
-            
             <ContactForm />
           </div>
         </div>
