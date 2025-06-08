@@ -21,7 +21,8 @@ const Hero: React.FC = () => {
     const fetchNextEvent = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('/api/calendar/events');
+        // Use proxy API route instead of direct external call
+        const response = await fetch('/api/proxy/calendar');
         
         if (!response.ok) {
           throw new Error('Failed to fetch calendar events');

@@ -50,6 +50,18 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Phone validation regex (Czech format)
 const phoneRegex = /^(\+420)?[0-9\s]{9,}$/;
 
+// Handle CORS preflight requests
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body: OrderRequest = await request.json();
@@ -59,7 +71,14 @@ export async function POST(request: NextRequest) {
     if (!firstName || !lastName || !email || !phone || !preferredMonth) {
       return NextResponse.json(
         { error: 'Všechna povinná pole musí být vyplněna' },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       );
     }
 
@@ -67,7 +86,14 @@ export async function POST(request: NextRequest) {
     if (!consent) {
       return NextResponse.json(
         { error: 'Musíte souhlasit se zpracováním osobních údajů' },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       );
     }
 
@@ -75,7 +101,14 @@ export async function POST(request: NextRequest) {
     if (!emailRegex.test(email)) {
       return NextResponse.json(
         { error: 'Neplatný formát e-mailové adresy' },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       );
     }
 
@@ -83,7 +116,14 @@ export async function POST(request: NextRequest) {
     if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
       return NextResponse.json(
         { error: 'Neplatný formát telefonního čísla' },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       );
     }
 
@@ -93,7 +133,14 @@ export async function POST(request: NextRequest) {
     if (!validMonths.includes(preferredMonth)) {
       return NextResponse.json(
         { error: 'Neplatný preferovaný měsíc' },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       );
     }
 
@@ -102,7 +149,14 @@ export async function POST(request: NextRequest) {
       console.error('BRJ_API_KEY is not configured');
       return NextResponse.json(
         { error: 'Chyba konfigurace serveru' },
-        { status: 500 }
+        { 
+          status: 500,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       );
     }
 
@@ -156,7 +210,14 @@ export async function POST(request: NextRequest) {
       console.error('BRJ API Error:', response.status, errorText);
       return NextResponse.json(
         { error: 'Chyba při vytváření objednávky' },
-        { status: response.status }
+        { 
+          status: response.status,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       );
     }
 
@@ -168,13 +229,26 @@ export async function POST(request: NextRequest) {
       hash: result.hash,
       payLink: result.links.payLink,
       orderPageLink: result.links.orderPageLink
+    }, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      }
     });
 
   } catch (error) {
     console.error('Order creation error:', error);
     return NextResponse.json(
       { error: 'Došlo k neočekávané chybě' },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      }
     );
   }
 }

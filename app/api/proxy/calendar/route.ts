@@ -15,6 +15,18 @@ interface BRJApiResponse {
   events: BRJEvent[];
 }
 
+// Handle CORS preflight requests
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
+}
+
 export async function GET(request: NextRequest) {
   try {
     const apiKey = process.env.BRJ_API_KEY;
@@ -22,7 +34,14 @@ export async function GET(request: NextRequest) {
       console.error('BRJ_API_KEY is not configured');
       return NextResponse.json(
         { error: 'Chyba konfigurace serveru' },
-        { status: 500 }
+        { 
+          status: 500,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       );
     }
 
@@ -55,7 +74,14 @@ export async function GET(request: NextRequest) {
       console.error('BRJ API Error:', response.status, errorText);
       return NextResponse.json(
         { error: 'Chyba při načítání událostí z kalendáře' },
-        { status: response.status }
+        { 
+          status: response.status,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       );
     }
 
@@ -64,6 +90,9 @@ export async function GET(request: NextRequest) {
     // Add CORS headers for better browser compatibility
     return NextResponse.json(result, {
       headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
       },
     });
@@ -72,7 +101,14 @@ export async function GET(request: NextRequest) {
     console.error('Calendar events fetch error:', error);
     return NextResponse.json(
       { error: 'Došlo k neočekávané chybě' },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      }
     );
   }
 }

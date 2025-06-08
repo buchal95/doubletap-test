@@ -68,7 +68,8 @@ const ContactForm: React.FC = () => {
     }
 
     try {
-      const response = await fetch('/api/order/create', {
+      // Use proxy API route instead of direct external call
+      const response = await fetch('/api/proxy/order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

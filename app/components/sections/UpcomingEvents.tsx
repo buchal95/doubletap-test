@@ -23,7 +23,8 @@ const UpcomingEvents: React.FC = () => {
     const fetchEvents = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('/api/calendar/events');
+        // Use proxy API route instead of direct external call
+        const response = await fetch('/api/proxy/calendar');
         
         if (!response.ok) {
           throw new Error('Nepodařilo se načíst události z kalendáře');
