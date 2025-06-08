@@ -44,21 +44,21 @@ const Testimonials: React.FC = () => {
     {
       name: "Jana Veselá",
       role: "Marketingová manažerka",
-      quote: "Kurz předčil moje očekávání. Za pouhé 4 dny jsem se naučila vše potřebné pro tvorbu profesionálních videí. Dosahy na našich sociálních sítích vzrostly o 120 % během prvního měsíce.",
+      quote: "Za 4 dny jsem se naučila víc než za rok zkoušení na vlastní pěst. Dosahy vzrostly o 120 % během měsíce. Kurz se vyplatil.",
       image: "https://images.pexels.com/photos/762080/pexels-photo-762080.jpeg?auto=compress&cs=tinysrgb&w=150",
       stars: 5
     },
     {
       name: "Tomáš Svoboda",
       role: "Majitel e-shopu",
-      quote: "Investice do kurzu se mi vrátila již během prvních dvou týdnů. Naše produktová videa mají nyní 3x vyšší konverzní poměr a zákazníci je mnohem lépe přijímají.",
+      quote: "Investice se vrátila za 14 dní. Produktová videa mají 3x vyšší konverze. Zákazníci konečně vidí, co prodávám.",
       image: "https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=150",
       stars: 5
     },
     {
       name: "Martina Dvořáková",
       role: "Content creator",
-      quote: "Po absolvování kurzu jsem získala sebejistotu v tvorbě videí. Naučila jsem se efektivně stříhat a moje videa nyní vypadají profesionálně i bez drahého vybavení.",
+      quote: "Konečně vím, co dělám. Videa vypadají profesionálně bez drahého vybavení. Stačí telefon a správný postup.",
       image: "https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg?auto=compress&cs=tinysrgb&w=150",
       stars: 5
     }
@@ -68,8 +68,8 @@ const Testimonials: React.FC = () => {
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <SectionHeading 
-          title="Příběhy našich absolventů" 
-          subtitle="Poslechněte si, jak kurz pomohl našim absolventům dosáhnout konkrétních výsledků"
+          title="Co říkají absolventi" 
+          subtitle="Konkrétní výsledky od lidí, kteří kurz absolvovali"
         />
         
         <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -79,7 +79,7 @@ const Testimonials: React.FC = () => {
         </div>
         
         <div className="bg-brand-beige rounded-xl p-6 md:p-8 text-center">
-          <h3 className="text-xl font-anton mb-4 text-brand-gray">Video recenze absolventů</h3>
+          <h3 className="text-xl font-anton mb-4 text-brand-gray">Video od absolventky</h3>
           
           <div className="aspect-w-16 aspect-h-9 max-w-3xl mx-auto mb-6">
             <div className="bg-white rounded-lg w-full h-64 md:h-[400px] flex items-center justify-center border border-brand-gray/10">
@@ -88,8 +88,8 @@ const Testimonials: React.FC = () => {
           </div>
           
           <p className="text-brand-gray/80 font-montserrat max-w-2xl mx-auto">
-            "Kurz byl perfektní. Jsem opravdu vděčná za všechny rady a triky, které jsem se naučila.
-            Dnes pracuji jako freelance video tvůrce a živím se tím, co mě baví."
+            "Kurz byl přesně to, co jsem potřebovala. Dnes si vydělávám tvorbou videí. 
+            Živím se tím, co mě baví."
           </p>
           <p className="font-anton mt-2 text-brand-gray">Lucie Pokorná, freelancer</p>
         </div>
