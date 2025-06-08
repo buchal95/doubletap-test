@@ -88,11 +88,11 @@ export default function PrivacyPolicyPage() {
               <div className="space-y-4 font-montserrat text-brand-gray/80">
                 <p>Na webu používáme nástroje, které mohou shromažďovat cookies a další údaje:</p>
                 <ul className="list-disc pl-6 space-y-3">
-                  <li><strong>Google Analytics 4</strong> - Slouží k měření a analýze chování uživatelů na webu. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-brand-olive hover:underline">Zásady Google</a></li>
-                  <li><strong>Google Ads</strong> - Používáme pro cílenou reklamu a měření kampaní. <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" className="text-brand-olive hover:underline">Podmínky reklam Google</a></li>
-                  <li><strong>Google Tag Manager</strong> - Spravuje měřicí kódy bez zásahu do kódu webu. Sám údaje neukládá. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-brand-olive hover:underline">Podmínky GTM</a></li>
-                  <li><strong>Sklik (Seznam.cz)</strong> - Nástroj pro zobrazování a měření českých reklamních kampaní. <a href="https://www.seznam.cz/ochranaudaju/" target="_blank" rel="noopener noreferrer" className="text-brand-olive hover:underline">Zásady Sklik</a></li>
-                  <li><strong>Meta (Facebook a Instagram)</strong> - Využíváme pixel Meta pro měření účinnosti reklam. <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer" className="text-brand-olive hover:underline">Zásady Meta</a></li>
+                  <li><strong>Google Analytics 4</strong> - Slouží k měření a analýze chování uživatelů na webu. <a href="https://policies.google.com/privacy" target=\"_blank" rel="noopener noreferrer\" className="text-brand-olive hover:underline">Zásady Google</a></li>
+                  <li><strong>Google Ads</strong> - Používáme pro cílenou reklamu a měření kampaní. <a href="https://policies.google.com/technologies/ads" target=\"_blank" rel="noopener noreferrer\" className="text-brand-olive hover:underline">Podmínky reklam Google</a></li>
+                  <li><strong>Google Tag Manager</strong> - Spravuje měřicí kódy bez zásahu do kódu webu. Sám údaje neukládá. <a href="https://policies.google.com/privacy" target=\"_blank" rel="noopener noreferrer\" className="text-brand-olive hover:underline">Podmínky GTM</a></li>
+                  <li><strong>Sklik (Seznam.cz)</strong> - Nástroj pro zobrazování a měření českých reklamních kampaní. <a href="https://www.seznam.cz/ochranaudaju/" target=\"_blank" rel="noopener noreferrer\" className="text-brand-olive hover:underline">Zásady Sklik</a></li>
+                  <li><strong>Meta (Facebook a Instagram)</strong> - Využíváme pixel Meta pro měření účinnosti reklam. <a href="https://www.facebook.com/privacy/policy/" target=\"_blank" rel="noopener noreferrer\" className="text-brand-olive hover:underline">Zásady Meta</a></li>
                 </ul>
               </div>
             </section>
