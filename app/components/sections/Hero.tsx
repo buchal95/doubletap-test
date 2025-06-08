@@ -6,16 +6,48 @@ import { Camera } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const [nextEvent, setNextEvent] = useState<string | null>(null);
+  const [remainingSeats, setRemainingSeats] = useState<number>(5);
 
   useEffect(() => {
-    // Static upcoming course dates for demo purposes
-    const upcomingDates = [
-      "15. - 18. února 2025",
-      "22. - 25. března 2025",
-      "19. - 22. dubna 2025"
-    ];
+    const fetchNextEvent = async () => {
+      try {
+        const response = await fetch('/api/calendar/events');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch calendar events');
+        }
+        
+        const data = await response.json();
+        
+        if (data && Array.isArray(data.events) && data.events.length > 0) {
+          // Sort events by start time and get the next one
+          const futureEvents = data.events
+            .filter((event: any) => new Date(event.startTime) > new Date())
+            .sort((a: any, b: any) => 
+              new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+            );
+          
+          if (futureEvents.length > 0) {
+            const nextEventDate = new Date(futureEvents[0].startTime);
+            const formattedDate = `${nextEventDate.getDate()}. - ${nextEventDate.getDate() + 3}. ${
+              nextEventDate.toLocaleDateString('cs-CZ', { month: 'long', year: 'numeric' })
+            }`;
+            
+            setNextEvent(formattedDate);
+            
+            // Random number of remaining seats between 1 and 8
+            setRemainingSeats(Math.floor(Math.random() * 8) + 1);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching next event:', error);
+        // Fallback to static data
+        setNextEvent("15. - 18. února 2025");
+        setRemainingSeats(5);
+      }
+    };
     
-    setNextEvent(upcomingDates[0]);
+    fetchNextEvent();
   }, []);
 
   return (
@@ -43,7 +75,7 @@ const Hero: React.FC = () => {
           
           {nextEvent && (
             <p className="mt-6 text-brand-beige text-sm font-montserrat animate-fade-in">
-              Příští termín: {nextEvent} | Zbývá 5 míst
+              Příští termín: {nextEvent} | Zbývá {remainingSeats} míst
             </p>
           )}
         </div>
