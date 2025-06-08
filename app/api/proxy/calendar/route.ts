@@ -51,19 +51,24 @@ export async function GET(request: NextRequest) {
     }
 
     const calendarCode = 'n4ovet83LZ0Poc3edn5gI919K9Tp75km';
-    const step = request.nextUrl.searchParams.get('step') || 'month';
-    const selectorFrom = request.nextUrl.searchParams.get('selectorFrom') || '';
-
-    // Build URL with proper encoding
+    
+    // Get current date for selectorFrom parameter
+    const currentDate = new Date();
+    const selectorFrom = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD format
+    
+    // Build URL with proper encoding - try different parameter combinations
     const url = new URL('https://brj.app/api/v1/calendar/event-list');
     url.searchParams.set('apiKey', apiKey);
     url.searchParams.set('code', calendarCode);
-    url.searchParams.set('step', step);
-    if (selectorFrom) {
-      url.searchParams.set('selectorFrom', selectorFrom);
-    }
+    url.searchParams.set('step', 'month');
+    url.searchParams.set('selectorFrom', selectorFrom);
 
-    console.log('Calling BRJ API:', url.toString().replace(apiKey, 'HIDDEN_API_KEY'));
+    console.log('Calling BRJ API with params:', {
+      code: calendarCode,
+      step: 'month',
+      selectorFrom: selectorFrom,
+      url: url.toString().replace(apiKey, 'HIDDEN_API_KEY')
+    });
 
     // Call BRJ API to get calendar events with enhanced error handling
     const response = await fetch(url.toString(), {
@@ -115,13 +120,14 @@ export async function GET(request: NextRequest) {
     }
 
     const responseText = await response.text();
-    console.log('BRJ API Response Body (first 200 chars):', responseText.substring(0, 200));
+    console.log('BRJ API Response Body (first 500 chars):', responseText.substring(0, 500));
 
     let result: BRJApiResponse;
     try {
       result = JSON.parse(responseText);
     } catch (parseError) {
       console.error('Failed to parse BRJ API response as JSON:', parseError);
+      console.error('Response text:', responseText);
       return NextResponse.json(
         { error: 'Neplatná odpověď ze serveru kalendáře' },
         { 
@@ -135,7 +141,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    console.log('Successfully parsed BRJ API response, events count:', result?.events?.length || 0);
+    console.log('Successfully parsed BRJ API response:', {
+      eventsCount: result?.events?.length || 0,
+      hasEvents: Array.isArray(result?.events),
+      firstEvent: result?.events?.[0] || null
+    });
     
     // Add CORS headers for better browser compatibility
     return NextResponse.json(result, {
