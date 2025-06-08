@@ -4,13 +4,23 @@ import React, { useState, useEffect } from 'react';
 import CTAButton from '../common/CTAButton';
 import { Camera } from 'lucide-react';
 
+interface CalendarEvent {
+  id: string;
+  title: string;
+  startTime: string;
+  endTime: string;
+  isAllDay: boolean;
+  locationTitle?: string;
+}
+
 const Hero: React.FC = () => {
   const [nextEvent, setNextEvent] = useState<string | null>(null);
-  const [remainingSeats, setRemainingSeats] = useState<number>(5);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchNextEvent = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch('/api/calendar/events');
         
         if (!response.ok) {
@@ -20,30 +30,50 @@ const Hero: React.FC = () => {
         const data = await response.json();
         
         if (data && Array.isArray(data.events) && data.events.length > 0) {
-          // Sort events by start time and get the next one
+          // Filter and sort future events
           const futureEvents = data.events
-            .filter((event: any) => new Date(event.startTime) > new Date())
-            .sort((a: any, b: any) => 
+            .filter((event: CalendarEvent) => new Date(event.startTime) > new Date())
+            .sort((a: CalendarEvent, b: CalendarEvent) => 
               new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
             );
           
           if (futureEvents.length > 0) {
-            const nextEventDate = new Date(futureEvents[0].startTime);
-            const formattedDate = `${nextEventDate.getDate()}. - ${nextEventDate.getDate() + 3}. ${
-              nextEventDate.toLocaleDateString('cs-CZ', { month: 'long', year: 'numeric' })
-            }`;
+            const nextEventData = futureEvents[0];
+            const startDate = new Date(nextEventData.startTime);
+            const endDate = new Date(nextEventData.endTime);
             
-            setNextEvent(formattedDate);
+            // Format the date range properly
+            const formatDate = (date: Date) => {
+              return date.toLocaleDateString('cs-CZ', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+              });
+            };
             
-            // Random number of remaining seats between 1 and 8
-            setRemainingSeats(Math.floor(Math.random() * 8) + 1);
+            // If it's a multi-day event, show date range
+            if (startDate.toDateString() !== endDate.toDateString()) {
+              const startDay = startDate.getDate();
+              const endDay = endDate.getDate();
+              const month = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
+              const year = startDate.getFullYear();
+              
+              setNextEvent(`${startDay}. - ${endDay}. ${month} ${year}`);
+            } else {
+              // Single day event
+              setNextEvent(formatDate(startDate));
+            }
+          } else {
+            setNextEvent(null);
           }
+        } else {
+          setNextEvent(null);
         }
       } catch (error) {
         console.error('Error fetching next event:', error);
-        // Fallback to static data
-        setNextEvent("15. - 18. února 2025");
-        setRemainingSeats(5);
+        setNextEvent(null);
+      } finally {
+        setIsLoading(false);
       }
     };
     
@@ -73,9 +103,18 @@ const Hero: React.FC = () => {
             className="w-full sm:w-auto shadow-lg text-xl py-4 px-12 transform transition-all duration-300 hover:scale-110" 
           />
           
-          {nextEvent && (
+          {/* Dynamic next event display */}
+          {isLoading ? (
+            <p className="mt-6 text-brand-beige/60 text-sm font-montserrat animate-pulse">
+              Načítání termínů...
+            </p>
+          ) : nextEvent ? (
             <p className="mt-6 text-brand-beige text-sm font-montserrat animate-fade-in">
-              Příští termín: {nextEvent} | Zbývá {remainingSeats} míst
+              Příští termín: {nextEvent}
+            </p>
+          ) : (
+            <p className="mt-6 text-brand-beige/80 text-sm font-montserrat animate-fade-in">
+              Nové termíny budou brzy vyhlášeny
             </p>
           )}
         </div>
