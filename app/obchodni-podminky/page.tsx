@@ -116,7 +116,7 @@ export default function TermsPage() {
               <h2 className="text-2xl font-anton text-brand-gray mb-4">8. Řešení sporů</h2>
               <div className="space-y-4 font-montserrat text-brand-gray/80">
                 <p><strong>8.1</strong> V případě jakýchkoli nejasností či nespokojenosti je Klient vyzván ke komunikaci přímo s Poskytovatelem.</p>
-                <p><strong>8.2</strong> Spotřebitel má právo obrátit se s případným sporem na Českou obchodní inspekci nebo využít platformu ODR: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer" className="text-brand-olive hover:underline">https://ec.europa.eu/consumers/odr/</a></p>
+                <p><strong>8.2</strong> Spotřebitel má právo obrátit se s případným sporem na Českou obchodní inspekci nebo využít platformu ODR: <a href="https://ec.europa.eu/consumers/odr/" target=\"_blank" rel="noopener noreferrer\" className="text-brand-olive hover:underline">https://ec.europa.eu/consumers/odr/</a></p>
               </div>
             </section>
 
