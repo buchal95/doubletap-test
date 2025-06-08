@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
-import { Calendar, Clock, MapPin } from 'lucide-react';
+import { Calendar, Clock, MapPin, RefreshCw } from 'lucide-react';
 
 interface CalendarEvent {
   id: string;
@@ -18,41 +18,66 @@ const UpcomingEvents: React.FC = () => {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [retryCount, setRetryCount] = useState<number>(0);
+
+  const fetchEvents = async (isRetry: boolean = false) => {
+    try {
+      if (!isRetry) {
+        setIsLoading(true);
+      }
+      setError(null);
+      
+      // Use proxy API route with proper error handling
+      const response = await fetch('/api/proxy/calendar', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Add timeout
+        signal: AbortSignal.timeout(10000), // 10 second timeout
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      // Process and sort events by start time
+      if (data && Array.isArray(data.events)) {
+        const sortedEvents = data.events
+          .filter((event: any) => new Date(event.startTime) > new Date()) // Only future events
+          .sort((a: any, b: any) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
+          .slice(0, 3); // Take only the next 3 events
+        
+        setEvents(sortedEvents);
+        setRetryCount(0); // Reset retry count on success
+      } else {
+        setEvents([]);
+      }
+    } catch (err) {
+      console.error('Error fetching calendar events:', err);
+      setError('Nepodařilo se načíst události z kalendáře');
+      setEvents([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        setIsLoading(true);
-        // Use proxy API route instead of direct external call
-        const response = await fetch('/api/proxy/calendar');
-        
-        if (!response.ok) {
-          throw new Error('Nepodařilo se načíst události z kalendáře');
-        }
-        
-        const data = await response.json();
-        
-        // Process and sort events by start time
-        if (data && Array.isArray(data.events)) {
-          const sortedEvents = data.events
-            .filter((event: any) => new Date(event.startTime) > new Date()) // Only future events
-            .sort((a: any, b: any) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
-            .slice(0, 3); // Take only the next 3 events
-          
-          setEvents(sortedEvents);
-        } else {
-          setEvents([]);
-        }
-      } catch (err) {
-        console.error('Error fetching calendar events:', err);
-        setError('Nepodařilo se načíst události z kalendáře');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchEvents();
   }, []);
+
+  // Retry function with exponential backoff
+  const handleRetry = () => {
+    if (retryCount < 3) {
+      setRetryCount(prev => prev + 1);
+      const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff
+      setTimeout(() => {
+        fetchEvents(true);
+      }, delay);
+    }
+  };
 
   // Format date to Czech format
   const formatDate = (dateString: string) => {
@@ -88,8 +113,24 @@ const UpcomingEvents: React.FC = () => {
               <p className="mt-4 text-brand-gray/80 font-montserrat">Načítání termínů...</p>
             </div>
           ) : error ? (
-            <div className="text-center py-12">
-              <p className="text-brand-red font-montserrat">{error}</p>
+            <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-brand-gray/10">
+              <Calendar className="w-12 h-12 text-brand-red mx-auto mb-4" />
+              <p className="text-xl font-anton text-brand-gray mb-2">Nepodařilo se načíst termíny</p>
+              <p className="text-brand-gray/80 font-montserrat mb-6">
+                Zkuste to prosím znovu nebo nás kontaktujte přímo
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                {retryCount < 3 && (
+                  <button
+                    onClick={handleRetry}
+                    className="inline-flex items-center justify-center py-3 px-6 bg-brand-olive text-white rounded-lg font-montserrat font-semibold transition-all duration-300 hover:bg-opacity-90"
+                  >
+                    <RefreshCw className="w-5 h-5 mr-2" />
+                    Zkusit znovu
+                  </button>
+                )}
+                <CTAButton text="Projevit zájem" className="mx-auto" />
+              </div>
             </div>
           ) : events.length === 0 ? (
             <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-brand-gray/10">

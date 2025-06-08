@@ -16,16 +16,26 @@ interface CalendarEvent {
 const Hero: React.FC = () => {
   const [nextEvent, setNextEvent] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchNextEvent = async () => {
       try {
         setIsLoading(true);
-        // Use proxy API route instead of direct external call
-        const response = await fetch('/api/proxy/calendar');
+        setError(null);
+        
+        // Use proxy API route with proper error handling
+        const response = await fetch('/api/proxy/calendar', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          // Add timeout
+          signal: AbortSignal.timeout(10000), // 10 second timeout
+        });
         
         if (!response.ok) {
-          throw new Error('Failed to fetch calendar events');
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         
         const data = await response.json();
@@ -72,6 +82,7 @@ const Hero: React.FC = () => {
         }
       } catch (error) {
         console.error('Error fetching next event:', error);
+        setError('Nepodařilo se načíst termíny');
         setNextEvent(null);
       } finally {
         setIsLoading(false);
@@ -109,10 +120,14 @@ const Hero: React.FC = () => {
             className="w-full sm:w-auto shadow-lg text-xl py-4 px-12 transform transition-all duration-300 hover:scale-110" 
           />
           
-          {/* Dynamic next event display */}
+          {/* Dynamic next event display with error handling */}
           {isLoading ? (
             <p className="mt-6 text-brand-beige/60 font-montserrat animate-pulse">
               Načítání termínů...
+            </p>
+          ) : error ? (
+            <p className="mt-6 text-brand-beige/80 font-montserrat animate-fade-in">
+              Nové termíny budou brzy vyhlášeny
             </p>
           ) : nextEvent ? (
             <p className="mt-6 text-brand-beige font-montserrat animate-fade-in">
