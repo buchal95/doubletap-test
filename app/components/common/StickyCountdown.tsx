@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Clock, AlertTriangle } from 'lucide-react';
+import { Clock, AlertTriangle, X } from 'lucide-react';
 
 const StickyCountdown: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -11,6 +11,7 @@ const StickyCountdown: React.FC = () => {
     seconds: 0
   });
   const [isVisible, setIsVisible] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
 
   useEffect(() => {
     // Target date: October 31, 2025 23:59:59
@@ -43,8 +44,8 @@ const StickyCountdown: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show sticky button after scrolling 500px
-      setIsVisible(window.scrollY > 500);
+      // Show sticky banner after scrolling 800px
+      setIsVisible(window.scrollY > 800);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -58,64 +59,94 @@ const StickyCountdown: React.FC = () => {
     }
   };
 
-  if (!isVisible || (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0)) {
+  const handleDismiss = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsDismissed(true);
+  };
+
+  if (!isVisible || isDismissed || (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0)) {
     return null;
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 animate-slide-up">
-      <div className="bg-brand-red text-white rounded-2xl shadow-2xl border-2 border-white/20 overflow-hidden max-w-sm">
-        {/* Header */}
-        <div className="bg-brand-red/90 px-4 py-3 flex items-center">
-          <AlertTriangle className="w-5 h-5 mr-2 animate-pulse" />
-          <span className="font-anton text-sm">Dotace brzy končí!</span>
-        </div>
-        
-        {/* Content */}
-        <div className="p-4">
-          <div className="text-center mb-4">
-            <div className="text-2xl font-anton mb-1">82% DOTACE</div>
-            <div className="text-xs opacity-90">Zbývá jen:</div>
+    <div className="fixed bottom-0 left-0 right-0 z-50 animate-slide-up">
+      <div className="bg-gradient-to-r from-brand-red to-brand-red/90 text-white shadow-2xl border-t-2 border-white/20">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            {/* Left side - Alert */}
+            <div className="flex items-center">
+              <AlertTriangle className="w-6 h-6 mr-3 animate-pulse flex-shrink-0" />
+              <div>
+                <div className="font-anton text-lg">82% DOTACE KONČÍ!</div>
+                <div className="text-sm opacity-90">Registrace nutná do 31. 10. 2025</div>
+              </div>
+            </div>
+            
+            {/* Center - Countdown */}
+            <div className="hidden md:flex items-center space-x-4">
+              <Clock className="w-5 h-5" />
+              <div className="flex space-x-3">
+                <div className="text-center">
+                  <div className="font-anton text-xl">{timeLeft.days}</div>
+                  <div className="text-xs opacity-80">dní</div>
+                </div>
+                <div className="text-white/50">:</div>
+                <div className="text-center">
+                  <div className="font-anton text-xl">{timeLeft.hours}</div>
+                  <div className="text-xs opacity-80">hod</div>
+                </div>
+                <div className="text-white/50">:</div>
+                <div className="text-center">
+                  <div className="font-anton text-xl">{timeLeft.minutes}</div>
+                  <div className="text-xs opacity-80">min</div>
+                </div>
+                <div className="text-white/50">:</div>
+                <div className="text-center">
+                  <div className="font-anton text-xl">{timeLeft.seconds}</div>
+                  <div className="text-xs opacity-80">sek</div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Right side - CTA and Close */}
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={handleClick}
+                className="bg-white text-brand-red font-anton py-3 px-6 rounded-lg hover:bg-brand-beige transition-all duration-300 transform hover:scale-105 whitespace-nowrap"
+              >
+                Využít dotaci
+              </button>
+              
+              <button
+                onClick={handleDismiss}
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                aria-label="Zavřít"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
           
-          {/* Countdown */}
-          <div className="grid grid-cols-4 gap-2 mb-4">
-            <div className="text-center">
-              <div className="bg-white/20 rounded-lg py-2 px-1">
+          {/* Mobile countdown */}
+          <div className="md:hidden mt-3 pt-3 border-t border-white/20">
+            <div className="flex justify-center space-x-4">
+              <div className="text-center">
                 <div className="font-anton text-lg">{timeLeft.days}</div>
                 <div className="text-xs opacity-80">dní</div>
               </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-white/20 rounded-lg py-2 px-1">
+              <div className="text-center">
                 <div className="font-anton text-lg">{timeLeft.hours}</div>
                 <div className="text-xs opacity-80">hod</div>
               </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-white/20 rounded-lg py-2 px-1">
+              <div className="text-center">
                 <div className="font-anton text-lg">{timeLeft.minutes}</div>
                 <div className="text-xs opacity-80">min</div>
               </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-white/20 rounded-lg py-2 px-1">
+              <div className="text-center">
                 <div className="font-anton text-lg">{timeLeft.seconds}</div>
                 <div className="text-xs opacity-80">sek</div>
               </div>
             </div>
-          </div>
-          
-          {/* CTA */}
-          <button
-            onClick={handleClick}
-            className="w-full bg-white text-brand-red font-anton py-3 px-4 rounded-lg hover:bg-brand-beige transition-all duration-300 transform hover:scale-105 text-sm"
-          >
-            Využít dotaci nyní
-          </button>
-          
-          <div className="text-center mt-2">
-            <span className="text-xs opacity-75">Pouze 2 700 Kč místo 15 000 Kč</span>
           </div>
         </div>
       </div>

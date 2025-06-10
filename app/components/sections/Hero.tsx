@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import CTAButton from '../common/CTAButton';
-import { MapPin, AlertTriangle } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 
 interface CalendarEvent {
   id: string;
@@ -108,21 +108,12 @@ const Hero: React.FC = () => {
             Naučte se natáčet profesionální videa telefonem za 4 dny
           </h1>
           
-          <p className="text-xl md:text-2xl mb-6 text-brand-beige font-montserrat animate-fade-in font-semibold">
+          <p className="text-xl md:text-2xl mb-8 text-brand-beige font-montserrat animate-fade-in font-semibold">
             Státní dotace 82% končí koncem roku 2025. Neváhejte!
           </p>
 
-          {/* Urgency notice */}
-          <div className="inline-flex items-center justify-center mb-8 bg-brand-red/90 px-6 py-4 rounded-xl border border-brand-red/30">
-            <AlertTriangle className="w-6 h-6 mr-3 text-white animate-pulse" />
-            <div className="text-left">
-              <div className="font-anton text-lg">Dotace brzy končí!</div>
-              <div className="text-sm opacity-90">Registrace nutná do 31. 10. 2025</div>
-            </div>
-          </div>
-
           {/* Location info */}
-          <div className="mb-6">
+          <div className="mb-8">
             <div className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
               <MapPin className="w-5 h-5 mr-2 text-brand-olive" />
               <span className="font-montserrat font-semibold">Kurz se koná osobně v Praze</span>
