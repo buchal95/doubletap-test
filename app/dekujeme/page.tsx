@@ -164,10 +164,6 @@ export default function ThankYouPage() {
                       <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
                       Bankovní převod
                     </li>
-                    <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
-                      <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
-                      Platba v hotovosti
-                    </li>
                   </ul>
                 </div>
               </div>
