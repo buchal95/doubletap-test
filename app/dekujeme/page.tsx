@@ -109,29 +109,67 @@ export default function ThankYouPage() {
             </div>
           </div>
 
-          {/* Payment information */}
+          {/* Payment information - Enhanced with better spacing */}
           <div className="bg-brand-olive/10 border border-brand-olive/20 rounded-xl p-6 mb-8">
             <div className="flex items-start">
               <CreditCard className="w-6 h-6 text-brand-olive mt-1 mr-4 flex-shrink-0" />
-              <div className="text-left">
-                <h3 className="font-anton text-lg text-brand-gray mb-2">Platba kurzu</h3>
-                <p className="text-brand-gray/80 font-montserrat text-sm leading-relaxed mb-3">
+              <div className="text-left w-full">
+                <h3 className="font-anton text-lg text-brand-gray mb-4">Platba kurzu</h3>
+                <p className="text-brand-gray/80 font-montserrat text-sm leading-relaxed mb-6">
                   Po schválení dotace od Úřadu práce:
                 </p>
-                <ul className="text-left space-y-2">
-                  <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
-                    <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
-                    Zaplatíte pouze <strong className="text-brand-red">2 700 Kč</strong> (18 % z celkové ceny)
-                  </li>
-                  <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
-                    <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
-                    Stát uhradí zbývajících <strong>12 300 Kč</strong> (82 % dotace)
-                  </li>
-                  <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
-                    <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
-                    Platba je možná kartou, převodem nebo v hotovosti
-                  </li>
-                </ul>
+                
+                {/* Payment breakdown with improved spacing */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Your payment */}
+                  <div className="bg-white rounded-lg p-6 border border-brand-gray/10">
+                    <div className="text-center">
+                      <p className="text-brand-gray/70 font-montserrat text-sm mb-2">
+                        Zaplatíte pouze
+                      </p>
+                      <p className="text-3xl font-anton text-brand-red mb-2">
+                        2 700 Kč
+                      </p>
+                      <p className="text-brand-gray/60 font-montserrat text-sm">
+                        (18 % z celkové ceny)
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* State subsidy */}
+                  <div className="bg-brand-olive/5 rounded-lg p-6 border border-brand-olive/20">
+                    <div className="text-center">
+                      <p className="text-brand-gray/70 font-montserrat text-sm mb-2">
+                        Stát uhradí zbývajících
+                      </p>
+                      <p className="text-3xl font-anton text-brand-olive mb-2">
+                        12 300 Kč
+                      </p>
+                      <p className="text-brand-gray/60 font-montserrat text-sm">
+                        (82 % dotace)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Payment options */}
+                <div className="mt-6 bg-brand-beige rounded-lg p-4">
+                  <h4 className="font-anton text-brand-gray mb-3">Možnosti platby:</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
+                      <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
+                      Platba kartou online
+                    </li>
+                    <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
+                      <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
+                      Bankovní převod
+                    </li>
+                    <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
+                      <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
+                      Platba v hotovosti
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
