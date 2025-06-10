@@ -177,11 +177,12 @@ const SocialProof: React.FC = () => {
           </div>
         </div>
         
-        {/* Stats section - FIXED: Improved text centering */}
+        {/* Stats section - Updated with additional details */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-6 max-w-4xl mx-auto">
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
             <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">24+</div>
-            <div className="text-brand-gray/80 font-montserrat text-center">let zkušeností z marketingu</div>
+            <div className="text-brand-gray/80 font-montserrat text-center mb-1">let zkušeností z marketingu</div>
+            <div className="text-brand-gray/60 font-montserrat text-sm text-center">* a tisíce videí</div>
           </div>
           
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
@@ -195,7 +196,8 @@ const SocialProof: React.FC = () => {
           
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
             <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">82%</div>
-            <div className="text-brand-gray/80 font-montserrat text-center">dotace od státu</div>
+            <div className="text-brand-gray/80 font-montserrat text-center mb-1">dotace od státu</div>
+            <div className="text-brand-gray/60 font-montserrat text-sm text-center">* do konce roku 2025</div>
           </div>
         </div>
         
