@@ -92,8 +92,6 @@ const Lectors: React.FC = () => {
                         priority={index === 0}
                         loading={index === 0 ? "eager" : "lazy"}
                         quality={80}
-                        placeholder="blur"
-                        blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA"
                         onError={() => handleImageError(lector.fallbackUrl)}
                       />
                     )
@@ -108,8 +106,6 @@ const Lectors: React.FC = () => {
                       priority={index === 0}
                       loading={index === 0 ? "eager" : "lazy"}
                       quality={80}
-                      placeholder="blur"
-                      blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VLIAAAA"
                       onError={() => handleImageError(lector.image)}
                     />
                   )}

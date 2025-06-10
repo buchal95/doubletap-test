@@ -17,7 +17,6 @@ interface CalendarEvent {
 const Hero: React.FC = () => {
   const [nextEvent, setNextEvent] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [heroImageError, setHeroImageError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchNextEvent = async () => {
@@ -84,37 +83,31 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative py-20 md:py-32 bg-brand-gray text-white overflow-hidden">
-      {/* Hero background with improved fallback */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-gray via-brand-gray/95 to-brand-olive/10">
-        {!heroImageError && (
-          <Image
-            src="/hero-image.webp"
-            alt="Profesionální tvorba videí"
-            fill
-            priority
-            quality={85}
-            sizes="100vw"
-            className="object-cover opacity-30 mix-blend-overlay"
-            placeholder="blur"
-            blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VLIAAAA"
-            onError={() => {
-              setHeroImageError(true);
-              console.log('Hero image failed to load, using gradient fallback');
-            }}
-          />
-        )}
-        
-        {/* Enhanced gradient overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-gray/90 via-brand-gray/60 to-brand-gray/40"></div>
+      {/* Hero background image - simplified approach */}
+      <div className="absolute inset-0">
+        <Image
+          src="/hero-image.webp"
+          alt="Profesionální tvorba videí"
+          fill
+          priority
+          quality={90}
+          sizes="100vw"
+          className="object-cover opacity-40"
+          onLoad={() => console.log('Hero image loaded successfully')}
+          onError={(e) => console.error('Hero image failed to load:', e)}
+        />
       </div>
+      
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-brand-gray/70 via-brand-gray/60 to-brand-gray/80"></div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center mb-8 bg-brand-red bg-opacity-20 px-6 py-3 rounded-full transform transition-all duration-300 hover:scale-110 hover:bg-opacity-30 backdrop-blur-sm border border-white/20">
-            <span className="text-lg font-montserrat font-bold">82% hradí stát. Platíte jen 2 700 Kč.</span>
+          <div className="inline-flex items-center justify-center mb-8 bg-brand-red/25 backdrop-blur-sm px-6 py-3 rounded-full transform transition-all duration-300 hover:scale-105 hover:bg-brand-red/30 border border-white/20">
+            <span className="text-lg font-montserrat font-bold text-white drop-shadow-sm">82% hradí stát. Platíte jen 2 700 Kč.</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-anton mb-6 leading-tight animate-fade-in drop-shadow-lg">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-anton mb-6 leading-tight animate-fade-in text-white drop-shadow-lg">
             Naučte se natáčet profesionální videa telefonem za 4 dny
           </h1>
           
@@ -123,16 +116,16 @@ const Hero: React.FC = () => {
           </p>
 
           <div className="mb-8">
-            <div className="inline-flex items-center justify-center bg-white/15 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20 shadow-lg">
+            <div className="inline-flex items-center justify-center bg-white/15 backdrop-blur-sm px-6 py-3 rounded-full border border-white/30 shadow-lg">
               <MapPin className="w-5 h-5 mr-2 text-brand-olive" />
-              <span className="font-montserrat font-semibold">Kurz se koná osobně v Praze</span>
+              <span className="font-montserrat font-semibold text-white">Kurz se koná osobně v Praze</span>
             </div>
           </div>
           
           <div className="mb-8">
             <CTAButton 
               text="Chci využít 82% dotaci" 
-              className="w-full sm:w-auto shadow-2xl text-xl py-4 px-12 transform transition-all duration-300 hover:scale-110 backdrop-blur-sm"
+              className="w-full sm:w-auto shadow-2xl text-xl py-4 px-12 transform transition-all duration-300 hover:scale-110"
               location="hero"
             />
           </div>
