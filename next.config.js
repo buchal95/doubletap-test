@@ -23,12 +23,11 @@ const nextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['lucide-react'],
-    optimizeCss: true,
   },
-  // Compression
-  compress: true,
-  // Production optimizations
+  // Disable SWC minifier if it causes issues and fallback to Terser
   swcMinify: true,
+  // Production optimizations
+  compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
   
