@@ -15,7 +15,8 @@ const Lectors: React.FC = () => {
       expertise: ["Video produkce", "Social media", "Content strategy"],
       description: "Už přes 10 let dělá social media marketing a videa točí tak dobře, že by mu to záviděl i algoritmus. Pracoval pro ZOOT, Dáme jídlo nebo Zentivu. Baví ho kreativita, humor a hlavně nadchnout ostatní, aby se nebáli projevit.",
       highlight: "Algoritmus whisperer",
-      personality: "Kreativní chaos"
+      personality: "Kreativní chaos",
+      objectPosition: "center top" // Show more of the face/head area
     },
     {
       name: "Kateřina Hůšová", 
@@ -25,7 +26,8 @@ const Lectors: React.FC = () => {
       expertise: ["Vizuální styl", "Trendy", "Výuka"],
       description: "Je duší celého týmu. Neumí improvizovat (ale zato umí všechno ostatní), má cit pro vizuálno, vtip a timing. Když vám něco vysvětluje, tak se to fakt naučíte.",
       highlight: "Učí tak, že to pochopíte",
-      personality: "Vizuální génius"
+      personality: "Vizuální génius",
+      objectPosition: "center top" // Show more of the face/head area
     },
     {
       name: "Jan Buchal",
@@ -35,7 +37,8 @@ const Lectors: React.FC = () => {
       expertise: ["Strategie", "Analýza", "Plánování"],
       description: "Neumí improvizovat, ale všechno ostatní mu jde skvěle. Je precizní, přemýšlí nad každým detailem a kdyby byl hashtagem, byl by to #strateg.",
       highlight: "Anti-improvizace",
-      personality: "#strateg"
+      personality: "#strateg",
+      objectPosition: "center center" // Keep Jan's positioning as is
     }
   ];
 
@@ -56,25 +59,16 @@ const Lectors: React.FC = () => {
               {/* Photo section */}
               <div className="relative overflow-hidden">
                 <div className="relative w-full h-80">
-                  {lector.name === "Marek Madenský" ? (
-                    <img
-                      src={lector.image}
-                      alt={lector.name}
-                      width={400}
-                      height={320}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                  ) : (
-                    <Image
-                      src={lector.image}
-                      alt={lector.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      priority={index === 0}
-                      unoptimized={true}
-                    />
-                  )}
+                  <Image
+                    src={lector.image}
+                    alt={lector.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    style={{ objectPosition: lector.objectPosition }}
+                    priority={index === 0}
+                    unoptimized={true}
+                  />
                 </div>
                 
                 {/* Fun highlight badge */}
