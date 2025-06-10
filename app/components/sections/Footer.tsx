@@ -7,8 +7,8 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-brand-gray text-white pt-12 pb-6">
       <div className="container mx-auto px-4">
-        {/* Main footer content */}
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+        {/* Main footer content - FIXED: proper responsive grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Left column - Brand & Social */}
           <div>
             {/* Logo with white background for visibility */}
@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
                 <div>
                   <a 
                     href="mailto:mrkt.doubletap@gmail.com" 
-                    className="text-brand-beige hover:text-white transition-colors font-montserrat"
+                    className="text-brand-beige hover:text-white transition-colors font-montserrat break-all"
                   >
                     mrkt.doubletap@gmail.com
                   </a>
@@ -97,19 +97,19 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Right column - Legal Links */}
+          {/* Right column - Legal Links - FIXED: better mobile layout */}
           <div>
             <h4 className="text-lg font-anton mb-4 text-white">Právní informace</h4>
             <div className="space-y-3">
               <Link 
                 href="/obchodni-podminky" 
-                className="block text-brand-beige hover:text-white transition-colors font-montserrat hover:underline decoration-brand-olive underline-offset-4 bg-brand-beige/5 hover:bg-brand-beige/10 p-3 rounded-lg"
+                className="block text-brand-beige hover:text-white transition-colors font-montserrat hover:underline decoration-brand-olive underline-offset-4 bg-brand-beige/5 hover:bg-brand-beige/10 p-3 rounded-lg text-sm"
               >
                 📄 Obchodní podmínky
               </Link>
               <Link 
                 href="/zasady-ochrany-osobnich-udaju" 
-                className="block text-brand-beige hover:text-white transition-colors font-montserrat hover:underline decoration-brand-olive underline-offset-4 bg-brand-beige/5 hover:bg-brand-beige/10 p-3 rounded-lg"
+                className="block text-brand-beige hover:text-white transition-colors font-montserrat hover:underline decoration-brand-olive underline-offset-4 bg-brand-beige/5 hover:bg-brand-beige/10 p-3 rounded-lg text-sm"
               >
                 🔒 Zásady ochrany osobních údajů
               </Link>
@@ -120,10 +120,10 @@ const Footer: React.FC = () => {
         {/* Divider */}
         <hr className="border-brand-beige/20 mb-6" />
         
-        {/* Bottom section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        {/* Bottom section - FIXED: better mobile stacking */}
+        <div className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
           {/* Copyright */}
-          <div className="text-brand-beige/80 font-montserrat">
+          <div className="text-brand-beige/80 font-montserrat text-center md:text-left">
             <p className="mb-1">
               &copy; 2025 Double Tap. Všechna práva vyhrazena.
             </p>
@@ -133,7 +133,7 @@ const Footer: React.FC = () => {
           </div>
           
           {/* Additional info */}
-          <div className="text-right">
+          <div className="text-center md:text-right">
             <p className="text-brand-beige/60 font-montserrat text-sm">
               IČ: 06885560 | Není plátcem DPH
             </p>
