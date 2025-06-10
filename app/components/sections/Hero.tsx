@@ -108,20 +108,25 @@ const Hero: React.FC = () => {
             Naučte se točit profesionální videa telefonem za 4 dny
           </h1>
           
-          <p className="text-xl md:text-2xl mb-6 text-brand-beige font-montserrat animate-fade-in font-semibold">
+          <p className="text-xl md:text-2xl mb-8 text-brand-beige font-montserrat animate-fade-in font-semibold">
             Státní dotace brzy končí. Využijte je, dokud existují.
           </p>
 
           {/* Location info */}
-          <div className="inline-flex items-center justify-center mb-8 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
-            <MapPin className="w-5 h-5 mr-2 text-brand-olive" />
-            <span className="font-montserrat font-semibold">Kurz probíhá osobně v Praze</span>
+          <div className="mb-6">
+            <div className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
+              <MapPin className="w-5 h-5 mr-2 text-brand-olive" />
+              <span className="font-montserrat font-semibold">Kurz probíhá osobně v Praze</span>
+            </div>
           </div>
           
-          <CTAButton 
-            text="Chci využít dotaci" 
-            className="w-full sm:w-auto shadow-lg text-xl py-4 px-12 transform transition-all duration-300 hover:scale-110" 
-          />
+          {/* CTA Button */}
+          <div className="mb-8">
+            <CTAButton 
+              text="Chci využít dotaci" 
+              className="w-full sm:w-auto shadow-lg text-xl py-4 px-12 transform transition-all duration-300 hover:scale-110" 
+            />
+          </div>
           
           {/* Dynamic next event display with error handling */}
           {isLoading ? (
