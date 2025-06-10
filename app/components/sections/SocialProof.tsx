@@ -1,30 +1,188 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Star } from 'lucide-react';
+import { Star, Heart } from 'lucide-react';
 
 const SocialProof: React.FC = () => {
+  const allLogos = [
+    { src: '/proteinaco-logo.png', alt: 'Protein a Co', width: 160, height: 50 },
+    { src: '/florea-logo.png', alt: 'Florea', width: 120, height: 40 },
+    { src: '/xinzuo-logo.png', alt: 'Xinzuo', width: 120, height: 40 },
+    { src: '/alkoholcz-logo.webp', alt: 'Alkohol.cz', width: 140, height: 45 },
+    { src: '/himalife-logo.webp', alt: 'Himalife', width: 130, height: 42 },
+    { src: '/naturway-logo.webp', alt: 'Naturway', width: 135, height: 44 },
+    { src: '/zoot-logo.webp', alt: 'Zoot', width: 110, height: 38 }
+  ];
+
+  const [currentLogoSet, setCurrentLogoSet] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [showHeart, setShowHeart] = useState(false);
+  const [fingerPosition, setFingerPosition] = useState({ x: 0, y: 0 });
+
+  // Get current 3 logos
+  const getCurrentLogos = () => {
+    const start = currentLogoSet * 3;
+    return allLogos.slice(start, start + 3);
+  };
+
+  // Auto-play animation every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleDoubleTap();
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [currentLogoSet]);
+
+  const handleDoubleTap = () => {
+    if (isAnimating) return;
+
+    setIsAnimating(true);
+    
+    // Random finger position
+    setFingerPosition({
+      x: Math.random() * 200 - 100,
+      y: Math.random() * 100 - 50
+    });
+
+    // Finger tap animation
+    setTimeout(() => {
+      setShowHeart(true);
+      
+      // Change logos
+      setTimeout(() => {
+        setCurrentLogoSet((prev) => {
+          const maxSets = Math.ceil(allLogos.length / 3);
+          return (prev + 1) % maxSets;
+        });
+      }, 300);
+
+      // Hide heart
+      setTimeout(() => {
+        setShowHeart(false);
+        setIsAnimating(false);
+      }, 1000);
+    }, 500);
+  };
+
   return (
-    <section className="py-16 bg-brand-beige">
+    <section className="py-16 bg-gradient-to-br from-brand-beige to-brand-beige/80 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10 animate-fade-in">
-          <h2 className="text-2xl font-anton text-brand-gray">Naši lektoři tvořili videa pro tyto společnosti</h2>
+          <h2 className="text-2xl md:text-3xl font-anton text-brand-gray mb-2">
+            Naši lektoři tvořili videa pro tyto společnosti
+          </h2>
+          <p className="text-brand-gray/60 font-montserrat">Double tap pro další značky</p>
         </div>
         
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 mb-16 opacity-80">
-          <Image src="/proteinaco-logo.webp" alt="Protein a Co" width={160} height={50} className="h-10 md:h-12 w-auto transform transition-all duration-300 hover:scale-110" />
-          <Image src="/florea-logo.webp" alt="Florea" width={120} height={40} className="h-8 md:h-10 w-auto transform transition-all duration-300 hover:scale-110" />
-          <Image src="/xinzuo-logo.webp" alt="Xinzuo" width={120} height={40} className="h-8 md:h-10 w-auto transform transition-all duration-300 hover:scale-110" />
-          <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Czech_Television_logo.svg/512px-Czech_Television_logo.svg.png" alt="Česká televize" width={120} height={48} className="h-10 md:h-12 w-auto transform transition-all duration-300 hover:scale-110" />
-          <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Seznam.cz_logo.svg/512px-Seznam.cz_logo.svg.png" alt="Seznam.cz" width={120} height={36} className="h-7 md:h-9 w-auto transform transition-all duration-300 hover:scale-110" />
+        {/* Interactive logo container */}
+        <div className="relative max-w-4xl mx-auto">
+          <div 
+            className="flex justify-center items-center gap-12 md:gap-20 mb-16 min-h-[120px] cursor-pointer select-none relative"
+            onClick={handleDoubleTap}
+          >
+            {getCurrentLogos().map((logo, index) => (
+              <div
+                key={`${currentLogoSet}-${index}`}
+                className={`transform transition-all duration-700 ${
+                  isAnimating ? 'scale-110 rotate-1' : 'scale-100 hover:scale-105'
+                } opacity-80 hover:opacity-100`}
+                style={{
+                  animationDelay: `${index * 150}ms`
+                }}
+              >
+                <Image 
+                  src={logo.src} 
+                  alt={logo.alt} 
+                  width={logo.width} 
+                  height={logo.height} 
+                  className="h-12 md:h-16 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
+                />
+              </div>
+            ))}
+
+            {/* Animated finger */}
+            <div 
+              className={`absolute pointer-events-none transition-all duration-500 ${
+                isAnimating ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
+              }`}
+              style={{
+                left: `calc(50% + ${fingerPosition.x}px)`,
+                top: `calc(50% + ${fingerPosition.y}px)`,
+                transform: 'translate(-50%, -50%)'
+              }}
+            >
+              <div className="relative">
+                {/* Finger icon */}
+                <div className={`text-4xl transition-transform duration-200 ${
+                  isAnimating ? 'animate-pulse scale-90' : ''
+                }`}>
+                  👆
+                </div>
+                
+                {/* Double tap indicator */}
+                <div className="absolute -top-2 -right-2 w-3 h-3 bg-brand-red rounded-full animate-ping"></div>
+                <div className="absolute -top-1 -right-1 w-2 h-2 bg-brand-red rounded-full"></div>
+              </div>
+            </div>
+
+            {/* Instagram-style heart */}
+            <div 
+              className={`absolute pointer-events-none transition-all duration-500 ${
+                showHeart ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
+              }`}
+              style={{
+                left: `calc(50% + ${fingerPosition.x}px)`,
+                top: `calc(50% + ${fingerPosition.y}px)`,
+                transform: 'translate(-50%, -50%)'
+              }}
+            >
+              <Heart 
+                className={`w-12 h-12 text-brand-red fill-brand-red transition-all duration-300 ${
+                  showHeart ? 'animate-bounce' : ''
+                }`} 
+              />
+            </div>
+
+            {/* Ripple effect */}
+            {isAnimating && (
+              <div 
+                className="absolute pointer-events-none"
+                style={{
+                  left: `calc(50% + ${fingerPosition.x}px)`,
+                  top: `calc(50% + ${fingerPosition.y}px)`,
+                  transform: 'translate(-50%, -50%)'
+                }}
+              >
+                <div className="w-16 h-16 border-2 border-brand-red/30 rounded-full animate-ping"></div>
+                <div className="absolute top-1/2 left-1/2 w-8 h-8 border-2 border-brand-red/50 rounded-full animate-ping transform -translate-x-1/2 -translate-y-1/2" style={{ animationDelay: '0.1s' }}></div>
+              </div>
+            )}
+          </div>
+
+          {/* Progress dots */}
+          <div className="flex justify-center space-x-2 mb-8">
+            {Array.from({ length: Math.ceil(allLogos.length / 3) }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentLogoSet(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentLogoSet ? 'bg-brand-red w-6' : 'bg-brand-gray/20 hover:bg-brand-gray/40'
+                }`}
+              />
+            ))}
+          </div>
         </div>
         
+        {/* Stats section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-6">
-          <div className="p-6 bg-white rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">24+</div>
-            <div className="text-brand-gray/80 font-montserrat">let zkušeností z marketingu</div>
+          <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
+            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">7+</div>
+            <div className="text-brand-gray/80 font-montserrat">značek důvěřuje našim lektorům</div>
           </div>
           
-          <div className="p-6 bg-white rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+          <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
             <div className="flex justify-center mb-3">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-6 h-6 text-brand-red fill-brand-red" />
@@ -33,16 +191,16 @@ const SocialProof: React.FC = () => {
             <div className="text-brand-gray/80 font-montserrat font-semibold">hodnocení kurzu</div>
           </div>
           
-          <div className="p-6 bg-white rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+          <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
             <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">82%</div>
             <div className="text-brand-gray/80 font-montserrat">dotace od státu</div>
           </div>
         </div>
         
-        {/* Playful footnote outside the boxes */}
+        {/* Playful footnote */}
         <div className="text-center">
           <p className="text-xs text-brand-gray/50 font-montserrat italic">
-            * sami tomu věříme těžko, ale je to pravda
+            * videa, která pomohla těmto značkám růst
           </p>
         </div>
       </div>
