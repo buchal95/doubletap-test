@@ -69,11 +69,10 @@ const SocialProof: React.FC = () => {
   return (
     <section className="py-16 bg-gradient-to-br from-brand-beige to-brand-beige/80 overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10 animate-fade-in">
-          <h2 className="text-2xl md:text-3xl font-anton text-brand-gray mb-2">
-            Naši lektoři tvořili videa pro tyto společnosti
+        <div className="text-center mb-12 animate-fade-in max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-anton text-brand-gray leading-tight">
+            Naši lektoři tvořili videa (nejen) pro tyto společnosti
           </h2>
-          <p className="text-brand-gray/60 font-montserrat">Automaticky se mění každé 4 sekundy</p>
         </div>
         
         {/* Interactive logo container */}
@@ -179,7 +178,7 @@ const SocialProof: React.FC = () => {
         </div>
         
         {/* Stats section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-6 max-w-4xl mx-auto">
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
             <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">7+</div>
             <div className="text-brand-gray/80 font-montserrat">značek důvěřuje našim lektorům</div>
