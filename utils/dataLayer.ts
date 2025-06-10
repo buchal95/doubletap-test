@@ -9,6 +9,15 @@ interface BaseEventData {
   currency?: string;
 }
 
+interface MetaAdvancedMatching {
+  em?: string;        // Email - lowercase, bez mezer
+  fn?: string;        // Křestní jméno - lowercase, bez mezer  
+  ln?: string;        // Příjmení - lowercase, bez mezer
+  ph?: string;        // Telefon - s kódem země, bez mezer/pomlček
+  country?: string;   // Země - ISO kód (2 znaky)
+  external_id?: string; // Externí ID
+}
+
 interface FormEventData extends BaseEventData {
   form_name?: string;
   form_step?: string;
@@ -18,6 +27,7 @@ interface FormEventData extends BaseEventData {
     first_name?: string;
     last_name?: string;
   };
+  fb_advanced_matching?: MetaAdvancedMatching;
 }
 
 interface ConversionEventData extends BaseEventData {
@@ -25,6 +35,7 @@ interface ConversionEventData extends BaseEventData {
   conversion_label?: string;
   order_value?: number;
   order_id?: string;
+  fb_advanced_matching?: MetaAdvancedMatching;
 }
 
 // Declare global dataLayer
@@ -42,6 +53,87 @@ export const initializeDataLayer = () => {
   }
 };
 
+// Helper function to format phone number for advanced matching
+const formatPhoneForMatching = (phone: string): string => {
+  // Remove all spaces, dashes, parentheses
+  let cleaned = phone.replace(/[\s\-\(\)]/g, '');
+  
+  // If starts with +, keep it
+  if (cleaned.startsWith('+')) {
+    return cleaned;
+  }
+  
+  // If starts with 420 or 421, add +
+  if (cleaned.startsWith('420') || cleaned.startsWith('421')) {
+    return '+' + cleaned;
+  }
+  
+  // If starts with 00420 or 00421, replace with +
+  if (cleaned.startsWith('00420')) {
+    return '+420' + cleaned.substring(5);
+  }
+  if (cleaned.startsWith('00421')) {
+    return '+421' + cleaned.substring(5);
+  }
+  
+  // If 9 digits and starts with 6,7,9 (Czech mobile), add +420
+  if (cleaned.length === 9 && /^[679]/.test(cleaned)) {
+    return '+420' + cleaned;
+  }
+  
+  // If 9 digits and starts with 9 (Slovak mobile), add +421
+  if (cleaned.length === 9 && cleaned.startsWith('9')) {
+    return '+421' + cleaned;
+  }
+  
+  // Default to +420 for other 9-digit numbers
+  if (cleaned.length === 9) {
+    return '+420' + cleaned;
+  }
+  
+  return cleaned;
+};
+
+// Helper function to generate external_id
+const generateExternalId = (email: string, phone?: string): string => {
+  const timestamp = Date.now();
+  const emailHash = email.split('@')[0];
+  const phoneHash = phone ? phone.slice(-4) : '0000';
+  return `user_${emailHash}_${phoneHash}_${timestamp}`;
+};
+
+// Helper function to create advanced matching object
+const createAdvancedMatching = (userData: {
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+}): MetaAdvancedMatching => {
+  const matching: MetaAdvancedMatching = {};
+  
+  if (userData.email) {
+    matching.em = userData.email.toLowerCase().trim();
+    matching.external_id = generateExternalId(userData.email, userData.phone);
+  }
+  
+  if (userData.firstName) {
+    matching.fn = userData.firstName.toLowerCase().trim();
+  }
+  
+  if (userData.lastName) {
+    matching.ln = userData.lastName.toLowerCase().trim();
+  }
+  
+  if (userData.phone) {
+    matching.ph = formatPhoneForMatching(userData.phone);
+  }
+  
+  // Hardcode country as CZ since the course is in Prague
+  matching.country = 'cz';
+  
+  return matching;
+};
+
 // Generic function to push events to dataLayer
 export const pushToDataLayer = (data: BaseEventData | FormEventData | ConversionEventData) => {
   if (typeof window !== 'undefined' && window.dataLayer) {
@@ -54,24 +146,33 @@ export const pushToDataLayer = (data: BaseEventData | FormEventData | Conversion
 
 // Track when user starts filling the form
 export const trackFormStart = (formData?: Partial<FormEventData['user_data']>) => {
+  const advancedMatching = formData ? createAdvancedMatching({
+    email: formData.email,
+    firstName: formData.first_name,
+    lastName: formData.last_name,
+    phone: formData.phone
+  }) : {};
+
   pushToDataLayer({
     event: 'form_start',
     event_category: 'engagement',
     event_label: 'course_registration_form',
     form_name: 'course_registration',
     form_step: 'start',
-    user_data: formData || {}
+    user_data: formData || {},
+    fb_advanced_matching: advancedMatching
   });
 
-  // Also push Meta Pixel InitiateCheckout event
+  // Meta Pixel InitiateCheckout event with advanced matching
   pushToDataLayer({
-    event: 'InitiateCheckout',
-    event_category: 'conversion',
-    event_label: 'course_registration_start',
-    value: 2700,
-    currency: 'CZK',
-    content_name: 'Kurz profesionální tvorby videí',
-    content_category: 'Education'
+    event: 'fb_initiate_checkout',
+    fb_event_parameters: {
+      value: 2700,
+      currency: 'CZK',
+      content_name: 'Kurz profesionální tvorby videí',
+      content_category: 'Education'
+    },
+    fb_advanced_matching: advancedMatching
   });
 };
 
@@ -90,25 +191,33 @@ export const trackFormInteraction = (fieldName: string, value?: string) => {
 
 // Track form submission attempt
 export const trackFormSubmit = (formData: FormEventData['user_data']) => {
+  const advancedMatching = formData ? createAdvancedMatching({
+    email: formData.email,
+    firstName: formData.first_name,
+    lastName: formData.last_name,
+    phone: formData.phone
+  }) : {};
+
   pushToDataLayer({
     event: 'form_submit',
     event_category: 'conversion',
     event_label: 'course_registration_submit',
     form_name: 'course_registration',
     form_step: 'submit',
-    user_data: formData
+    user_data: formData,
+    fb_advanced_matching: advancedMatching
   });
 
-  // Meta Pixel Lead event
+  // Meta Pixel Lead event with advanced matching
   pushToDataLayer({
-    event: 'Lead',
-    event_category: 'conversion',
-    event_label: 'course_registration_lead',
-    value: 2700,
-    currency: 'CZK',
-    content_name: 'Kurz profesionální tvorby videí',
-    content_category: 'Education',
-    user_data: formData
+    event: 'fb_lead',
+    fb_event_parameters: {
+      value: 2700,
+      currency: 'CZK',
+      content_name: 'Kurz profesionální tvorby videí',
+      content_category: 'Education'
+    },
+    fb_advanced_matching: advancedMatching
   });
 };
 
@@ -121,6 +230,13 @@ export const trackFormSuccess = (orderData?: {
   phone?: string;
   preferredMonth?: string;
 }) => {
+  const advancedMatching = orderData ? createAdvancedMatching({
+    email: orderData.email,
+    firstName: orderData.firstName,
+    lastName: orderData.lastName,
+    phone: orderData.phone
+  }) : {};
+
   pushToDataLayer({
     event: 'form_success',
     event_category: 'conversion',
@@ -135,25 +251,20 @@ export const trackFormSuccess = (orderData?: {
       first_name: orderData.firstName,
       last_name: orderData.lastName,
       phone: orderData.phone
-    } : {}
+    } : {},
+    fb_advanced_matching: advancedMatching
   });
 
-  // Meta Pixel CompleteRegistration event
+  // Meta Pixel CompleteRegistration event with advanced matching
   pushToDataLayer({
-    event: 'CompleteRegistration',
-    event_category: 'conversion',
-    event_label: 'course_registration_complete',
-    value: 2700,
-    currency: 'CZK',
-    content_name: 'Kurz profesionální tvorby videí',
-    content_category: 'Education',
-    registration_method: 'website_form',
-    user_data: orderData ? {
-      email: orderData.email,
-      first_name: orderData.firstName,
-      last_name: orderData.lastName,
-      phone: orderData.phone
-    } : {}
+    event: 'fb_complete_registration',
+    fb_event_parameters: {
+      value: 2700,
+      currency: 'CZK',
+      content_name: 'Kurz profesionální tvorby videí',
+      content_category: 'Education'
+    },
+    fb_advanced_matching: advancedMatching
   });
 
   // Enhanced ecommerce purchase event for Google Analytics
@@ -178,12 +289,20 @@ export const trackFormSuccess = (orderData?: {
       first_name: orderData.firstName,
       last_name: orderData.lastName,
       phone: orderData.phone
-    } : {}
+    } : {},
+    fb_advanced_matching: advancedMatching
   });
 };
 
 // Track form errors
 export const trackFormError = (errorMessage: string, formData?: FormEventData['user_data']) => {
+  const advancedMatching = formData ? createAdvancedMatching({
+    email: formData.email,
+    firstName: formData.first_name,
+    lastName: formData.last_name,
+    phone: formData.phone
+  }) : {};
+
   pushToDataLayer({
     event: 'form_error',
     event_category: 'error',
@@ -191,7 +310,8 @@ export const trackFormError = (errorMessage: string, formData?: FormEventData['u
     form_name: 'course_registration',
     form_step: 'error',
     error_message: errorMessage,
-    user_data: formData || {}
+    user_data: formData || {},
+    fb_advanced_matching: advancedMatching
   });
 };
 
@@ -208,11 +328,11 @@ export const trackPageView = (pageName: string, additionalData?: Record<string, 
 
   // Meta Pixel PageView event
   pushToDataLayer({
-    event: 'PageView',
-    event_category: 'engagement',
-    event_label: `page_${pageName}`,
-    content_name: document.title,
-    content_category: 'Education'
+    event: 'fb_page_view',
+    fb_event_parameters: {
+      content_name: document.title,
+      content_category: 'Education'
+    }
   });
 };
 
@@ -228,11 +348,11 @@ export const trackCTAClick = (buttonText: string, location: string) => {
 
   // Meta Pixel custom event for CTA clicks
   pushToDataLayer({
-    event: 'Contact',
-    event_category: 'engagement',
-    event_label: `cta_click_${location}`,
-    content_name: buttonText,
-    content_category: 'CTA'
+    event: 'fb_contact',
+    fb_event_parameters: {
+      content_name: buttonText,
+      content_category: 'CTA'
+    }
   });
 };
 

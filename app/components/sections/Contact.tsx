@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
-import { Loader2, AlertTriangle, MapPin } from 'lucide-react';
+import { Loader2, AlertTriangle, MapPin, ChevronDown } from 'lucide-react';
 import { 
   trackFormStart, 
   trackFormInteraction, 
@@ -19,12 +19,20 @@ const MONTHS_CZ = [
   'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'
 ];
 
+const PHONE_PREFIXES = [
+  { code: '+420', country: 'CZ', label: '🇨🇿 +420' },
+  { code: '+421', country: 'SK', label: '🇸🇰 +421' }
+];
+
 const ContactForm: React.FC = () => {
   const [availableMonths, setAvailableMonths] = useState<string[]>([]);
   const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<string>('');
   const [formStarted, setFormStarted] = useState(false);
+  const [selectedPrefix, setSelectedPrefix] = useState(PHONE_PREFIXES[0]);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [showPrefixDropdown, setShowPrefixDropdown] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -93,6 +101,29 @@ const ContactForm: React.FC = () => {
     trackFormInteraction(fieldName, typeof value === 'string' ? value : value.toString());
   };
 
+  // Handle phone number changes
+  const handlePhoneChange = (value: string) => {
+    // Remove any non-digit characters except spaces and dashes for display
+    const cleaned = value.replace(/[^\d\s\-]/g, '');
+    setPhoneNumber(cleaned);
+    
+    // Create full phone number for form data
+    const fullPhone = selectedPrefix.code + cleaned.replace(/[\s\-]/g, '');
+    handleFieldChange('phone', fullPhone);
+  };
+
+  // Handle prefix selection
+  const handlePrefixChange = (prefix: typeof PHONE_PREFIXES[0]) => {
+    setSelectedPrefix(prefix);
+    setShowPrefixDropdown(false);
+    
+    // Update full phone number
+    if (phoneNumber) {
+      const fullPhone = prefix.code + phoneNumber.replace(/[\s\-]/g, '');
+      handleFieldChange('phone', fullPhone);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -103,7 +134,7 @@ const ContactForm: React.FC = () => {
       firstName: formDataSubmit.get('firstName') as string,
       lastName: formDataSubmit.get('lastName') as string,
       email: formDataSubmit.get('email') as string,
-      phone: formDataSubmit.get('phone') as string,
+      phone: selectedPrefix.code + phoneNumber.replace(/[\s\-]/g, ''), // Combine prefix + number
       preferredMonth: selectedMonth,
       consent: formDataSubmit.get('consent') === 'on'
     };
@@ -239,17 +270,53 @@ const ContactForm: React.FC = () => {
         <label htmlFor="phone" className="block font-montserrat font-medium text-brand-gray mb-2">
           Telefon *
         </label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          required
-          disabled={isSubmitting}
-          onFocus={handleFormStart}
-          onChange={(e) => handleFieldChange('phone', e.target.value)}
-          className="w-full px-4 py-3 border border-brand-gray/20 rounded-lg focus:ring-2 focus:ring-brand-olive focus:border-brand-olive font-montserrat disabled:opacity-50"
-          placeholder="+420 123 456 789"
-        />
+        <div className="flex">
+          {/* Country prefix dropdown */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setShowPrefixDropdown(!showPrefixDropdown)}
+              onFocus={handleFormStart}
+              disabled={isSubmitting}
+              className="flex items-center px-3 py-3 border border-brand-gray/20 border-r-0 rounded-l-lg focus:ring-2 focus:ring-brand-olive focus:border-brand-olive font-montserrat disabled:opacity-50 bg-brand-beige hover:bg-brand-beige/80 transition-colors min-w-[100px]"
+            >
+              <span className="text-sm">{selectedPrefix.label}</span>
+              <ChevronDown className="w-4 h-4 ml-1" />
+            </button>
+            
+            {showPrefixDropdown && (
+              <div className="absolute top-full left-0 right-0 bg-white border border-brand-gray/20 rounded-lg shadow-lg z-10 mt-1">
+                {PHONE_PREFIXES.map((prefix) => (
+                  <button
+                    key={prefix.code}
+                    type="button"
+                    onClick={() => handlePrefixChange(prefix)}
+                    className="w-full px-3 py-2 text-left hover:bg-brand-beige font-montserrat text-sm transition-colors"
+                  >
+                    {prefix.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          
+          {/* Phone number input */}
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            required
+            disabled={isSubmitting}
+            value={phoneNumber}
+            onFocus={handleFormStart}
+            onChange={(e) => handlePhoneChange(e.target.value)}
+            className="flex-1 px-4 py-3 border border-brand-gray/20 rounded-r-lg focus:ring-2 focus:ring-brand-olive focus:border-brand-olive font-montserrat disabled:opacity-50"
+            placeholder="123 456 789"
+          />
+        </div>
+        <p className="text-sm text-brand-gray/60 font-montserrat mt-1">
+          Zvolte předvolbu a zadejte číslo bez předvolby
+        </p>
       </div>
       
       <div>
