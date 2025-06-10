@@ -16,27 +16,21 @@ interface CalendarEvent {
 const Hero: React.FC = () => {
   const [nextEvent, setNextEvent] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchNextEvent = async () => {
       try {
         setIsLoading(true);
-        setError(null);
         
-        // Use proxy API route with proper error handling
         const response = await fetch('/api/proxy/calendar', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
-          // Add timeout
-          signal: AbortSignal.timeout(10000), // 10 second timeout
+          signal: AbortSignal.timeout(10000),
         });
         
         if (!response.ok) {
-          console.error(`Calendar API error: ${response.status} ${response.statusText}`);
-          setError('Nepodařilo se načíst termíny');
           setNextEvent(null);
           return;
         }
@@ -44,7 +38,6 @@ const Hero: React.FC = () => {
         const data = await response.json();
         
         if (data && Array.isArray(data.events) && data.events.length > 0) {
-          // Filter and sort future events
           const futureEvents = data.events
             .filter((event: CalendarEvent) => new Date(event.startTime) > new Date())
             .sort((a: CalendarEvent, b: CalendarEvent) => 
@@ -56,16 +49,6 @@ const Hero: React.FC = () => {
             const startDate = new Date(nextEventData.startTime);
             const endDate = new Date(nextEventData.endTime);
             
-            // Format the date - only show day and month, not time
-            const formatDate = (date: Date) => {
-              return date.toLocaleDateString('cs-CZ', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-              });
-            };
-            
-            // If it's a multi-day event, show date range
             if (startDate.toDateString() !== endDate.toDateString()) {
               const startDay = startDate.getDate();
               const endDay = endDate.getDate();
@@ -74,8 +57,11 @@ const Hero: React.FC = () => {
               
               setNextEvent(`${startDay}. - ${endDay}. ${month} ${year}`);
             } else {
-              // Single day event
-              setNextEvent(formatDate(startDate));
+              setNextEvent(startDate.toLocaleDateString('cs-CZ', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+              }));
             }
           } else {
             setNextEvent(null);
@@ -85,7 +71,6 @@ const Hero: React.FC = () => {
         }
       } catch (error) {
         console.error('Error fetching next event:', error);
-        setError('Nepodařilo se načíst termíny');
         setNextEvent(null);
       } finally {
         setIsLoading(false);
@@ -97,7 +82,7 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative py-20 md:py-32 bg-brand-gray text-white overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/2833037/pexels-photo-2833037.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] opacity-20 bg-cover bg-center transform transition-all duration-500 hover:scale-105"></div>
+      <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/2833037/pexels-photo-2833037.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] opacity-20 bg-cover bg-center"></div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center justify-center mb-8 bg-brand-red bg-opacity-20 px-6 py-3 rounded-full transform transition-all duration-300 hover:scale-110 hover:bg-opacity-30">
@@ -112,7 +97,6 @@ const Hero: React.FC = () => {
             Státní dotace 82% končí koncem roku 2025. Neváhejte!
           </p>
 
-          {/* Location info */}
           <div className="mb-8">
             <div className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
               <MapPin className="w-5 h-5 mr-2 text-brand-olive" />
@@ -120,7 +104,6 @@ const Hero: React.FC = () => {
             </div>
           </div>
           
-          {/* CTA Button */}
           <div className="mb-8">
             <CTAButton 
               text="Chci využít 82% dotaci" 
@@ -128,14 +111,9 @@ const Hero: React.FC = () => {
             />
           </div>
           
-          {/* Dynamic next event display with error handling */}
           {isLoading ? (
             <p className="mt-6 text-brand-beige/60 font-montserrat animate-pulse">
               Zjišťujeme nejbližší termíny...
-            </p>
-          ) : error ? (
-            <p className="mt-6 text-brand-beige/80 font-montserrat animate-fade-in">
-              Nové termíny oznámíme brzy
             </p>
           ) : nextEvent ? (
             <p className="mt-6 text-brand-beige font-montserrat animate-fade-in">
