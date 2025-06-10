@@ -7,6 +7,7 @@ interface BaseEventData {
   event_label?: string;
   value?: number;
   currency?: string;
+  fb_event_parameters?: any; // Added for Meta Ads event parameters
 }
 
 interface MetaAdvancedMatching {
