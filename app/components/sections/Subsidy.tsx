@@ -55,7 +55,7 @@ const Subsidy: React.FC = () => {
                 </li>
                 <li className="flex items-start opacity-50">
                   <BadgeCheck className="w-5 h-5 text-brand-gray/40 mt-0.5 mr-3 flex-shrink-0" />
-                  <span className="font-montserrat">Přístup do komunity absolventů</span>
+                  <span className="font-montserrat">Praktické video projekty</span>
                 </li>
               </ul>
             </div>
@@ -86,11 +86,11 @@ const Subsidy: React.FC = () => {
                 </li>
                 <li className="flex items-start">
                   <BadgeCheck className="w-5 h-5 text-brand-olive mt-0.5 mr-3 flex-shrink-0" />
-                  <span className="font-montserrat">Přístup do komunity absolventů</span>
+                  <span className="font-montserrat">Praktické video projekty</span>
                 </li>
                 <li className="flex items-start font-semibold">
                   <BadgeCheck className="w-5 h-5 text-brand-olive mt-0.5 mr-3 flex-shrink-0" />
-                  <span className="font-montserrat">30 dní podpory po kurzu</span>
+                  <span className="font-montserrat">Hotové video připravené k publikaci</span>
                 </li>
               </ul>
               
