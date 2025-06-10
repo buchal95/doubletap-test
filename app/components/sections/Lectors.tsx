@@ -14,8 +14,8 @@ const Lectors: React.FC = () => {
       image: "/marek.webp",
       expertise: ["Video produkce", "Social media", "Content strategy"],
       description: "Už přes 10 let dělá social media marketing a videa točí tak dobře, že by mu to záviděl i algoritmus. Pracoval pro ZOOT, Dáme jídlo nebo Zentivu. Baví ho kreativita, humor a hlavně nadchnout ostatní, aby se nebáli projevit.",
-      highlight: "10+ let praxe",
-      personality: "Kreativita + humor"
+      highlight: "Algoritmus whisperer",
+      personality: "Kreativní chaos"
     },
     {
       name: "Kateřina Hůšová", 
@@ -24,8 +24,8 @@ const Lectors: React.FC = () => {
       image: "/kata.webp",
       expertise: ["Vizuální styl", "Trendy", "Výuka"],
       description: "Je duší celého týmu. Neumí improvizovat (ale zato umí všechno ostatní), má cit pro vizuálno, vtip a timing. Když vám něco vysvětluje, tak se to fakt naučíte.",
-      highlight: "100% úspěšnost",
-      personality: "Cit pro detail"
+      highlight: "Učí tak, že to pochopíte",
+      personality: "Vizuální génius"
     },
     {
       name: "Jan Buchal",
@@ -34,8 +34,8 @@ const Lectors: React.FC = () => {
       image: "/honza.webp",
       expertise: ["Strategie", "Analýza", "Plánování"],
       description: "Neumí improvizovat, ale všechno ostatní mu jde skvěle. Je precizní, přemýšlí nad každým detailem a kdyby byl hashtagem, byl by to #strateg.",
-      highlight: "#strateg",
-      personality: "Preciznost"
+      highlight: "Anti-improvizace",
+      personality: "#strateg"
     }
   ];
 
@@ -66,13 +66,13 @@ const Lectors: React.FC = () => {
                   />
                 </div>
                 
-                {/* Highlight badge */}
-                <div className="absolute top-4 left-4 bg-brand-red text-white px-4 py-2 rounded-full text-sm font-anton shadow-lg">
+                {/* Fun highlight badge */}
+                <div className="absolute top-4 left-4 bg-brand-red text-white px-4 py-2 rounded-full text-sm font-anton shadow-lg transform rotate-2 group-hover:rotate-0 transition-transform duration-300">
                   {lector.highlight}
                 </div>
                 
                 {/* Personality badge */}
-                <div className="absolute top-4 right-4 bg-brand-olive text-white px-3 py-1 rounded-full text-xs font-montserrat font-semibold">
+                <div className="absolute top-4 right-4 bg-brand-olive text-white px-3 py-1 rounded-full text-xs font-montserrat font-semibold transform -rotate-2 group-hover:rotate-0 transition-transform duration-300">
                   {lector.personality}
                 </div>
               </div>
