@@ -2,7 +2,7 @@
 
 import React from 'react';
 import SectionHeading from '../common/SectionHeading';
-import { Star, Quote } from 'lucide-react';
+import { Star, Quote, Play } from 'lucide-react';
 
 const TestimonialCard: React.FC<{
   name: string;
@@ -63,8 +63,33 @@ const Testimonials: React.FC = () => {
           ))}
         </div>
         
+        {/* Video testimonial section */}
+        <div className="bg-brand-beige rounded-xl p-8 md:p-10 text-center max-w-4xl mx-auto mb-16">
+          <div className="flex items-center justify-center mb-6">
+            <Play className="w-8 h-8 text-brand-olive mr-3" />
+            <h3 className="text-2xl font-anton mb-0 text-brand-gray">Video od absolventky</h3>
+          </div>
+          
+          <div className="aspect-w-16 aspect-h-9 max-w-3xl mx-auto mb-6">
+            <iframe
+              src="https://www.youtube.com/embed/nuhI-mo_vmY"
+              title="Video testimonial od absolventky kurzu"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-64 md:h-[400px] rounded-lg shadow-lg"
+            ></iframe>
+          </div>
+          
+          <p className="text-brand-gray/80 font-montserrat max-w-2xl mx-auto mb-4">
+            "Kurz byl přesně to, co jsem potřebovala. Dnes si vydělávám tvorbou videí. 
+            Živím se tím, co mě baví."
+          </p>
+          <p className="font-anton text-brand-gray">Lucie Pokorná, freelancer</p>
+        </div>
+        
         {/* Call to action */}
-        <div className="bg-brand-beige rounded-xl p-8 text-center max-w-4xl mx-auto">
+        <div className="bg-white border-2 border-brand-olive/20 rounded-xl p-8 text-center max-w-4xl mx-auto">
           <h3 className="text-xl font-anton mb-4 text-brand-gray">Přidejte se k naším spokojeným absolventům</h3>
           <p className="text-brand-gray/80 font-montserrat max-w-2xl mx-auto mb-6">
             Každý měsíc absolvuje náš kurz další skupina nadšenců, kteří si chtějí zlepšit své video dovednosti. 
