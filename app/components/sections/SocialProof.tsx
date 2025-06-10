@@ -6,9 +6,11 @@ import { Star, Heart } from 'lucide-react';
 
 const SocialProof: React.FC = () => {
   const allLogos = [
-    { src: '/proteinaco-logo.png', alt: 'Protein a Co' },
-    { src: '/florea-logo.png', alt: 'Florea' },
-    { src: '/xinzuo-logo.png', alt: 'Xinzuo' },
+    { src: '/amica-logo.webp', alt: 'Amica' },
+    { src: '/autokelly-logo.webp', alt: 'AutoKelly' },
+    { src: '/foodora-logo.webp', alt: 'Foodora' },
+    { src: '/lamax-logo.webp', alt: 'Lamax' },
+    { src: '/zentiva-logo.webp', alt: 'Zentiva' },
     { src: '/alkoholcz-logo.webp', alt: 'Alkohol.cz' },
     { src: '/himalife-logo.webp', alt: 'Himalife' },
     { src: '/naturway-logo.webp', alt: 'Naturway' },
