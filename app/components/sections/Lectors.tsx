@@ -1,11 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import SectionHeading from '../common/SectionHeading';
-import { Heart } from 'lucide-react';
+import { Heart, User } from 'lucide-react';
 
 const Lectors: React.FC = () => {
+  const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
+
+  const handleImageError = (imageName: string) => {
+    setImageErrors(prev => ({ ...prev, [imageName]: true }));
+  };
+
   const lectors = [
     {
       name: "Marek Madenský",
@@ -59,16 +65,27 @@ const Lectors: React.FC = () => {
               {/* Photo section */}
               <div className="relative overflow-hidden">
                 <div className="relative w-full h-80">
-                  <Image
-                    src={lector.image}
-                    alt={lector.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    style={{ objectPosition: lector.objectPosition }}
-                    priority={index === 0}
-                    loading={index === 0 ? "eager" : "lazy"}
-                  />
+                  {imageErrors[lector.image] ? (
+                    // Fallback placeholder when image fails to load
+                    <div className="w-full h-full bg-gradient-to-br from-brand-beige to-brand-olive/20 flex items-center justify-center">
+                      <div className="text-center">
+                        <User className="w-16 h-16 text-brand-olive/60 mx-auto mb-2" />
+                        <p className="text-brand-gray/60 font-montserrat text-sm">{lector.name}</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <Image
+                      src={lector.image}
+                      alt={lector.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      style={{ objectPosition: lector.objectPosition }}
+                      priority={index === 0}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      onError={() => handleImageError(lector.image)}
+                    />
+                  )}
                 </div>
                 
                 {/* Fun highlight badge */}
