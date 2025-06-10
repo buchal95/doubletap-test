@@ -1,12 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Disable SWC and use JavaScript fallback compiler in WebContainer
-  experimental: {
-    swcMinify: false,
-    optimizePackageImports: ['lucide-react'],
-  },
-  swcMinify: false,
-  
   images: {
     remotePatterns: [
       {
@@ -22,6 +15,10 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  // Enable experimental features for better performance
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
   },
 }
 
