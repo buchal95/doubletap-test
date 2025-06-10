@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Kurz Profesionální Tvorby Videí | Double Tap',
     description: 'Naučte se natáčet profesionální videa za pouhé 4 dny. Dotovaný kurz pro začátečníky i pokročilé.',
-    url: 'https://videokurz.cz',
+    url: 'https://doubletap.cz',
     siteName: 'Double Tap',
     locale: 'cs_CZ',
     type: 'website',
