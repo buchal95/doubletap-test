@@ -77,10 +77,10 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/fav32.png',
-        width: 32,
-        height: 32,
-        alt: 'Double Tap Logo - Kurz tvorby videí',
+        url: '/social-share.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Double Tap - Kurz profesionální tvorby videí telefonem s 82% státní dotací',
       },
     ],
   },
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Kurz Profesionální Tvorby Videí | Double Tap',
     description: 'Naučte se natáčet profesionální videa telefonem za 4 dny s 82% státní dotací.',
-    images: ['/fav32.png'],
+    images: ['/social-share.webp'],
     creator: '@doubletap_cz',
   },
   robots: {
