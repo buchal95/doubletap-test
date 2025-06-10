@@ -6,15 +6,15 @@ import { Star, Heart } from 'lucide-react';
 
 const SocialProof: React.FC = () => {
   const allLogos = [
-    { src: '/amica-logo.webp', alt: 'Amica' },
-    { src: '/autokelly-logo.webp', alt: 'AutoKelly' },
-    { src: '/foodora-logo.webp', alt: 'Foodora' },
-    { src: '/lamax-logo.webp', alt: 'Lamax' },
-    { src: '/zentiva-logo.webp', alt: 'Zentiva' },
-    { src: '/alkoholcz-logo.webp', alt: 'Alkohol.cz' },
-    { src: '/himalife-logo.webp', alt: 'Himalife' },
-    { src: '/naturway-logo.webp', alt: 'Naturway' },
-    { src: '/zoot-logo.webp', alt: 'Zoot' }
+    { src: '/amica-logo.webp', alt: 'Amica', size: 'normal' },
+    { src: '/autokelly-logo.webp', alt: 'AutoKelly', size: 'normal' },
+    { src: '/foodora-logo.webp', alt: 'Foodora', size: 'normal' },
+    { src: '/lamax-logo.webp', alt: 'Lamax', size: 'normal' },
+    { src: '/zentiva-logo.webp', alt: 'Zentiva', size: 'normal' },
+    { src: '/alkoholcz-logo.webp', alt: 'Alkohol.cz', size: 'large' },
+    { src: '/himalife-logo.webp', alt: 'Himalife', size: 'large' },
+    { src: '/naturway-logo.webp', alt: 'Naturway', size: 'large' },
+    { src: '/zoot-logo.webp', alt: 'Zoot', size: 'large' }
   ];
 
   const [currentLogoSet, setCurrentLogoSet] = useState(0);
@@ -85,6 +85,25 @@ const SocialProof: React.FC = () => {
     }, 500);
   };
 
+  // Get image dimensions and container class based on logo size
+  const getLogoSizing = (logo: typeof allLogos[0]) => {
+    if (logo.size === 'large') {
+      return {
+        containerClass: "w-32 h-20 sm:w-36 sm:h-24 md:w-44 md:h-28 lg:w-52 lg:h-32",
+        imageWidth: 200,
+        imageHeight: 120,
+        imageClass: "max-w-full max-h-full object-contain transition-all duration-300 hover:scale-105 scale-110"
+      };
+    }
+    
+    return {
+      containerClass: "w-28 h-16 sm:w-32 sm:h-18 md:w-40 md:h-22 lg:w-48 lg:h-28",
+      imageWidth: 180,
+      imageHeight: 100,
+      imageClass: "max-w-full max-h-full object-contain transition-all duration-300 hover:scale-105"
+    };
+  };
+
   return (
     <section className="py-16 bg-gradient-to-br from-brand-beige to-brand-beige/80 overflow-hidden">
       <div className="container mx-auto px-4">
@@ -95,34 +114,38 @@ const SocialProof: React.FC = () => {
         </div>
         
         {/* Interactive logo container with colorful logos */}
-        <div className="relative max-w-5xl mx-auto">
+        <div className="relative max-w-6xl mx-auto">
           <div 
-            className="flex justify-center items-center gap-8 md:gap-16 lg:gap-20 mb-16 min-h-[120px] md:min-h-[140px] cursor-pointer select-none relative"
+            className="flex justify-center items-center gap-8 md:gap-16 lg:gap-20 mb-16 min-h-[140px] md:min-h-[160px] cursor-pointer select-none relative"
             onClick={handleDoubleTap}
           >
-            {getCurrentLogos().map((logo, index) => (
-              <div
-                key={`${currentLogoSet}-${index}`}
-                className={`transform transition-all duration-700 ${
-                  isAnimating ? 'scale-110 rotate-1' : 'scale-100 hover:scale-110'
-                } shadow-lg hover:shadow-xl`}
-                style={{
-                  animationDelay: `${index * 150}ms`
-                }}
-              >
-                <div className="w-28 h-16 sm:w-32 sm:h-18 md:w-40 md:h-22 lg:w-48 lg:h-28 flex items-center justify-center bg-white rounded-xl backdrop-blur-sm border-2 border-white/40 p-4 md:p-6 shadow-md hover:shadow-lg transition-all duration-300">
-                  <Image 
-                    src={logo.src} 
-                    alt={logo.alt} 
-                    width={180}
-                    height={100}
-                    loading="lazy"
-                    sizes="(max-width: 640px) 112px, (max-width: 768px) 128px, (max-width: 1024px) 160px, 192px"
-                    className="max-w-full max-h-full object-contain transition-all duration-300 hover:scale-105"
-                  />
+            {getCurrentLogos().map((logo, index) => {
+              const sizing = getLogoSizing(logo);
+              
+              return (
+                <div
+                  key={`${currentLogoSet}-${index}`}
+                  className={`transform transition-all duration-700 ${
+                    isAnimating ? 'scale-110 rotate-1' : 'scale-100 hover:scale-110'
+                  } shadow-lg hover:shadow-xl`}
+                  style={{
+                    animationDelay: `${index * 150}ms`
+                  }}
+                >
+                  <div className={`${sizing.containerClass} flex items-center justify-center bg-white rounded-xl backdrop-blur-sm border-2 border-white/40 p-4 md:p-6 shadow-md hover:shadow-lg transition-all duration-300`}>
+                    <Image 
+                      src={logo.src} 
+                      alt={logo.alt} 
+                      width={sizing.imageWidth}
+                      height={sizing.imageHeight}
+                      loading="lazy"
+                      sizes="(max-width: 640px) 128px, (max-width: 768px) 144px, (max-width: 1024px) 176px, 208px"
+                      className={sizing.imageClass}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             {/* Animated finger - responsive size */}
             <div 
