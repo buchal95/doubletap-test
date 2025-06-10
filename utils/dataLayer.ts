@@ -14,7 +14,6 @@ interface MetaAdvancedMatching {
   fn?: string;        // Křestní jméno - lowercase, bez mezer  
   ln?: string;        // Příjmení - lowercase, bez mezer
   ph?: string;        // Telefon - s kódem země, bez mezer/pomlček
-  country?: string;   // Země - ISO kód (2 znaky)
   external_id?: string; // Externí ID
 }
 
@@ -111,25 +110,28 @@ const createAdvancedMatching = (userData: {
 }): MetaAdvancedMatching => {
   const matching: MetaAdvancedMatching = {};
   
+  // Email - highest priority, lowercase, bez mezer
   if (userData.email) {
-    matching.em = userData.email.toLowerCase().trim();
+    matching.em = userData.email.toLowerCase().trim().replace(/\s/g, '');
     matching.external_id = generateExternalId(userData.email, userData.phone);
   }
   
+  // Křestní jméno - lowercase, bez mezer
   if (userData.firstName) {
-    matching.fn = userData.firstName.toLowerCase().trim();
+    matching.fn = userData.firstName.toLowerCase().trim().replace(/\s/g, '');
   }
   
+  // Příjmení - lowercase, bez mezer  
   if (userData.lastName) {
-    matching.ln = userData.lastName.toLowerCase().trim();
+    matching.ln = userData.lastName.toLowerCase().trim().replace(/\s/g, '');
   }
   
+  // Telefon - highest priority, s kódem země, bez mezer/pomlček
   if (userData.phone) {
     matching.ph = formatPhoneForMatching(userData.phone);
   }
   
-  // Hardcode country as CZ since the course is in Prague
-  matching.country = 'cz';
+  // Nebudeme hardcodovat country - necháme Meta Pixel detekovat automaticky
   
   return matching;
 };
