@@ -119,6 +119,7 @@ const SocialProof: React.FC = () => {
                     alt={logo.alt} 
                     width={150}
                     height={75}
+                    unoptimized={true}
                     className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
                   />
                 </div>
