@@ -222,7 +222,7 @@ const ContactForm: React.FC = () => {
             Zpracovávám...
           </>
         ) : (
-          'Chci se přihlásit s dotací'
+          'Využít 82% dotaci nyní'
         )}
       </button>
     </form>
@@ -234,8 +234,8 @@ const Contact: React.FC = () => {
     <section id="contact" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <SectionHeading 
-          title="Zajistěte si místo s 82% dotací" 
-          subtitle="Jak se přihlásit a využít státní dotaci"
+          title="Využijte 82% státní dotaci" 
+          subtitle="Platíte jen 2 700 Kč místo 15 000 Kč • Registrace nutná do 31. 10. 2025"
         />
 
         {/* Warning about program ending */}
@@ -243,9 +243,9 @@ const Contact: React.FC = () => {
           <div className="flex items-start">
             <AlertTriangle className="w-6 h-6 text-brand-red mt-1 mr-4 flex-shrink-0" />
             <div className="text-center w-full">
-              <h4 className="font-anton text-lg text-brand-red mb-2">⏰ Dotace končí koncem roku 2025</h4>
+              <h4 className="font-anton text-lg text-brand-red mb-2">⏰ 82% dotace končí koncem roku 2025</h4>
               <p className="text-brand-gray/80 font-montserrat">
-                Po ukončení dotačního programu bude kurz stát 15 000 Kč
+                Po ukončení dotačního programu bude kurz stát plných 15 000 Kč
               </p>
             </div>
           </div>
@@ -264,7 +264,7 @@ const Contact: React.FC = () => {
         
         <div className="max-w-2xl mx-auto mb-12">
           <div className="bg-brand-beige p-8 md:p-10 rounded-2xl shadow-md">
-            <h3 className="text-2xl font-anton mb-8 text-brand-gray">Registrace na kurz</h3>
+            <h3 className="text-2xl font-anton mb-8 text-brand-gray">Registrace na kurz s 82% dotací</h3>
             
             <ContactForm />
           </div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import CTAButton from '../common/CTAButton';
-import { MapPin } from 'lucide-react';
+import { MapPin, AlertTriangle } from 'lucide-react';
 
 interface CalendarEvent {
   id: string;
@@ -101,16 +101,25 @@ const Hero: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center justify-center mb-8 bg-brand-red bg-opacity-20 px-6 py-3 rounded-full transform transition-all duration-300 hover:scale-110 hover:bg-opacity-30">
-            <span className="text-lg font-montserrat font-bold">82% hradí stát. Vy jen 2 700 Kč.</span>
+            <span className="text-lg font-montserrat font-bold">82% hradí stát. Platíte jen 2 700 Kč.</span>
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-anton mb-6 leading-tight animate-fade-in">
             Naučte se natáčet profesionální videa telefonem za 4 dny
           </h1>
           
-          <p className="text-xl md:text-2xl mb-8 text-brand-beige font-montserrat animate-fade-in font-semibold">
-            Státní dotace brzy končí. Neváhejte, dokud jsou ještě k dispozici.
+          <p className="text-xl md:text-2xl mb-6 text-brand-beige font-montserrat animate-fade-in font-semibold">
+            Státní dotace 82% končí koncem roku 2025. Neváhejte!
           </p>
+
+          {/* Urgency notice */}
+          <div className="inline-flex items-center justify-center mb-8 bg-brand-red/90 px-6 py-4 rounded-xl border border-brand-red/30">
+            <AlertTriangle className="w-6 h-6 mr-3 text-white animate-pulse" />
+            <div className="text-left">
+              <div className="font-anton text-lg">Dotace brzy končí!</div>
+              <div className="text-sm opacity-90">Registrace nutná do 31. 10. 2025</div>
+            </div>
+          </div>
 
           {/* Location info */}
           <div className="mb-6">
@@ -123,7 +132,7 @@ const Hero: React.FC = () => {
           {/* CTA Button */}
           <div className="mb-8">
             <CTAButton 
-              text="Chci využít dotaci" 
+              text="Chci využít 82% dotaci" 
               className="w-full sm:w-auto shadow-lg text-xl py-4 px-12 transform transition-all duration-300 hover:scale-110" 
             />
           </div>

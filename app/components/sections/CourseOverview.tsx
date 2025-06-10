@@ -57,11 +57,14 @@ const CourseOverview: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between">
             <div className="mb-6 md:mb-0 md:mr-8">
               <h3 className="text-2xl font-anton text-brand-gray mb-2">Řemeslo má svá pravidla. Naučíme vás je.</h3>
-              <p className="text-brand-gray/80 font-montserrat">
+              <p className="text-brand-gray/80 font-montserrat mb-4">
                 Nejde o nudný teoretický kurz - budete natáčet, stříhat a publikovat reálná videa pod vedením expertů.
               </p>
+              <div className="inline-flex items-center bg-brand-red/10 px-4 py-2 rounded-lg border border-brand-red/20">
+                <span className="font-montserrat font-semibold text-brand-red">82% dotace končí koncem roku 2025</span>
+              </div>
             </div>
-            <CTAButton text="Chci využít dotaci" className="whitespace-nowrap text-lg py-4 px-8" />
+            <CTAButton text="Využít 82% dotaci" className="whitespace-nowrap text-lg py-4 px-8" />
           </div>
         </div>
       </div>

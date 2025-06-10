@@ -40,6 +40,10 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, toggle }) =
 const FAQ: React.FC = () => {
   const faqs = [
     {
+      question: "Kolik skutečně zaplatím díky 82% dotaci?",
+      answer: "Místo běžné ceny 15 000 Kč zaplatíte pouze 2 700 Kč. Stát uhradí zbývajících 12 300 Kč (82% z celkové ceny). Tato dotace je však časově omezená a končí koncem roku 2025."
+    },
+    {
       question: "Kde kurz probíhá?",
       answer: "Kurz se koná osobně v Praze v moderních prostorách vybavených vším potřebným pro praktickou výuku. Přesnou adresu a pokyny k dopravě zašleme po potvrzení registrace."
     },
@@ -54,6 +58,10 @@ const FAQ: React.FC = () => {
     {
       question: "Jak dlouho trvá schválení dotace?",
       answer: "Oficiálně má Úřad práce 30 dní, ale doporučujeme podat žádost co nejdříve. Registrace musí být minimálně 30 dní před začátkem kurzu."
+    },
+    {
+      question: "Do kdy musím využít 82% dotaci?",
+      answer: "Dotace je dostupná pouze do konce roku 2025. Pro bezpečné stíhání všech termínů doporučujeme registraci do 31. října 2025, abyste měli dostatek času na vyřízení všech náležitostí."
     },
     {
       question: "Co když kurz nedokončím?",
@@ -80,7 +88,7 @@ const FAQ: React.FC = () => {
       <div className="container mx-auto px-4">
         <SectionHeading 
           title="Praktické informace" 
-          subtitle="Odpovědi na nejčastější otázky o kurzu a dotaci"
+          subtitle="Odpovědi na nejčastější otázky o kurzu a 82% dotaci"
         />
         
         <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-md border border-brand-gray/10 divide-y divide-brand-gray/10">

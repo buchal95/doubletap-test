@@ -11,6 +11,7 @@ import UpcomingEvents from './sections/UpcomingEvents';
 import FAQ from './sections/FAQ';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
+import StickyCountdown from './common/StickyCountdown';
 
 const LandingPage: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const LandingPage: React.FC = () => {
       <FAQ />
       <Contact />
       <Footer />
+      <StickyCountdown />
     </div>
   );
 };
