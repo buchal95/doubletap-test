@@ -1,5 +1,5 @@
 // DataLayer utility for tracking events to Google Tag Manager
-// Focused on advanced matching for Meta Ads without values/currency
+// Only pushes lead event on successful form submission with advanced matching
 
 interface BaseEventData {
   event: string;
@@ -154,32 +154,14 @@ export const pushToDataLayer = (data: BaseEventData | FormEventData | Conversion
 
 // Track when user starts filling the form
 export const trackFormStart = (formData?: Partial<FormEventData['user_data']>) => {
-  const advancedMatching = formData ? createAdvancedMatching({
-    email: formData.email,
-    firstName: formData.first_name,
-    lastName: formData.last_name,
-    phone: formData.phone
-  }) : {};
-
   pushToDataLayer({
     event: 'form_start',
     event_category: 'engagement',
     event_label: 'course_registration_form',
     form_name: 'course_registration',
     form_step: 'start',
-    user_data: formData || {},
-    fb_advanced_matching: advancedMatching
+    user_data: formData || {}
   } as FormEventData);
-
-  // Meta Pixel InitiateCheckout event with advanced matching only
-  pushToDataLayer({
-    event: 'fb_initiate_checkout',
-    fb_event_parameters: {
-      content_name: 'Kurz profesionální tvorby videí',
-      content_category: 'Education'
-    },
-    fb_advanced_matching: advancedMatching
-  } as BaseEventData);
 };
 
 // Track form field interactions
@@ -197,35 +179,17 @@ export const trackFormInteraction = (fieldName: string, value?: string) => {
 
 // Track form submission attempt
 export const trackFormSubmit = (formData: FormEventData['user_data']) => {
-  const advancedMatching = formData ? createAdvancedMatching({
-    email: formData.email,
-    firstName: formData.first_name,
-    lastName: formData.last_name,
-    phone: formData.phone
-  }) : {};
-
   pushToDataLayer({
     event: 'form_submit',
     event_category: 'conversion',
     event_label: 'course_registration_submit',
     form_name: 'course_registration',
     form_step: 'submit',
-    user_data: formData,
-    fb_advanced_matching: advancedMatching
+    user_data: formData
   } as FormEventData);
-
-  // Meta Pixel Lead event with advanced matching only
-  pushToDataLayer({
-    event: 'fb_lead',
-    fb_event_parameters: {
-      content_name: 'Kurz profesionální tvorby videí',
-      content_category: 'Education'
-    },
-    fb_advanced_matching: advancedMatching
-  } as BaseEventData);
 };
 
-// Track successful registration
+// Track successful registration - ONLY place where Meta Lead event is pushed
 export const trackFormSuccess = (orderData?: {
   orderId?: string;
   email?: string;
@@ -241,6 +205,7 @@ export const trackFormSuccess = (orderData?: {
     phone: orderData.phone
   }) : {};
 
+  // Standard form success event
   pushToDataLayer({
     event: 'form_success',
     event_category: 'conversion',
@@ -253,45 +218,22 @@ export const trackFormSuccess = (orderData?: {
       first_name: orderData.firstName,
       last_name: orderData.lastName,
       phone: orderData.phone
-    } : {},
-    fb_advanced_matching: advancedMatching
+    } : {}
   } as FormEventData);
 
-  // Meta Pixel CompleteRegistration event with advanced matching only
+  // Meta Pixel Lead event with advanced matching - ONLY Meta event
   pushToDataLayer({
-    event: 'fb_complete_registration',
+    event: 'fb_lead',
     fb_event_parameters: {
       content_name: 'Kurz profesionální tvorby videí',
       content_category: 'Education'
     },
     fb_advanced_matching: advancedMatching
   } as BaseEventData);
-
-  // Google Analytics event without ecommerce data
-  pushToDataLayer({
-    event: 'generate_lead',
-    event_category: 'conversion',
-    event_label: 'course_registration',
-    transaction_id: orderData?.orderId,
-    user_data: orderData ? {
-      email: orderData.email,
-      first_name: orderData.firstName,
-      last_name: orderData.lastName,
-      phone: orderData.phone
-    } : {},
-    fb_advanced_matching: advancedMatching
-  } as ConversionEventData);
 };
 
 // Track form errors
 export const trackFormError = (errorMessage: string, formData?: FormEventData['user_data']) => {
-  const advancedMatching = formData ? createAdvancedMatching({
-    email: formData.email,
-    firstName: formData.first_name,
-    lastName: formData.last_name,
-    phone: formData.phone
-  }) : {};
-
   pushToDataLayer({
     event: 'form_error',
     event_category: 'error',
@@ -299,12 +241,11 @@ export const trackFormError = (errorMessage: string, formData?: FormEventData['u
     form_name: 'course_registration',
     form_step: 'error',
     error_message: errorMessage,
-    user_data: formData || {},
-    fb_advanced_matching: advancedMatching
+    user_data: formData || {}
   } as FormEventData);
 };
 
-// Track page views for Meta Ads
+// Track page views
 export const trackPageView = (pageName: string, additionalData?: Record<string, any>) => {
   pushToDataLayer({
     event: 'page_view',
@@ -314,15 +255,6 @@ export const trackPageView = (pageName: string, additionalData?: Record<string, 
     page_location: typeof window !== 'undefined' ? window.location.href : '',
     ...additionalData
   } as ConversionEventData);
-
-  // Meta Pixel PageView event - no advanced matching needed for page views
-  pushToDataLayer({
-    event: 'fb_page_view',
-    fb_event_parameters: {
-      content_name: typeof document !== 'undefined' ? document.title : '',
-      content_category: 'Education'
-    }
-  } as BaseEventData);
 };
 
 // Track CTA button clicks
@@ -334,15 +266,6 @@ export const trackCTAClick = (buttonText: string, location: string) => {
     button_text: buttonText,
     button_location: location
   } as FormEventData);
-
-  // Meta Pixel custom event for CTA clicks - no advanced matching needed
-  pushToDataLayer({
-    event: 'fb_contact',
-    fb_event_parameters: {
-      content_name: buttonText,
-      content_category: 'CTA'
-    }
-  } as BaseEventData);
 };
 
 // Track video interactions (if you add videos later)
