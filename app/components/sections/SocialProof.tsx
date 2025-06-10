@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { Star } from 'lucide-react';
 
 const SocialProof: React.FC = () => {
   return (
@@ -24,10 +25,16 @@ const SocialProof: React.FC = () => {
           </div>
           
           <div className="p-6 bg-white rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-            <div className="text-4xl font-anton text-brand-red mb-1 animate-fade-in">5/5</div>
-            <div className="text-brand-gray/80 font-montserrat mb-1">hodnocení kurzu</div>
-            <div className="text-xs text-brand-gray/60 font-montserrat italic">
-              samotným nám to přijde nereálné, ale zatím to tak je
+            <div className="mb-3">
+              <div className="flex justify-center mb-2">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-6 h-6 text-brand-red fill-brand-red" />
+                ))}
+              </div>
+              <div className="text-brand-gray/80 font-montserrat font-semibold">hodnocení kurzu</div>
+            </div>
+            <div className="text-xs text-brand-gray/50 font-montserrat italic leading-relaxed">
+              * sami tomu věříme těžko, ale je to pravda
             </div>
           </div>
           
