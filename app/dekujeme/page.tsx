@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
-import { CheckCircle, ArrowLeft } from 'lucide-react';
+import { CheckCircle, ArrowLeft, Clock, Users, FileText } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Děkujeme za registraci',
-  description: 'Vaše registrace na kurz profesionální tvorby videí byla úspěšně odeslána. Brzy vás budeme kontaktovat s dalšími informacemi.',
+  title: 'Děkujeme za váš zájem',
+  description: 'Váš zájem o kurz profesionální tvorby videí byl úspěšně zaznamenán. Brzy vás budeme kontaktovat s dalšími informacemi.',
   robots: {
     index: false,
     follow: true,
@@ -14,29 +14,28 @@ export const metadata: Metadata = {
 };
 
 export default function ThankYouPage() {
-  // Track thank you page view (conversion confirmation)
+  // Track thank you page view (interest confirmation)
   if (typeof window !== 'undefined') {
     // Import dynamically to avoid SSR issues
     import('../../utils/dataLayer').then(({ trackPageView, pushToDataLayer }) => {
-      trackPageView('thank_you');
+      trackPageView('thank_you_interest');
       
-      // Additional conversion confirmation event for Meta Ads
+      // Track interest confirmation event
       pushToDataLayer({
-        event: 'conversion_confirmed',
-        event_category: 'conversion',
+        event: 'interest_confirmed',
+        event_category: 'engagement',
         event_label: 'thank_you_page_view',
-        value: 2700,
-        currency: 'CZK'
+        form_name: 'interest_form'
       });
     });
   }
 
   return (
     <div className="min-h-screen bg-brand-beige flex items-center justify-center px-4">
-      <div className="max-w-2xl mx-auto text-center">
+      <div className="max-w-3xl mx-auto text-center">
         <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
           <div className="mb-8">
-            {/* Logo with white background - no extra background needed since it's on white */}
+            {/* Logo */}
             <div className="mb-6">
               <Image
                 src="/doubletap-logo.webp"
@@ -49,42 +48,100 @@ export default function ThankYouPage() {
             
             <CheckCircle className="w-20 h-20 text-brand-olive mx-auto mb-6" />
             <h1 className="text-3xl md:text-4xl font-anton text-brand-gray mb-4">
-              Děkujeme za vaši objednávku!
+              Děkujeme za váš zájem!
             </h1>
             <p className="text-lg text-brand-gray/80 font-montserrat mb-6">
-              Vaše registrace na kurz byla úspěšně odeslána. Brzy vás budeme kontaktovat s dalšími informacemi.
+              Váš zájem o kurz profesionální tvorby videí s 82% dotací byl úspěšně zaznamenán.
             </p>
           </div>
 
+          {/* Next steps */}
           <div className="bg-brand-beige rounded-xl p-6 mb-8">
-            <h2 className="text-xl font-anton text-brand-gray mb-4">Co bude následovat?</h2>
-            <ul className="space-y-3 text-left">
-              <li className="flex items-start">
-                <span className="inline-block w-2 h-2 rounded-full bg-brand-olive mt-2 mr-3 flex-shrink-0"></span>
-                <span className="text-brand-gray/80 font-montserrat">Během 24 hodin vás kontaktujeme s potvrzením termínu</span>
-              </li>
-              <li className="flex items-start">
-                <span className="inline-block w-2 h-2 rounded-full bg-brand-olive mt-2 mr-3 flex-shrink-0"></span>
-                <span className="text-brand-gray/80 font-montserrat">Zašleme vám všechny potřebné informace o kurzu</span>
-              </li>
-              <li className="flex items-start">
-                <span className="inline-block w-2 h-2 rounded-full bg-brand-olive mt-2 mr-3 flex-shrink-0"></span>
-                <span className="text-brand-gray/80 font-montserrat">Týden před kurzem obdržíte připomínku a praktické pokyny</span>
-              </li>
-            </ul>
+            <h2 className="text-xl font-anton text-brand-gray mb-6 flex items-center justify-center">
+              <Clock className="w-6 h-6 mr-2 text-brand-olive" />
+              Co bude následovat?
+            </h2>
+            
+            <div className="grid md:grid-cols-3 gap-6 mb-6">
+              <div className="text-center">
+                <div className="bg-brand-olive text-white rounded-full w-10 h-10 flex items-center justify-center font-anton text-lg mx-auto mb-3">
+                  1
+                </div>
+                <h3 className="font-anton text-brand-gray mb-2">Kontakt do 24-48 hodin</h3>
+                <p className="text-sm text-brand-gray/80 font-montserrat">
+                  Ozveme se vám s informacemi o dostupných termínech kurzu
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="bg-brand-olive text-white rounded-full w-10 h-10 flex items-center justify-center font-anton text-lg mx-auto mb-3">
+                  2
+                </div>
+                <h3 className="font-anton text-brand-gray mb-2">Výběr termínu</h3>
+                <p className="text-sm text-brand-gray/80 font-montserrat">
+                  Domluvíme se na termínu, který vám nejlépe vyhovuje
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="bg-brand-olive text-white rounded-full w-10 h-10 flex items-center justify-center font-anton text-lg mx-auto mb-3">
+                  3
+                </div>
+                <h3 className="font-anton text-brand-gray mb-2">Registrace na ÚP</h3>
+                <p className="text-sm text-brand-gray/80 font-montserrat">
+                  Provedeme vás procesem registrace na Úřadu práce pro získání 82% dotace
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="space-y-4">
-            <p className="text-brand-gray/80 font-montserrat">
-              Máte-li jakékoli dotazy, neváhejte nás kontaktovat na{' '}
-              <a href="mailto:mrkt.doubletap@gmail.com" className="text-brand-olive hover:underline">
+          {/* Important information about Úřad práce */}
+          <div className="bg-brand-red/10 border border-brand-red/20 rounded-xl p-6 mb-8">
+            <div className="flex items-start">
+              <FileText className="w-6 h-6 text-brand-red mt-1 mr-4 flex-shrink-0" />
+              <div className="text-left">
+                <h3 className="font-anton text-lg text-brand-red mb-2">Registrace na Úřadu práce</h3>
+                <p className="text-brand-gray/80 font-montserrat text-sm leading-relaxed">
+                  <strong>Nezapomeňte:</strong> Pro získání 82% dotace je nutná registrace na Úřadu práce minimálně 30 dní před začátkem kurzu. 
+                  Detailně vás provedeme celým procesem a pomůžeme s vyřízením všech náležitostí.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact information */}
+          <div className="bg-brand-olive/10 border border-brand-olive/20 rounded-xl p-6 mb-8">
+            <h3 className="font-anton text-lg text-brand-gray mb-4">Máte dotazy?</h3>
+            <p className="text-brand-gray/80 font-montserrat mb-4">
+              Neváhejte nás kontaktovat, pokud máte jakékoli otázky ohledně kurzu nebo dotace:
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="mailto:mrkt.doubletap@gmail.com" 
+                className="text-brand-olive hover:underline font-montserrat font-semibold"
+              >
                 mrkt.doubletap@gmail.com
               </a>
-              {' '}nebo na telefonu{' '}
-              <a href="tel:+420770650852" className="text-brand-olive hover:underline">
+              <a 
+                href="tel:+420770650852" 
+                className="text-brand-olive hover:underline font-montserrat font-semibold"
+              >
                 +420 770 650 852
               </a>
-            </p>
+            </div>
+          </div>
+
+          {/* Call to action */}
+          <div className="space-y-4">
+            <div className="bg-brand-beige rounded-lg p-4">
+              <div className="flex items-center justify-center mb-2">
+                <Users className="w-5 h-5 text-brand-olive mr-2" />
+                <span className="font-anton text-brand-gray">Připojte se k 100+ spokojeným absolventům</span>
+              </div>
+              <p className="text-sm text-brand-gray/80 font-montserrat">
+                Každý měsíc pomáháme desítkám lidí naučit se profesionální tvorbu videí
+              </p>
+            </div>
             
             <Link 
               href="/"
