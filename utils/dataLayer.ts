@@ -8,6 +8,7 @@ interface BaseEventData {
   value?: number;
   currency?: string;
   fb_event_parameters?: any; // Added for Meta Ads event parameters
+  [key: string]: any; // Allow additional properties for flexibility
 }
 
 interface MetaAdvancedMatching {
@@ -21,6 +22,11 @@ interface MetaAdvancedMatching {
 interface FormEventData extends BaseEventData {
   form_name?: string;
   form_step?: string;
+  field_name?: string;
+  field_value?: string;
+  error_message?: string;
+  button_text?: string;
+  button_location?: string;
   user_data?: {
     email?: string;
     phone?: string;
@@ -35,6 +41,22 @@ interface ConversionEventData extends BaseEventData {
   conversion_label?: string;
   order_value?: number;
   order_id?: string;
+  transaction_id?: string;
+  page_title?: string;
+  page_location?: string;
+  video_name?: string;
+  video_action?: string;
+  video_progress?: number;
+  scroll_depth?: number;
+  items?: Array<{
+    item_id?: string;
+    item_name?: string;
+    item_category?: string;
+    item_category2?: string;
+    item_brand?: string;
+    price?: number;
+    quantity?: number;
+  }>;
   fb_advanced_matching?: MetaAdvancedMatching;
 }
 
@@ -164,7 +186,7 @@ export const trackFormStart = (formData?: Partial<FormEventData['user_data']>) =
     form_step: 'start',
     user_data: formData || {},
     fb_advanced_matching: advancedMatching
-  });
+  } as FormEventData);
 
   // Meta Pixel InitiateCheckout event with advanced matching
   pushToDataLayer({
@@ -176,7 +198,7 @@ export const trackFormStart = (formData?: Partial<FormEventData['user_data']>) =
       content_category: 'Education'
     },
     fb_advanced_matching: advancedMatching
-  });
+  } as BaseEventData);
 };
 
 // Track form field interactions
@@ -189,7 +211,7 @@ export const trackFormInteraction = (fieldName: string, value?: string) => {
     form_step: 'interaction',
     field_name: fieldName,
     field_value: value ? 'filled' : 'empty'
-  });
+  } as FormEventData);
 };
 
 // Track form submission attempt
@@ -209,7 +231,7 @@ export const trackFormSubmit = (formData: FormEventData['user_data']) => {
     form_step: 'submit',
     user_data: formData,
     fb_advanced_matching: advancedMatching
-  });
+  } as FormEventData);
 
   // Meta Pixel Lead event with advanced matching
   pushToDataLayer({
@@ -221,7 +243,7 @@ export const trackFormSubmit = (formData: FormEventData['user_data']) => {
       content_category: 'Education'
     },
     fb_advanced_matching: advancedMatching
-  });
+  } as BaseEventData);
 };
 
 // Track successful registration
@@ -256,7 +278,7 @@ export const trackFormSuccess = (orderData?: {
       phone: orderData.phone
     } : {},
     fb_advanced_matching: advancedMatching
-  });
+  } as FormEventData);
 
   // Meta Pixel CompleteRegistration event with advanced matching
   pushToDataLayer({
@@ -268,7 +290,7 @@ export const trackFormSuccess = (orderData?: {
       content_category: 'Education'
     },
     fb_advanced_matching: advancedMatching
-  });
+  } as BaseEventData);
 
   // Enhanced ecommerce purchase event for Google Analytics
   pushToDataLayer({
@@ -294,7 +316,7 @@ export const trackFormSuccess = (orderData?: {
       phone: orderData.phone
     } : {},
     fb_advanced_matching: advancedMatching
-  });
+  } as ConversionEventData);
 };
 
 // Track form errors
@@ -315,7 +337,7 @@ export const trackFormError = (errorMessage: string, formData?: FormEventData['u
     error_message: errorMessage,
     user_data: formData || {},
     fb_advanced_matching: advancedMatching
-  });
+  } as FormEventData);
 };
 
 // Track page views for Meta Ads
@@ -324,19 +346,19 @@ export const trackPageView = (pageName: string, additionalData?: Record<string, 
     event: 'page_view',
     event_category: 'engagement',
     event_label: pageName,
-    page_title: document.title,
-    page_location: window.location.href,
+    page_title: typeof document !== 'undefined' ? document.title : '',
+    page_location: typeof window !== 'undefined' ? window.location.href : '',
     ...additionalData
-  });
+  } as ConversionEventData);
 
   // Meta Pixel PageView event
   pushToDataLayer({
     event: 'fb_page_view',
     fb_event_parameters: {
-      content_name: document.title,
+      content_name: typeof document !== 'undefined' ? document.title : '',
       content_category: 'Education'
     }
-  });
+  } as BaseEventData);
 };
 
 // Track CTA button clicks
@@ -347,7 +369,7 @@ export const trackCTAClick = (buttonText: string, location: string) => {
     event_label: `cta_${location}`,
     button_text: buttonText,
     button_location: location
-  });
+  } as FormEventData);
 
   // Meta Pixel custom event for CTA clicks
   pushToDataLayer({
@@ -356,7 +378,7 @@ export const trackCTAClick = (buttonText: string, location: string) => {
       content_name: buttonText,
       content_category: 'CTA'
     }
-  });
+  } as BaseEventData);
 };
 
 // Track video interactions (if you add videos later)
@@ -368,7 +390,7 @@ export const trackVideoInteraction = (action: 'play' | 'pause' | 'complete', vid
     video_name: videoName,
     video_action: action,
     video_progress: progress || 0
-  });
+  } as ConversionEventData);
 };
 
 // Track scroll depth for engagement
@@ -378,6 +400,6 @@ export const trackScrollDepth = (depth: 25 | 50 | 75 | 100) => {
     event_category: 'engagement',
     event_label: `scroll_${depth}`,
     scroll_depth: depth,
-    page_title: document.title
-  });
+    page_title: typeof document !== 'undefined' ? document.title : ''
+  } as ConversionEventData);
 };
