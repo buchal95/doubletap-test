@@ -14,6 +14,23 @@ export const metadata: Metadata = {
 };
 
 export default function ThankYouPage() {
+  // Track thank you page view (conversion confirmation)
+  if (typeof window !== 'undefined') {
+    // Import dynamically to avoid SSR issues
+    import('../../utils/dataLayer').then(({ trackPageView, pushToDataLayer }) => {
+      trackPageView('thank_you');
+      
+      // Additional conversion confirmation event for Meta Ads
+      pushToDataLayer({
+        event: 'conversion_confirmed',
+        event_category: 'conversion',
+        event_label: 'thank_you_page_view',
+        value: 2700,
+        currency: 'CZK'
+      });
+    });
+  }
+
   return (
     <div className="min-h-screen bg-brand-beige flex items-center justify-center px-4">
       <div className="max-w-2xl mx-auto text-center">

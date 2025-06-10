@@ -119,6 +119,17 @@ export default function RootLayout({
   return (
     <html lang="cs" className={`${anton.variable} ${montserrat.variable}`}>
       <head>
+        {/* Initialize dataLayer first */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+            `
+          }}
+        />
+        
         {/* Google Tag Manager */}
         <script
           dangerouslySetInnerHTML={{

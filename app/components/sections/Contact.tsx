@@ -5,6 +5,14 @@ import Image from 'next/image';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
 import { Loader2, AlertTriangle, MapPin } from 'lucide-react';
+import { 
+  trackFormStart, 
+  trackFormInteraction, 
+  trackFormSubmit, 
+  trackFormSuccess, 
+  trackFormError,
+  initializeDataLayer 
+} from '../../../utils/dataLayer';
 
 const MONTHS_CZ = [
   'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen',
@@ -16,6 +24,19 @@ const ContactForm: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<string>('');
+  const [formStarted, setFormStarted] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    consent: false
+  });
+
+  // Initialize dataLayer on component mount
+  useEffect(() => {
+    initializeDataLayer();
+  }, []);
 
   useEffect(() => {
     const currentDate = new Date();
@@ -46,27 +67,68 @@ const ContactForm: React.FC = () => {
     }
   }, []);
 
+  // Track form start when user begins interacting
+  const handleFormStart = () => {
+    if (!formStarted) {
+      setFormStarted(true);
+      trackFormStart({
+        email: formData.email || undefined,
+        first_name: formData.firstName || undefined,
+        last_name: formData.lastName || undefined,
+        phone: formData.phone || undefined
+      });
+    }
+  };
+
+  // Handle form field changes with tracking
+  const handleFieldChange = (fieldName: string, value: string | boolean) => {
+    handleFormStart(); // Track form start on first interaction
+    
+    setFormData(prev => ({
+      ...prev,
+      [fieldName]: value
+    }));
+
+    // Track field interaction
+    trackFormInteraction(fieldName, typeof value === 'string' ? value : value.toString());
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitMessage('');
 
-    const formData = new FormData(e.currentTarget);
+    const formDataSubmit = new FormData(e.currentTarget);
     const data = {
-      firstName: formData.get('firstName') as string,
-      lastName: formData.get('lastName') as string,
-      email: formData.get('email') as string,
-      phone: formData.get('phone') as string,
+      firstName: formDataSubmit.get('firstName') as string,
+      lastName: formDataSubmit.get('lastName') as string,
+      email: formDataSubmit.get('email') as string,
+      phone: formDataSubmit.get('phone') as string,
       preferredMonth: selectedMonth,
-      consent: formData.get('consent') === 'on'
+      consent: formDataSubmit.get('consent') === 'on'
     };
 
     // Validate consent
     if (!data.consent) {
-      setSubmitMessage('Musíte souhlasit se zpracováním osobních údajů');
+      const errorMsg = 'Musíte souhlasit se zpracováním osobních údajů';
+      setSubmitMessage(errorMsg);
+      trackFormError(errorMsg, {
+        email: data.email,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        phone: data.phone
+      });
       setIsSubmitting(false);
       return;
     }
+
+    // Track form submission attempt
+    trackFormSubmit({
+      email: data.email,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      phone: data.phone
+    });
 
     try {
       // Use proxy API route instead of direct external call
@@ -81,14 +143,38 @@ const ContactForm: React.FC = () => {
       const result = await response.json();
 
       if (response.ok && result.success) {
+        // Track successful registration
+        trackFormSuccess({
+          orderId: result.orderNumber || result.hash,
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phone: data.phone,
+          preferredMonth: data.preferredMonth
+        });
+
         // Redirect to payment link
         window.location.href = result.payLink;
       } else {
-        setSubmitMessage(result.error || 'Došlo k chybě při odesílání formuláře');
+        const errorMsg = result.error || 'Došlo k chybě při odesílání formuláře';
+        setSubmitMessage(errorMsg);
+        trackFormError(errorMsg, {
+          email: data.email,
+          first_name: data.firstName,
+          last_name: data.lastName,
+          phone: data.phone
+        });
       }
     } catch (error) {
       console.error('Form submission error:', error);
-      setSubmitMessage('Došlo k neočekávané chybě. Zkuste to prosím znovu.');
+      const errorMsg = 'Došlo k neočekávané chybě. Zkuste to prosím znovu.';
+      setSubmitMessage(errorMsg);
+      trackFormError(errorMsg, {
+        email: data.email,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        phone: data.phone
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -107,6 +193,8 @@ const ContactForm: React.FC = () => {
             name="firstName"
             required
             disabled={isSubmitting}
+            onFocus={handleFormStart}
+            onChange={(e) => handleFieldChange('firstName', e.target.value)}
             className="w-full px-4 py-3 border border-brand-gray/20 rounded-lg focus:ring-2 focus:ring-brand-olive focus:border-brand-olive font-montserrat disabled:opacity-50"
             placeholder="Jan"
           />
@@ -122,6 +210,8 @@ const ContactForm: React.FC = () => {
             name="lastName"
             required
             disabled={isSubmitting}
+            onFocus={handleFormStart}
+            onChange={(e) => handleFieldChange('lastName', e.target.value)}
             className="w-full px-4 py-3 border border-brand-gray/20 rounded-lg focus:ring-2 focus:ring-brand-olive focus:border-brand-olive font-montserrat disabled:opacity-50"
             placeholder="Novák"
           />
@@ -138,6 +228,8 @@ const ContactForm: React.FC = () => {
           name="email"
           required
           disabled={isSubmitting}
+          onFocus={handleFormStart}
+          onChange={(e) => handleFieldChange('email', e.target.value)}
           className="w-full px-4 py-3 border border-brand-gray/20 rounded-lg focus:ring-2 focus:ring-brand-olive focus:border-brand-olive font-montserrat disabled:opacity-50"
           placeholder="jan@example.cz"
         />
@@ -153,6 +245,8 @@ const ContactForm: React.FC = () => {
           name="phone"
           required
           disabled={isSubmitting}
+          onFocus={handleFormStart}
+          onChange={(e) => handleFieldChange('phone', e.target.value)}
           className="w-full px-4 py-3 border border-brand-gray/20 rounded-lg focus:ring-2 focus:ring-brand-olive focus:border-brand-olive font-montserrat disabled:opacity-50"
           placeholder="+420 123 456 789"
         />
@@ -171,7 +265,11 @@ const ContactForm: React.FC = () => {
                 name="preferred-month"
                 value={month}
                 checked={selectedMonth === month}
-                onChange={(e) => setSelectedMonth(e.target.value)}
+                onChange={(e) => {
+                  handleFormStart();
+                  setSelectedMonth(e.target.value);
+                  trackFormInteraction('preferredMonth', e.target.value);
+                }}
                 required
                 disabled={isSubmitting}
                 className="mr-3 w-4 h-4 text-brand-olive focus:ring-brand-olive disabled:opacity-50"
@@ -191,6 +289,8 @@ const ContactForm: React.FC = () => {
           name="consent"
           required
           disabled={isSubmitting}
+          onFocus={handleFormStart}
+          onChange={(e) => handleFieldChange('consent', e.target.checked)}
           className="mt-1 mr-3 disabled:opacity-50"
         />
         <label htmlFor="consent" className="text-brand-gray/80 font-montserrat">
