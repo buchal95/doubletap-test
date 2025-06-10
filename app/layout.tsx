@@ -24,6 +24,22 @@ export const metadata: Metadata = {
   authors: [{ name: 'Double Tap' }],
   creator: 'Double Tap',
   publisher: 'Double Tap',
+  icons: {
+    icon: [
+      {
+        url: '/fav16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+      {
+        url: '/fav32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+    ],
+    shortcut: '/fav16.png',
+    apple: '/fav32.png',
+  },
   openGraph: {
     title: 'Kurz Profesionální Tvorby Videí | Double Tap',
     description: 'Naučte se natáčet profesionální videa za pouhé 4 dny. Dotovaný kurz pro začátečníky i pokročilé.',
@@ -31,11 +47,20 @@ export const metadata: Metadata = {
     siteName: 'Double Tap',
     locale: 'cs_CZ',
     type: 'website',
+    images: [
+      {
+        url: '/fav32.png',
+        width: 32,
+        height: 32,
+        alt: 'Double Tap Logo',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Kurz Profesionální Tvorby Videí | Double Tap',
     description: 'Naučte se natáčet profesionální videa za pouhé 4 dny. Dotovaný kurz pro začátečníky i pokročilé.',
+    images: ['/fav32.png'],
   },
   robots: {
     index: true,
@@ -57,6 +82,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="cs" className={`${anton.variable} ${montserrat.variable}`}>
+      <head>
+        <link rel="icon" type="image/png" sizes="16x16" href="/fav16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/fav32.png" />
+        <link rel="shortcut icon" href="/fav16.png" />
+        <link rel="apple-touch-icon" href="/fav32.png" />
+      </head>
       <body className="font-montserrat text-brand-gray antialiased">
         {children}
       </body>
