@@ -56,15 +56,25 @@ const Lectors: React.FC = () => {
               {/* Photo section */}
               <div className="relative overflow-hidden">
                 <div className="relative w-full h-80">
-                  <Image
-                    src={lector.image}
-                    alt={lector.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    priority={index === 0}
-                    unoptimized={true}
-                  />
+                  {lector.name === "Marek Madenský" ? (
+                    <img
+                      src={lector.image}
+                      alt={lector.name}
+                      width={400}
+                      height={320}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  ) : (
+                    <Image
+                      src={lector.image}
+                      alt={lector.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      priority={index === 0}
+                      unoptimized={true}
+                    />
+                  )}
                 </div>
                 
                 {/* Fun highlight badge */}
