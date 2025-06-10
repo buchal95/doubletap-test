@@ -26,14 +26,14 @@ const SocialProof: React.FC = () => {
     return allLogos.slice(start, start + 3);
   };
 
-  // Auto-play animation every 3 seconds
+  // Auto-play animation every 3 seconds - FIXED: removed dependency array
   useEffect(() => {
     const interval = setInterval(() => {
       handleDoubleTap();
-    }, 3000); // Changed from 4000 to 3000ms
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, [currentLogoSet]);
+  }, []); // Empty dependency array - interval won't be recreated
 
   const handleDoubleTap = () => {
     if (isAnimating) return;
@@ -58,7 +58,7 @@ const SocialProof: React.FC = () => {
         });
       }, 300);
 
-      // Hide heart
+      // Hide heart and reset animation
       setTimeout(() => {
         setShowHeart(false);
         setIsAnimating(false);
