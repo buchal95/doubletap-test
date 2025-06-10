@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import CTAButton from '../common/CTAButton';
-import { MapPin } from 'lucide-react';
+import { MapPin, Camera } from 'lucide-react';
 
 interface CalendarEvent {
   id: string;
@@ -17,6 +17,7 @@ interface CalendarEvent {
 const Hero: React.FC = () => {
   const [nextEvent, setNextEvent] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [imageError, setImageError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchNextEvent = async () => {
@@ -81,21 +82,38 @@ const Hero: React.FC = () => {
     fetchNextEvent();
   }, []);
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <section className="relative py-20 md:py-32 bg-brand-gray text-white overflow-hidden">
-      {/* Optimized hero background image */}
+      {/* Background with fallback */}
       <div className="absolute inset-0 bg-brand-gray">
-        <Image
-          src="/hero-image.webp"
-          alt="Profesionální tvorba videí"
-          fill
-          priority
-          quality={85}
-          sizes="100vw"
-          className="object-cover opacity-30"
-          placeholder="blur"
-          blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA"
-        />
+        {!imageError ? (
+          <Image
+            src="https://images.pexels.com/photos/2833037/pexels-photo-2833037.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            alt="Profesionální tvorba videí"
+            fill
+            priority
+            quality={75}
+            sizes="100vw"
+            className="object-cover opacity-30"
+            placeholder="blur"
+            blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA"
+            onError={handleImageError}
+          />
+        ) : (
+          // Fallback pattern background
+          <div className="absolute inset-0 opacity-30">
+            <div className="w-full h-full bg-gradient-to-br from-brand-gray via-brand-olive/20 to-brand-red/20 relative">
+              <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="3" cy="3" r="1"/%3E%3Ccircle cx="13" cy="13" r="1"/%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <Camera className="w-32 h-32 text-white/10" />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       
       {/* Optimized dark overlay */}

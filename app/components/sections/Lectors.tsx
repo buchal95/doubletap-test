@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import SectionHeading from '../common/SectionHeading';
-import { Heart, User } from 'lucide-react';
+import { Heart, User, Camera, Video } from 'lucide-react';
 
 const Lectors: React.FC = () => {
   const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
@@ -17,34 +17,37 @@ const Lectors: React.FC = () => {
       name: "Marek Madenský",
       nickname: "Marek",
       title: "Video marketing expert a kreativní guru",
-      image: "/marek.webp",
+      image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&dpr=1",
       expertise: ["Video produkce", "Social media", "Content strategy"],
       description: "Už přes 10 let dělá social media marketing a videa točí tak dobře, že by mu to záviděl i algoritmus. Pracoval pro ZOOT, Dáme jídlo nebo Zentivu. Baví ho kreativita, humor a hlavně nadchnout ostatní, aby se nebáli projevit.",
       highlight: "Algoritmus whisperer",
       personality: "Kreativní chaos",
-      objectPosition: "center top"
+      objectPosition: "center top",
+      fallbackIcon: <Video className="w-16 h-16 text-brand-olive/60" />
     },
     {
       name: "Kateřina Hůšová", 
       nickname: "Kačis",
       title: "Duše týmu a vizuální čarodějka",
-      image: "/kata.webp",
+      image: "https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&dpr=1",
       expertise: ["Vizuální styl", "Trendy", "Výuka"],
       description: "Je duší celého týmu. Neumí improvizovat (ale zato umí všechno ostatní), má cit pro vizuálno, vtip a timing. Když vám něco vysvětluje, tak se to fakt naučíte.",
       highlight: "Učí tak, že to pochopíte",
       personality: "Vizuální génius",
-      objectPosition: "center top"
+      objectPosition: "center top",
+      fallbackIcon: <Camera className="w-16 h-16 text-brand-olive/60" />
     },
     {
       name: "Jan Buchal",
       nickname: "Honza", 
       title: "Stratég a perfekcionista",
-      image: "/honza.webp",
+      image: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&dpr=1",
       expertise: ["Strategie", "Analýza", "Plánování"],
       description: "Neumí improvizovat, ale všechno ostatní mu jde skvěle. Je precizní, přemýšlí nad každým detailem a kdyby byl hashtagem, byl by to #strateg.",
       highlight: "Anti-improvizace",
       personality: "#strateg",
-      objectPosition: "center center"
+      objectPosition: "center center",
+      fallbackIcon: <User className="w-16 h-16 text-brand-olive/60" />
     }
   ];
 
@@ -66,11 +69,12 @@ const Lectors: React.FC = () => {
               <div className="relative overflow-hidden">
                 <div className="relative w-full h-80">
                   {imageErrors[lector.image] ? (
-                    // Fallback placeholder when image fails to load
-                    <div className="w-full h-full bg-gradient-to-br from-brand-beige to-brand-olive/20 flex items-center justify-center">
+                    // Enhanced fallback placeholder when image fails to load
+                    <div className="w-full h-full bg-gradient-to-br from-brand-beige via-brand-olive/10 to-brand-red/5 flex items-center justify-center">
                       <div className="text-center">
-                        <User className="w-16 h-16 text-brand-olive/60 mx-auto mb-2" />
-                        <p className="text-brand-gray/60 font-montserrat text-sm">{lector.name}</p>
+                        {lector.fallbackIcon}
+                        <p className="text-brand-gray/60 font-montserrat text-sm mt-2">{lector.name}</p>
+                        <p className="text-brand-gray/40 font-montserrat text-xs">{lector.nickname}</p>
                       </div>
                     </div>
                   ) : (
@@ -83,6 +87,9 @@ const Lectors: React.FC = () => {
                       style={{ objectPosition: lector.objectPosition }}
                       priority={index === 0}
                       loading={index === 0 ? "eager" : "lazy"}
+                      quality={80}
+                      placeholder="blur"
+                      blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA"
                       onError={() => handleImageError(lector.image)}
                     />
                   )}
