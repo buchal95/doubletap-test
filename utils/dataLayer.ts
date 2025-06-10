@@ -1,14 +1,12 @@
 // DataLayer utility for tracking events to Google Tag Manager
-// This will help with Meta Ads conversion tracking
+// Focused on advanced matching for Meta Ads without values/currency
 
 interface BaseEventData {
   event: string;
   event_category?: string;
   event_label?: string;
-  value?: number;
-  currency?: string;
-  fb_event_parameters?: any; // Added for Meta Ads event parameters
-  [key: string]: any; // Allow additional properties for flexibility
+  fb_event_parameters?: any;
+  [key: string]: any;
 }
 
 interface MetaAdvancedMatching {
@@ -38,8 +36,6 @@ interface FormEventData extends BaseEventData {
 
 interface ConversionEventData extends BaseEventData {
   conversion_id?: string;
-  conversion_label?: string;
-  order_value?: number;
   order_id?: string;
   transaction_id?: string;
   page_title?: string;
@@ -48,15 +44,6 @@ interface ConversionEventData extends BaseEventData {
   video_action?: string;
   video_progress?: number;
   scroll_depth?: number;
-  items?: Array<{
-    item_id?: string;
-    item_name?: string;
-    item_category?: string;
-    item_category2?: string;
-    item_brand?: string;
-    price?: number;
-    quantity?: number;
-  }>;
   fb_advanced_matching?: MetaAdvancedMatching;
 }
 
@@ -154,8 +141,6 @@ const createAdvancedMatching = (userData: {
     matching.ph = formatPhoneForMatching(userData.phone);
   }
   
-  // Nebudeme hardcodovat country - necháme Meta Pixel detekovat automaticky
-  
   return matching;
 };
 
@@ -166,8 +151,6 @@ export const pushToDataLayer = (data: BaseEventData | FormEventData | Conversion
     window.dataLayer.push(data);
   }
 };
-
-// Specific tracking functions for Meta Ads
 
 // Track when user starts filling the form
 export const trackFormStart = (formData?: Partial<FormEventData['user_data']>) => {
@@ -188,12 +171,10 @@ export const trackFormStart = (formData?: Partial<FormEventData['user_data']>) =
     fb_advanced_matching: advancedMatching
   } as FormEventData);
 
-  // Meta Pixel InitiateCheckout event with advanced matching
+  // Meta Pixel InitiateCheckout event with advanced matching only
   pushToDataLayer({
     event: 'fb_initiate_checkout',
     fb_event_parameters: {
-      value: 2700,
-      currency: 'CZK',
       content_name: 'Kurz profesionální tvorby videí',
       content_category: 'Education'
     },
@@ -233,12 +214,10 @@ export const trackFormSubmit = (formData: FormEventData['user_data']) => {
     fb_advanced_matching: advancedMatching
   } as FormEventData);
 
-  // Meta Pixel Lead event with advanced matching
+  // Meta Pixel Lead event with advanced matching only
   pushToDataLayer({
     event: 'fb_lead',
     fb_event_parameters: {
-      value: 2700,
-      currency: 'CZK',
       content_name: 'Kurz profesionální tvorby videí',
       content_category: 'Education'
     },
@@ -269,8 +248,6 @@ export const trackFormSuccess = (orderData?: {
     form_name: 'course_registration',
     form_step: 'success',
     conversion_id: orderData?.orderId,
-    order_value: 2700,
-    currency: 'CZK',
     user_data: orderData ? {
       email: orderData.email,
       first_name: orderData.firstName,
@@ -280,35 +257,22 @@ export const trackFormSuccess = (orderData?: {
     fb_advanced_matching: advancedMatching
   } as FormEventData);
 
-  // Meta Pixel CompleteRegistration event with advanced matching
+  // Meta Pixel CompleteRegistration event with advanced matching only
   pushToDataLayer({
     event: 'fb_complete_registration',
     fb_event_parameters: {
-      value: 2700,
-      currency: 'CZK',
       content_name: 'Kurz profesionální tvorby videí',
       content_category: 'Education'
     },
     fb_advanced_matching: advancedMatching
   } as BaseEventData);
 
-  // Enhanced ecommerce purchase event for Google Analytics
+  // Google Analytics event without ecommerce data
   pushToDataLayer({
-    event: 'purchase',
-    event_category: 'ecommerce',
-    event_label: 'course_purchase',
+    event: 'generate_lead',
+    event_category: 'conversion',
+    event_label: 'course_registration',
     transaction_id: orderData?.orderId,
-    value: 2700,
-    currency: 'CZK',
-    items: [{
-      item_id: 'video-course-2025',
-      item_name: 'Kurz profesionální tvorby videí',
-      item_category: 'Education',
-      item_category2: 'Video Production',
-      item_brand: 'Double Tap',
-      price: 2700,
-      quantity: 1
-    }],
     user_data: orderData ? {
       email: orderData.email,
       first_name: orderData.firstName,
@@ -351,7 +315,7 @@ export const trackPageView = (pageName: string, additionalData?: Record<string, 
     ...additionalData
   } as ConversionEventData);
 
-  // Meta Pixel PageView event
+  // Meta Pixel PageView event - no advanced matching needed for page views
   pushToDataLayer({
     event: 'fb_page_view',
     fb_event_parameters: {
@@ -371,7 +335,7 @@ export const trackCTAClick = (buttonText: string, location: string) => {
     button_location: location
   } as FormEventData);
 
-  // Meta Pixel custom event for CTA clicks
+  // Meta Pixel custom event for CTA clicks - no advanced matching needed
   pushToDataLayer({
     event: 'fb_contact',
     fb_event_parameters: {
