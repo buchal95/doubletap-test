@@ -26,11 +26,11 @@ const SocialProof: React.FC = () => {
     return allLogos.slice(start, start + 3);
   };
 
-  // Auto-play animation every 4 seconds
+  // Auto-play animation every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       handleDoubleTap();
-    }, 4000);
+    }, 3000); // Changed from 4000 to 3000ms
 
     return () => clearInterval(interval);
   }, [currentLogoSet]);
