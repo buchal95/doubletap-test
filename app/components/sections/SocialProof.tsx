@@ -18,30 +18,32 @@ const SocialProof: React.FC = () => {
           <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/MALL.svg/512px-MALL.svg.png" alt="MALL" width={120} height={32} className="h-6 md:h-8 w-auto transform transition-all duration-300 hover:scale-110" />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-6">
           <div className="p-6 bg-white rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
             <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">24+</div>
             <div className="text-brand-gray/80 font-montserrat">let zkušeností z marketingu</div>
           </div>
           
           <div className="p-6 bg-white rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-            <div className="mb-3">
-              <div className="flex justify-center mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-6 h-6 text-brand-red fill-brand-red" />
-                ))}
-              </div>
-              <div className="text-brand-gray/80 font-montserrat font-semibold">hodnocení kurzu</div>
+            <div className="flex justify-center mb-3">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-6 h-6 text-brand-red fill-brand-red" />
+              ))}
             </div>
-            <div className="text-xs text-brand-gray/50 font-montserrat italic leading-relaxed">
-              * sami tomu věříme těžko, ale je to pravda
-            </div>
+            <div className="text-brand-gray/80 font-montserrat font-semibold">hodnocení kurzu</div>
           </div>
           
           <div className="p-6 bg-white rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
             <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">82%</div>
             <div className="text-brand-gray/80 font-montserrat">dotace od státu</div>
           </div>
+        </div>
+        
+        {/* Playful footnote outside the boxes */}
+        <div className="text-center">
+          <p className="text-xs text-brand-gray/50 font-montserrat italic">
+            * sami tomu věříme těžko, ale je to pravda
+          </p>
         </div>
       </div>
     </section>
