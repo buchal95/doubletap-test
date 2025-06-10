@@ -153,6 +153,20 @@ const ContactForm: React.FC = () => {
       return;
     }
 
+    // Validate required fields
+    if (!data.firstName || !data.lastName || !data.email || !phoneNumber) {
+      const errorMsg = 'Všechna povinná pole musí být vyplněna';
+      setSubmitMessage(errorMsg);
+      trackFormError(errorMsg, {
+        email: data.email,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        phone: data.phone
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     // Track form submission attempt
     trackFormSubmit({
       email: data.email,
@@ -162,40 +176,22 @@ const ContactForm: React.FC = () => {
     });
 
     try {
-      // Use proxy API route instead of direct external call
-      const response = await fetch('/api/proxy/order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+      // Simulate a brief processing delay for UX
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Track successful interest registration
+      trackFormSuccess({
+        orderId: `INTEREST_${Date.now()}`, // Generate unique interest ID
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.phone,
+        preferredMonth: data.preferredMonth
       });
 
-      const result = await response.json();
+      // Redirect to thank you page
+      window.location.href = '/dekujeme';
 
-      if (response.ok && result.success) {
-        // Track successful registration
-        trackFormSuccess({
-          orderId: result.orderNumber || result.hash,
-          email: data.email,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          phone: data.phone,
-          preferredMonth: data.preferredMonth
-        });
-
-        // Redirect to payment link
-        window.location.href = result.payLink;
-      } else {
-        const errorMsg = result.error || 'Došlo k chybě při odesílání formuláře';
-        setSubmitMessage(errorMsg);
-        trackFormError(errorMsg, {
-          email: data.email,
-          first_name: data.firstName,
-          last_name: data.lastName,
-          phone: data.phone
-        });
-      }
     } catch (error) {
       console.error('Form submission error:', error);
       const errorMsg = 'Došlo k neočekávané chybě. Zkuste to prosím znovu.';
@@ -206,7 +202,6 @@ const ContactForm: React.FC = () => {
         last_name: data.lastName,
         phone: data.phone
       });
-    } finally {
       setIsSubmitting(false);
     }
   };
@@ -387,10 +382,10 @@ const ContactForm: React.FC = () => {
         {isSubmitting ? (
           <>
             <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-            Zpracovávám...
+            Zpracovávám váš zájem...
           </>
         ) : (
-          'Využít 82% dotaci nyní'
+          'Projevit zájem o kurz'
         )}
       </button>
     </form>
@@ -442,7 +437,10 @@ const Contact: React.FC = () => {
                 className="mx-auto h-12 w-auto mb-4"
                 loading="lazy"
               />
-              <h3 className="text-2xl font-anton text-brand-gray">Registrace na kurz s 82% dotací</h3>
+              <h3 className="text-2xl font-anton text-brand-gray">Projev zájmu o kurz s 82% dotací</h3>
+              <p className="text-brand-gray/60 font-montserrat mt-2">
+                Po odeslání formuláře vás budeme kontaktovat s dalšími informacemi
+              </p>
             </div>
             
             <ContactForm />

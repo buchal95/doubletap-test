@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
-import { CheckCircle, ArrowLeft, Clock, Users, FileText } from 'lucide-react';
+import { CheckCircle, ArrowLeft, Clock, Users, FileText, CreditCard, Phone, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Děkujeme za váš zájem',
-  description: 'Váš zájem o kurz profesionální tvorby videí byl úspěšně zaznamenán. Brzy vás budeme kontaktovat s dalšími informacemi.',
+  title: 'Děkujeme za váš zájem o kurz',
+  description: 'Váš zájem o kurz profesionální tvorby videí byl úspěšně zaznamenán. Brzy vás budeme kontaktovat s dalšími informacemi o registraci a platbě.',
   robots: {
     index: false,
     follow: true,
@@ -32,7 +32,7 @@ export default function ThankYouPage() {
 
   return (
     <div className="min-h-screen bg-brand-beige flex items-center justify-center px-4">
-      <div className="max-w-3xl mx-auto text-center">
+      <div className="max-w-4xl mx-auto text-center">
         <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
           <div className="mb-8">
             {/* Logo */}
@@ -69,7 +69,7 @@ export default function ThankYouPage() {
                 </div>
                 <h3 className="font-anton text-brand-gray mb-2">Kontakt do 24-48 hodin</h3>
                 <p className="text-sm text-brand-gray/80 font-montserrat">
-                  Ozveme se vám s informacemi o dostupných termínech kurzu
+                  Ozveme se vám s informacemi o dostupných termínech kurzu a procesu registrace
                 </p>
               </div>
               
@@ -77,9 +77,9 @@ export default function ThankYouPage() {
                 <div className="bg-brand-olive text-white rounded-full w-10 h-10 flex items-center justify-center font-anton text-lg mx-auto mb-3">
                   2
                 </div>
-                <h3 className="font-anton text-brand-gray mb-2">Výběr termínu</h3>
+                <h3 className="font-anton text-brand-gray mb-2">Registrace na ÚP</h3>
                 <p className="text-sm text-brand-gray/80 font-montserrat">
-                  Domluvíme se na termínu, který vám nejlépe vyhovuje
+                  Pomůžeme vám s registrací na Úřadu práce pro získání 82% dotace
                 </p>
               </div>
               
@@ -87,9 +87,9 @@ export default function ThankYouPage() {
                 <div className="bg-brand-olive text-white rounded-full w-10 h-10 flex items-center justify-center font-anton text-lg mx-auto mb-3">
                   3
                 </div>
-                <h3 className="font-anton text-brand-gray mb-2">Registrace na ÚP</h3>
+                <h3 className="font-anton text-brand-gray mb-2">Platba a kurz</h3>
                 <p className="text-sm text-brand-gray/80 font-montserrat">
-                  Provedeme vás procesem registrace na Úřadu práce pro získání 82% dotace
+                  Po schválení dotace zaplatíte pouze 2 700 Kč a můžete začít kurz
                 </p>
               </div>
             </div>
@@ -102,38 +102,74 @@ export default function ThankYouPage() {
               <div className="text-left">
                 <h3 className="font-anton text-lg text-brand-red mb-2">Registrace na Úřadu práce</h3>
                 <p className="text-brand-gray/80 font-montserrat text-sm leading-relaxed">
-                  <strong>Nezapomeňte:</strong> Pro získání 82% dotace je nutná registrace na Úřadu práce minimálně 30 dní před začátkem kurzu. 
+                  <strong>Důležité:</strong> Pro získání 82% dotace je nutná registrace na Úřadu práce minimálně 30 dní před začátkem kurzu. 
                   Detailně vás provedeme celým procesem a pomůžeme s vyřízením všech náležitostí.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Contact information */}
+          {/* Payment information */}
           <div className="bg-brand-olive/10 border border-brand-olive/20 rounded-xl p-6 mb-8">
-            <h3 className="font-anton text-lg text-brand-gray mb-4">Máte dotazy?</h3>
-            <p className="text-brand-gray/80 font-montserrat mb-4">
-              Neváhejte nás kontaktovat, pokud máte jakékoli otázky ohledně kurzu nebo dotace:
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="mailto:mrkt.doubletap@gmail.com" 
-                className="text-brand-olive hover:underline font-montserrat font-semibold"
-              >
-                mrkt.doubletap@gmail.com
-              </a>
-              <a 
-                href="tel:+420770650852" 
-                className="text-brand-olive hover:underline font-montserrat font-semibold"
-              >
-                +420 770 650 852
-              </a>
+            <div className="flex items-start">
+              <CreditCard className="w-6 h-6 text-brand-olive mt-1 mr-4 flex-shrink-0" />
+              <div className="text-left">
+                <h3 className="font-anton text-lg text-brand-gray mb-2">Platba kurzu</h3>
+                <p className="text-brand-gray/80 font-montserrat text-sm leading-relaxed mb-3">
+                  Po schválení dotace od Úřadu práce:
+                </p>
+                <ul className="text-left space-y-2">
+                  <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
+                    <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
+                    Zaplatíte pouze <strong className="text-brand-red">2 700 Kč</strong> (18% z celkové ceny)
+                  </li>
+                  <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
+                    <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
+                    Stát uhradí zbývajících <strong>12 300 Kč</strong> (82% dotace)
+                  </li>
+                  <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
+                    <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
+                    Platba je možná kartou, převodem nebo v hotovosti
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
-          {/* Call to action - without specific numbers */}
+          {/* Contact information */}
+          <div className="bg-brand-beige border border-brand-olive/20 rounded-xl p-6 mb-8">
+            <h3 className="font-anton text-lg text-brand-gray mb-4">Máte dotazy? Kontaktujte nás</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex items-center justify-center">
+                <Mail className="w-5 h-5 text-brand-olive mr-2" />
+                <a 
+                  href="mailto:mrkt.doubletap@gmail.com" 
+                  className="text-brand-olive hover:underline font-montserrat font-semibold"
+                >
+                  mrkt.doubletap@gmail.com
+                </a>
+              </div>
+              <div className="flex items-center justify-center">
+                <Phone className="w-5 h-5 text-brand-olive mr-2" />
+                <a 
+                  href="tel:+420770650852" 
+                  className="text-brand-olive hover:underline font-montserrat font-semibold"
+                >
+                  +420 770 650 852
+                </a>
+              </div>
+            </div>
+            <div className="flex items-center justify-center mt-4">
+              <MapPin className="w-5 h-5 text-brand-olive mr-2" />
+              <span className="font-montserrat text-brand-gray">
+                Praha (přesná adresa po registraci)
+              </span>
+            </div>
+          </div>
+
+          {/* Call to action */}
           <div className="space-y-4">
-            <div className="bg-brand-beige rounded-lg p-4">
+            <div className="bg-brand-olive/10 rounded-lg p-4">
               <div className="flex items-center justify-center mb-2">
                 <Users className="w-5 h-5 text-brand-olive mr-2" />
                 <span className="font-anton text-brand-gray">Připojte se k našim spokojeným absolventům</span>
