@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
     <footer className="bg-brand-gray text-white pt-12 pb-6">
       <div className="container mx-auto px-4">
         {/* Main footer content */}
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
+        <div className="grid md:grid-cols-3 gap-8 mb-8">
           {/* Left column - Brand & Social */}
           <div>
             {/* Logo with white background for visibility */}
@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
           
-          {/* Right column - Contact */}
+          {/* Middle column - Contact */}
           <div>
             <h4 className="text-lg font-anton mb-4 text-white">Kontakt</h4>
             <div className="space-y-3">
@@ -96,6 +96,25 @@ const Footer: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Right column - Legal Links */}
+          <div>
+            <h4 className="text-lg font-anton mb-4 text-white">Právní informace</h4>
+            <div className="space-y-3">
+              <Link 
+                href="/obchodni-podminky" 
+                className="block text-brand-beige hover:text-white transition-colors font-montserrat hover:underline decoration-brand-olive underline-offset-4 bg-brand-beige/5 hover:bg-brand-beige/10 p-3 rounded-lg"
+              >
+                📄 Obchodní podmínky
+              </Link>
+              <Link 
+                href="/zasady-ochrany-osobnich-udaju" 
+                className="block text-brand-beige hover:text-white transition-colors font-montserrat hover:underline decoration-brand-olive underline-offset-4 bg-brand-beige/5 hover:bg-brand-beige/10 p-3 rounded-lg"
+              >
+                🔒 Zásady ochrany osobních údajů
+              </Link>
+            </div>
+          </div>
         </div>
         
         {/* Divider */}
@@ -113,20 +132,14 @@ const Footer: React.FC = () => {
             </p>
           </div>
           
-          {/* Legal links */}
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link 
-              href="/obchodni-podminky" 
-              className="text-brand-beige/80 hover:text-white transition-colors font-montserrat text-sm hover:underline decoration-brand-olive underline-offset-4"
-            >
-              Obchodní podmínky
-            </Link>
-            <Link 
-              href="/zasady-ochrany-osobnich-udaju" 
-              className="text-brand-beige/80 hover:text-white transition-colors font-montserrat text-sm hover:underline decoration-brand-olive underline-offset-4"
-            >
-              Zásady ochrany osobních údajů
-            </Link>
+          {/* Additional info */}
+          <div className="text-right">
+            <p className="text-brand-beige/60 font-montserrat text-sm">
+              IČ: 06885560 | Není plátcem DPH
+            </p>
+            <p className="text-brand-beige/60 font-montserrat text-sm">
+              Marek Madenský
+            </p>
           </div>
         </div>
       </div>
