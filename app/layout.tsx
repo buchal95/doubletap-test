@@ -18,12 +18,40 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: 'Kurz Profesionální Tvorby Videí | Double Tap',
-  description: 'Naučte se natáčet profesionální videa za pouhé 4 dny. Dotovaný kurz pro začátečníky i pokročilé.',
-  keywords: 'kurz videa, tvorba videí, video marketing, profesionální videa, Praha, Double Tap',
-  authors: [{ name: 'Double Tap' }],
+  title: {
+    default: 'Kurz Profesionální Tvorby Videí | Double Tap',
+    template: '%s | Double Tap'
+  },
+  description: 'Naučte se natáčet profesionální videa telefonem za 4 dny s 82% státní dotací. Kurz pro začátečníky i pokročilé v Praze. Platíte jen 2 700 Kč místo 15 000 Kč.',
+  keywords: [
+    'kurz tvorby videí',
+    'profesionální videa',
+    'video marketing',
+    'sociální sítě',
+    'dotovaný kurz',
+    'Praha',
+    'smartphone video',
+    'Instagram videa',
+    'TikTok videa',
+    'YouTube videa',
+    'video produkce',
+    'Double Tap'
+  ],
+  authors: [{ name: 'Double Tap', url: 'https://doubletap.cz' }],
   creator: 'Double Tap',
   publisher: 'Double Tap',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'cs-CZ': '/',
+    },
+  },
   icons: {
     icon: [
       {
@@ -42,8 +70,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Kurz Profesionální Tvorby Videí | Double Tap',
-    description: 'Naučte se natáčet profesionální videa za pouhé 4 dny. Dotovaný kurz pro začátečníky i pokročilé.',
-    url: 'https://doubletap.cz',
+    description: 'Naučte se natáčet profesionální videa telefonem za 4 dny s 82% státní dotací. Platíte jen 2 700 Kč místo 15 000 Kč.',
+    url: '/',
     siteName: 'Double Tap',
     locale: 'cs_CZ',
     type: 'website',
@@ -52,27 +80,35 @@ export const metadata: Metadata = {
         url: '/fav32.png',
         width: 32,
         height: 32,
-        alt: 'Double Tap Logo',
+        alt: 'Double Tap Logo - Kurz tvorby videí',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Kurz Profesionální Tvorby Videí | Double Tap',
-    description: 'Naučte se natáčet profesionální videa za pouhé 4 dny. Dotovaný kurz pro začátečníky i pokročilé.',
+    description: 'Naučte se natáčet profesionální videa telefonem za 4 dny s 82% státní dotací.',
     images: ['/fav32.png'],
+    creator: '@doubletap_cz',
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
   },
+  verification: {
+    google: 'your-google-verification-code', // Add your Google Search Console verification
+    yandex: 'your-yandex-verification-code', // Add if targeting Eastern Europe
+  },
+  category: 'education',
 }
 
 export default function RootLayout({
@@ -87,6 +123,87 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="32x32" href="/fav32.png" />
         <link rel="shortcut icon" href="/fav16.png" />
         <link rel="apple-touch-icon" href="/fav32.png" />
+        
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": "https://doubletap.cz/#organization",
+                  "name": "Double Tap",
+                  "url": "https://doubletap.cz",
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://doubletap.cz/doubletap-logo.webp"
+                  },
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+420770650852",
+                    "email": "mrkt.doubletap@gmail.com",
+                    "contactType": "customer service",
+                    "areaServed": "CZ",
+                    "availableLanguage": "cs"
+                  },
+                  "sameAs": [
+                    "https://www.facebook.com/doubletap.kurzy",
+                    "https://www.instagram.com/doubletap.cz"
+                  ]
+                },
+                {
+                  "@type": "Course",
+                  "@id": "https://doubletap.cz/#course",
+                  "name": "Kurz Profesionální Tvorby Videí",
+                  "description": "4-denní intenzivní kurz tvorby profesionálních videí pomocí mobilního telefonu. Určeno pro začátečníky i pokročilé.",
+                  "provider": {
+                    "@id": "https://doubletap.cz/#organization"
+                  },
+                  "hasCourseInstance": {
+                    "@type": "CourseInstance",
+                    "courseMode": "onsite",
+                    "duration": "P4D",
+                    "inLanguage": "cs",
+                    "location": {
+                      "@type": "Place",
+                      "name": "Praha",
+                      "addressCountry": "CZ"
+                    }
+                  },
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "2700",
+                    "priceCurrency": "CZK",
+                    "priceValidUntil": "2025-10-31",
+                    "availability": "https://schema.org/InStock",
+                    "validFrom": "2025-01-01",
+                    "description": "Cena s 82% státní dotací"
+                  },
+                  "educationalLevel": "Beginner to Intermediate",
+                  "teaches": [
+                    "Profesionální natáčení mobilním telefonem",
+                    "Postprodukce a střih videí",
+                    "Obsah pro sociální sítě",
+                    "Video marketing"
+                  ]
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://doubletap.cz/#website",
+                  "url": "https://doubletap.cz",
+                  "name": "Double Tap - Kurz Profesionální Tvorby Videí",
+                  "description": "Naučte se natáčet profesionální videa telefonem za 4 dny",
+                  "publisher": {
+                    "@id": "https://doubletap.cz/#organization"
+                  },
+                  "inLanguage": "cs"
+                }
+              ]
+            })
+          }}
+        />
       </head>
       <body className="font-montserrat text-brand-gray antialiased">
         {children}

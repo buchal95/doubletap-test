@@ -1,6 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Shield, Mail, Phone } from 'lucide-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Zásady ochrany osobních údajů (GDPR)',
+  description: 'Zásady zpracování osobních údajů v souladu s GDPR pro kurz tvorby videí od Double Tap.',
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function PrivacyPage() {
   return (

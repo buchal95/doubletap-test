@@ -1,6 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, FileText, Mail, Phone, AlertTriangle } from 'lucide-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Všeobecné obchodní podmínky',
+  description: 'Obchodní podmínky kurzu tvorby videí v rámci dotačního programu "Jsem v kurzu" od Double Tap.',
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function TermsPage() {
   return (

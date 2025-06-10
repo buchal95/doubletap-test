@@ -2,6 +2,16 @@ import React from 'react';
 import Image from 'next/image';
 import { CheckCircle, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Děkujeme za registraci',
+  description: 'Vaše registrace na kurz profesionální tvorby videí byla úspěšně odeslána. Brzy vás budeme kontaktovat s dalšími informacemi.',
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function ThankYouPage() {
   return (
