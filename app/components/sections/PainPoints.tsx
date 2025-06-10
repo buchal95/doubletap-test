@@ -47,7 +47,7 @@ const PainPoints: React.FC = () => {
           </div>
 
           {/* Group size info */}
-          <div className="bg-brand-olive/10 border border-brand-olive/20 rounded-xl p-6 mb-12 max-w-2xl mx-auto">
+          <div className="bg-brand-olive/10 border border-brand-olive/20 rounded-xl p-6 max-w-2xl mx-auto">
             <div className="flex items-center justify-center">
               <Users className="w-8 h-8 text-brand-olive mr-4" />
               <div>
@@ -55,20 +55,6 @@ const PainPoints: React.FC = () => {
                 <p className="text-brand-gray/80 font-montserrat">Maximálně 10 účastníků. Individuální přístup zaručen.</p>
               </div>
             </div>
-          </div>
-          
-          <div className="bg-brand-gray text-white p-8 md:p-10 rounded-2xl text-center">
-            <h3 className="text-2xl font-anton mb-4">
-              Takhle točí naši absolventi
-            </h3>
-            <div className="aspect-w-16 aspect-h-9 max-w-3xl mx-auto mb-6">
-              <div className="bg-brand-gray/50 rounded-lg w-full h-64 md:h-[400px] flex items-center justify-center border border-brand-beige/20">
-                <p className="text-brand-beige/60 font-montserrat">Videa absolventů - embedovaná videa nebo galerie</p>
-              </div>
-            </div>
-            <p className="text-brand-beige font-montserrat italic">
-              Všechno natočeno telefonem. Během kurzu nebo těsně po něm.
-            </p>
           </div>
         </div>
       </div>
