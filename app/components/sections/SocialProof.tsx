@@ -70,7 +70,7 @@ const SocialProof: React.FC = () => {
     <section className="py-16 bg-gradient-to-br from-brand-beige to-brand-beige/80 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 animate-fade-in max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-anton text-brand-gray leading-tight">
+          <h2 className="text-2xl md:text-3xl font-anton text-brand-gray leading-tight text-center">
             Naši lektoři tvořili videa (nejen) pro tyto společnosti
           </h2>
         </div>
@@ -177,11 +177,11 @@ const SocialProof: React.FC = () => {
           </div>
         </div>
         
-        {/* Stats section */}
+        {/* Stats section - FIXED: Improved text centering */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-6 max-w-4xl mx-auto">
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
-            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">7+</div>
-            <div className="text-brand-gray/80 font-montserrat">značek důvěřuje našim lektorům</div>
+            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">24+</div>
+            <div className="text-brand-gray/80 font-montserrat text-center">let zkušeností z marketingu</div>
           </div>
           
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
@@ -190,19 +190,19 @@ const SocialProof: React.FC = () => {
                 <Star key={i} className="w-6 h-6 text-brand-red fill-brand-red" />
               ))}
             </div>
-            <div className="text-brand-gray/80 font-montserrat font-semibold">hodnocení kurzu</div>
+            <div className="text-brand-gray/80 font-montserrat font-semibold text-center">hodnocení kurzu</div>
           </div>
           
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
-            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">82%</div>
-            <div className="text-brand-gray/80 font-montserrat">dotace od státu</div>
+            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">82%</div>
+            <div className="text-brand-gray/80 font-montserrat text-center">dotace od státu</div>
           </div>
         </div>
         
         {/* Playful footnote */}
         <div className="text-center">
           <p className="text-xs text-brand-gray/50 font-montserrat italic">
-            * videa, která pomohla těmto značkám růst
+            * sami tomu věříme těžko, ale je to pravda
           </p>
         </div>
       </div>
