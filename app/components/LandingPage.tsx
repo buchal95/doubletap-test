@@ -7,9 +7,7 @@ import Benefits from './sections/Benefits';
 import Schedule from './sections/Schedule';
 import Testimonials from './sections/Testimonials';
 import Subsidy from './sections/Subsidy';
-import Bonuses from './sections/Bonuses';
 import UpcomingEvents from './sections/UpcomingEvents';
-import Urgency from './sections/Urgency';
 import FAQ from './sections/FAQ';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
@@ -24,9 +22,7 @@ const LandingPage: React.FC = () => {
       <Schedule />
       <Testimonials />
       <Subsidy />
-      <Bonuses />
       <UpcomingEvents />
-      <Urgency />
       <FAQ />
       <Contact />
       <Footer />
