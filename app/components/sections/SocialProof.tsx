@@ -177,13 +177,13 @@ const SocialProof: React.FC = () => {
           </div>
         </div>
         
-        {/* Stats section - Different footnotes for each box */}
+        {/* Stats section - Funny footnotes restored */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-8 max-w-4xl mx-auto">
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
             <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">24+</div>
             <div className="text-brand-gray/80 font-montserrat text-center mb-3">let zkušeností z marketingu</div>
-            <div className="text-sm text-brand-gray/60 font-montserrat italic text-center">
-              * napříč různými obory a projekty
+            <div className="text-sm text-brand-gray/50 font-montserrat italic text-center">
+              * a tisíce videí
             </div>
           </div>
           
@@ -194,15 +194,15 @@ const SocialProof: React.FC = () => {
               ))}
             </div>
             <div className="text-brand-gray/80 font-montserrat font-semibold text-center mb-3">hodnocení kurzu</div>
-            <div className="text-sm text-brand-gray/60 font-montserrat italic text-center">
-              * a tisíce spokojených účastníků
+            <div className="text-sm text-brand-gray/50 font-montserrat italic text-center">
+              * sami tomu věříme těžko, ale je to pravda
             </div>
           </div>
           
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
             <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">82%</div>
             <div className="text-brand-gray/80 font-montserrat text-center mb-3">dotace od státu</div>
-            <div className="text-sm text-brand-gray/60 font-montserrat italic text-center">
+            <div className="text-sm text-brand-gray/50 font-montserrat italic text-center">
               * do konce roku 2025
             </div>
           </div>
