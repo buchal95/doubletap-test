@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { Facebook, Instagram, Youtube, Twitter } from 'lucide-react';
 import Link from 'next/link';
 
@@ -8,9 +9,17 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <div>
-            <h3 className="text-xl font-anton mb-4">Double Tap</h3>
-            <p className="text-brand-beige font-montserrat mb-4">
-              Naučíme vás řemeslo videa
+            <div className="mb-6">
+              <Image
+                src="/doubletap-logo.webp"
+                alt="Double Tap Logo"
+                width={200}
+                height={90}
+                className="h-16 w-auto mb-4"
+              />
+            </div>
+            <p className="text-brand-beige font-montserrat mb-4 max-w-md">
+              Naučíme vás řemeslo videa. Profesionálně, s humorem a se srdcem.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-brand-beige hover:text-white transition-colors">

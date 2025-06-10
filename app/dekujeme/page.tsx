@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { CheckCircle, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
@@ -8,6 +9,17 @@ export default function ThankYouPage() {
       <div className="max-w-2xl mx-auto text-center">
         <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
           <div className="mb-8">
+            {/* Logo */}
+            <div className="mb-6">
+              <Image
+                src="/doubletap-logo.webp"
+                alt="Double Tap Logo"
+                width={150}
+                height={70}
+                className="mx-auto h-12 w-auto"
+              />
+            </div>
+            
             <CheckCircle className="w-20 h-20 text-brand-olive mx-auto mb-6" />
             <h1 className="text-3xl md:text-4xl font-anton text-brand-gray mb-4">
               Děkujeme za vaši objednávku!

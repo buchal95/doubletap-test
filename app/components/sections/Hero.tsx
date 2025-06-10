@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import CTAButton from '../common/CTAButton';
 import { MapPin } from 'lucide-react';
 
@@ -83,6 +84,30 @@ const Hero: React.FC = () => {
   return (
     <section className="relative py-20 md:py-32 bg-brand-gray text-white overflow-hidden">
       <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/2833037/pexels-photo-2833037.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] opacity-20 bg-cover bg-center"></div>
+      
+      {/* Header with logo */}
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="flex justify-between items-center mb-8">
+          <div className="flex items-center">
+            <Image
+              src="/doubletap-logo.webp"
+              alt="Double Tap Logo"
+              width={180}
+              height={80}
+              className="h-12 md:h-16 w-auto"
+              priority
+            />
+          </div>
+          
+          {/* Navigation menu could go here in the future */}
+          <div className="hidden md:flex space-x-6">
+            <a href="#contact" className="text-brand-beige hover:text-white transition-colors font-montserrat font-medium">
+              Registrace
+            </a>
+          </div>
+        </div>
+      </div>
+      
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center justify-center mb-8 bg-brand-red bg-opacity-20 px-6 py-3 rounded-full transform transition-all duration-300 hover:scale-110 hover:bg-opacity-30">

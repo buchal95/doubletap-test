@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
 import { Loader2, AlertTriangle, MapPin } from 'lucide-react';
@@ -264,7 +265,17 @@ const Contact: React.FC = () => {
         
         <div className="max-w-2xl mx-auto mb-12">
           <div className="bg-brand-beige p-8 md:p-10 rounded-2xl shadow-md">
-            <h3 className="text-2xl font-anton mb-8 text-brand-gray">Registrace na kurz s 82% dotací</h3>
+            {/* Logo in contact form */}
+            <div className="text-center mb-8">
+              <Image
+                src="/doubletap-logo.webp"
+                alt="Double Tap Logo"
+                width={150}
+                height={70}
+                className="mx-auto h-12 w-auto mb-4"
+              />
+              <h3 className="text-2xl font-anton text-brand-gray">Registrace na kurz s 82% dotací</h3>
+            </div>
             
             <ContactForm />
           </div>
