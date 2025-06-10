@@ -6,13 +6,13 @@ import { Star, Heart } from 'lucide-react';
 
 const SocialProof: React.FC = () => {
   const allLogos = [
-    { src: '/proteinaco-logo.png', alt: 'Protein a Co', width: 160, height: 50 },
-    { src: '/florea-logo.png', alt: 'Florea', width: 120, height: 40 },
-    { src: '/xinzuo-logo.png', alt: 'Xinzuo', width: 120, height: 40 },
-    { src: '/alkoholcz-logo.webp', alt: 'Alkohol.cz', width: 140, height: 45 },
-    { src: '/himalife-logo.webp', alt: 'Himalife', width: 130, height: 42 },
-    { src: '/naturway-logo.webp', alt: 'Naturway', width: 135, height: 44 },
-    { src: '/zoot-logo.webp', alt: 'Zoot', width: 110, height: 38 }
+    { src: '/proteinaco-logo.png', alt: 'Protein a Co' },
+    { src: '/florea-logo.png', alt: 'Florea' },
+    { src: '/xinzuo-logo.png', alt: 'Xinzuo' },
+    { src: '/alkoholcz-logo.webp', alt: 'Alkohol.cz' },
+    { src: '/himalife-logo.webp', alt: 'Himalife' },
+    { src: '/naturway-logo.webp', alt: 'Naturway' },
+    { src: '/zoot-logo.webp', alt: 'Zoot' }
   ];
 
   const [currentLogoSet, setCurrentLogoSet] = useState(0);
@@ -73,7 +73,7 @@ const SocialProof: React.FC = () => {
           <h2 className="text-2xl md:text-3xl font-anton text-brand-gray mb-2">
             Naši lektoři tvořili videa pro tyto společnosti
           </h2>
-          <p className="text-brand-gray/60 font-montserrat">Double tap pro další značky</p>
+          <p className="text-brand-gray/60 font-montserrat">Automaticky se mění každé 4 sekundy</p>
         </div>
         
         {/* Interactive logo container */}
@@ -92,19 +92,22 @@ const SocialProof: React.FC = () => {
                   animationDelay: `${index * 150}ms`
                 }}
               >
-                <Image 
-                  src={logo.src} 
-                  alt={logo.alt} 
-                  width={logo.width} 
-                  height={logo.height} 
-                  className="h-12 md:h-16 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
-                />
+                {/* Fixed container for consistent sizing */}
+                <div className="w-32 h-16 md:w-40 md:h-20 flex items-center justify-center bg-white/50 rounded-lg backdrop-blur-sm border border-white/30 p-3">
+                  <Image 
+                    src={logo.src} 
+                    alt={logo.alt} 
+                    width={150}
+                    height={75}
+                    className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+                </div>
               </div>
             ))}
 
             {/* Animated finger */}
             <div 
-              className={`absolute pointer-events-none transition-all duration-500 ${
+              className={`absolute pointer-events-none transition-all duration-500 z-10 ${
                 isAnimating ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
               }`}
               style={{
@@ -129,7 +132,7 @@ const SocialProof: React.FC = () => {
 
             {/* Instagram-style heart */}
             <div 
-              className={`absolute pointer-events-none transition-all duration-500 ${
+              className={`absolute pointer-events-none transition-all duration-500 z-10 ${
                 showHeart ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
               }`}
               style={{
@@ -148,7 +151,7 @@ const SocialProof: React.FC = () => {
             {/* Ripple effect */}
             {isAnimating && (
               <div 
-                className="absolute pointer-events-none"
+                className="absolute pointer-events-none z-10"
                 style={{
                   left: `calc(50% + ${fingerPosition.x}px)`,
                   top: `calc(50% + ${fingerPosition.y}px)`,
