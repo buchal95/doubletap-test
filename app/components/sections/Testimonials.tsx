@@ -73,7 +73,7 @@ const Testimonials: React.FC = () => {
           <div className="aspect-w-16 aspect-h-9 max-w-3xl mx-auto mb-6">
             <iframe
               src="https://www.youtube.com/embed/nuhI-mo_vmY"
-              title="Video testimonial od absolventky kurzu"
+              title="Video testimonial od absolventky kurzu - Tina"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -82,10 +82,9 @@ const Testimonials: React.FC = () => {
           </div>
           
           <p className="text-brand-gray/80 font-montserrat max-w-2xl mx-auto mb-4">
-            "Kurz byl přesně to, co jsem potřebovala. Dnes si vydělávám tvorbou videí. 
-            Živím se tím, co mě baví."
+            "Kurz se mi velmi líbil a taky mi hodně dal. Jsem si sebejistější ve tvorbě videí a contentu na sociální sítě."
           </p>
-          <p className="font-anton text-brand-gray">Lucie Pokorná, freelancer</p>
+          <p className="font-anton text-brand-gray">Tina, absolventka kurzu</p>
         </div>
         
         {/* Call to action */}
