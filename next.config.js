@@ -18,14 +18,21 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 31536000, // 1 year for static images
   },
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['lucide-react'],
+    optimizeCss: true,
   },
   // Compression
   compress: true,
-  // PWA-ready headers
+  // Production optimizations
+  swcMinify: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
+  
+  // Performance headers
   async headers() {
     return [
       {
@@ -59,6 +66,36 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'no-cache, no-store, must-revalidate',
+          },
+        ],
+      },
+      // Cache static assets aggressively
+      {
+        source: '/(.*)\\.(jpg|jpeg|png|gif|webp|avif|ico|svg)$',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, immutable, max-age=31536000', // 1 year
+          },
+        ],
+      },
+      // Cache fonts
+      {
+        source: '/(.*)\\.(woff|woff2|eot|ttf|otf)$',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, immutable, max-age=31536000', // 1 year
+          },
+        ],
+      },
+      // Cache CSS and JS
+      {
+        source: '/(.*)\\.(css|js)$',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },

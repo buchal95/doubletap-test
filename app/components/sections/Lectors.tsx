@@ -16,7 +16,7 @@ const Lectors: React.FC = () => {
       description: "Už přes 10 let dělá social media marketing a videa točí tak dobře, že by mu to záviděl i algoritmus. Pracoval pro ZOOT, Dáme jídlo nebo Zentivu. Baví ho kreativita, humor a hlavně nadchnout ostatní, aby se nebáli projevit.",
       highlight: "Algoritmus whisperer",
       personality: "Kreativní chaos",
-      objectPosition: "center top" // Show more of the face/head area
+      objectPosition: "center top"
     },
     {
       name: "Kateřina Hůšová", 
@@ -27,7 +27,7 @@ const Lectors: React.FC = () => {
       description: "Je duší celého týmu. Neumí improvizovat (ale zato umí všechno ostatní), má cit pro vizuálno, vtip a timing. Když vám něco vysvětluje, tak se to fakt naučíte.",
       highlight: "Učí tak, že to pochopíte",
       personality: "Vizuální génius",
-      objectPosition: "center top" // Show more of the face/head area
+      objectPosition: "center top"
     },
     {
       name: "Jan Buchal",
@@ -38,7 +38,7 @@ const Lectors: React.FC = () => {
       description: "Neumí improvizovat, ale všechno ostatní mu jde skvěle. Je precizní, přemýšlí nad každým detailem a kdyby byl hashtagem, byl by to #strateg.",
       highlight: "Anti-improvizace",
       personality: "#strateg",
-      objectPosition: "center center" // Keep Jan's positioning as is
+      objectPosition: "center center"
     }
   ];
 
@@ -67,7 +67,7 @@ const Lectors: React.FC = () => {
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                     style={{ objectPosition: lector.objectPosition }}
                     priority={index === 0}
-                    unoptimized={true}
+                    loading={index === 0 ? "eager" : "lazy"}
                   />
                 </div>
                 

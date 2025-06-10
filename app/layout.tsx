@@ -2,19 +2,23 @@ import type { Metadata } from 'next'
 import { Anton, Montserrat } from 'next/font/google'
 import './globals.css'
 
-// Optimize font loading with Next.js built-in optimization
+// Optimize font loading with better performance settings
 const anton = Anton({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-anton',
-  display: 'swap',
+  display: 'swap', // Důležité pro rychlé zobrazení textu
+  preload: true,
+  fallback: ['system-ui', 'arial'],
 })
 
 const montserrat = Montserrat({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
   variable: '--font-montserrat',
-  display: 'swap',
+  display: 'swap', // Důležité pro rychlé zobrazení textu
+  preload: true,
+  fallback: ['system-ui', 'arial'],
 })
 
 export const metadata: Metadata = {
@@ -105,8 +109,8 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code', // Add your Google Search Console verification
-    yandex: 'your-yandex-verification-code', // Add if targeting Eastern Europe
+    google: 'your-google-verification-code',
+    yandex: 'your-yandex-verification-code',
   },
   category: 'education',
 }
@@ -119,6 +123,14 @@ export default function RootLayout({
   return (
     <html lang="cs" className={`${anton.variable} ${montserrat.variable}`}>
       <head>
+        {/* Preload critical resources */}
+        <link rel="preload" href="/doubletap-logo.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/hero-image.webp" as="image" type="image/webp" />
+        
+        {/* DNS prefetch for external domains */}
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="//images.pexels.com" />
+        
         {/* Initialize dataLayer first */}
         <script
           dangerouslySetInnerHTML={{
@@ -130,17 +142,17 @@ export default function RootLayout({
           }}
         />
         
-        {/* Google Tag Manager */}
+        {/* Google Tag Manager with defer */}
         <script
+          defer
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.defer=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-M3ZNVD4K');`
           }}
         />
-        {/* End Google Tag Manager */}
         
         <link rel="icon" type="image/png" sizes="16x16" href="/fav16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/fav32.png" />
@@ -238,7 +250,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{display:'none', visibility:'hidden'}}
           ></iframe>
         </noscript>
-        {/* End Google Tag Manager (noscript) */}
         
         {children}
       </body>

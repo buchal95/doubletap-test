@@ -432,7 +432,7 @@ const Contact: React.FC = () => {
         
         <div className="max-w-2xl mx-auto mb-12">
           <div className="bg-brand-beige p-8 md:p-10 rounded-2xl shadow-md">
-            {/* Logo in contact form with beige background - no extra background needed */}
+            {/* Logo in contact form */}
             <div className="text-center mb-8">
               <Image
                 src="/doubletap-logo.webp"
@@ -440,6 +440,7 @@ const Contact: React.FC = () => {
                 width={150}
                 height={70}
                 className="mx-auto h-12 w-auto mb-4"
+                loading="lazy"
               />
               <h3 className="text-2xl font-anton text-brand-gray">Registrace na kurz s 82% dotací</h3>
             </div>

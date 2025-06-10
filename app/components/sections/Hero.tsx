@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import CTAButton from '../common/CTAButton';
 import { MapPin } from 'lucide-react';
 
@@ -82,15 +83,22 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative py-20 md:py-32 bg-brand-gray text-white overflow-hidden">
-      {/* Hero background image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-30"
-        style={{
-          backgroundImage: "url('/hero-image.webp')"
-        }}
-      ></div>
+      {/* Optimized hero background image */}
+      <div className="absolute inset-0 bg-brand-gray">
+        <Image
+          src="/hero-image.webp"
+          alt="Profesionální tvorba videí"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover opacity-30"
+          placeholder="blur"
+          blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA"
+        />
+      </div>
       
-      {/* Dark overlay for better text readability */}
+      {/* Optimized dark overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-brand-gray/60 via-brand-gray/70 to-brand-gray/80"></div>
       
       <div className="container mx-auto px-4 relative z-10">

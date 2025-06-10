@@ -28,13 +28,13 @@ const SocialProof: React.FC = () => {
     };
     
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener('resize', checkMobile, { passive: true });
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Get current logos based on screen size
   const getCurrentLogos = () => {
-    const logosPerSet = isMobile ? 2 : 3; // Show 2 logos on mobile, 3 on desktop
+    const logosPerSet = isMobile ? 2 : 3;
     const start = currentLogoSet * logosPerSet;
     return allLogos.slice(start, start + logosPerSet);
   };
@@ -59,7 +59,6 @@ const SocialProof: React.FC = () => {
 
     setIsAnimating(true);
     
-    // Random finger position - adjust for mobile
     const maxX = isMobile ? 150 : 200;
     const maxY = isMobile ? 80 : 100;
     setFingerPosition({
@@ -67,11 +66,9 @@ const SocialProof: React.FC = () => {
       y: Math.random() * maxY - maxY/2
     });
 
-    // Finger tap animation
     setTimeout(() => {
       setShowHeart(true);
       
-      // Change logos
       setTimeout(() => {
         setCurrentLogoSet((prev) => {
           const maxSets = getMaxSets();
@@ -79,7 +76,6 @@ const SocialProof: React.FC = () => {
         });
       }, 300);
 
-      // Hide heart and reset animation
       setTimeout(() => {
         setShowHeart(false);
         setIsAnimating(false);
@@ -112,14 +108,14 @@ const SocialProof: React.FC = () => {
                   animationDelay: `${index * 150}ms`
                 }}
               >
-                {/* Responsive container for consistent sizing */}
                 <div className="w-24 h-12 sm:w-28 sm:h-14 md:w-32 md:h-16 lg:w-40 lg:h-20 flex items-center justify-center bg-white/50 rounded-lg backdrop-blur-sm border border-white/30 p-2 md:p-3">
                   <Image 
                     src={logo.src} 
                     alt={logo.alt} 
                     width={150}
                     height={75}
-                    unoptimized={true}
+                    loading="lazy"
+                    sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, (max-width: 1024px) 128px, 160px"
                     className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
                   />
                 </div>
@@ -138,20 +134,18 @@ const SocialProof: React.FC = () => {
               }}
             >
               <div className="relative">
-                {/* Finger icon - smaller on mobile */}
                 <div className={`text-2xl md:text-4xl transition-transform duration-200 ${
                   isAnimating ? 'animate-pulse scale-90' : ''
                 }`}>
                   👆
                 </div>
                 
-                {/* Double tap indicator - smaller on mobile */}
                 <div className="absolute -top-1 md:-top-2 -right-1 md:-right-2 w-2 h-2 md:w-3 md:h-3 bg-brand-red rounded-full animate-ping"></div>
                 <div className="absolute -top-0.5 md:-top-1 -right-0.5 md:-right-1 w-1.5 h-1.5 md:w-2 md:h-2 bg-brand-red rounded-full"></div>
               </div>
             </div>
 
-            {/* Instagram-style heart - responsive size */}
+            {/* Instagram-style heart */}
             <div 
               className={`absolute pointer-events-none transition-all duration-500 z-10 ${
                 showHeart ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
@@ -169,7 +163,7 @@ const SocialProof: React.FC = () => {
               />
             </div>
 
-            {/* Ripple effect - responsive size */}
+            {/* Ripple effect */}
             {isAnimating && (
               <div 
                 className="absolute pointer-events-none z-10"
@@ -185,7 +179,7 @@ const SocialProof: React.FC = () => {
             )}
           </div>
 
-          {/* Progress dots - responsive */}
+          {/* Progress dots */}
           <div className="flex justify-center space-x-2 mb-8">
             {Array.from({ length: getMaxSets() }).map((_, index) => (
               <button
