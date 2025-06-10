@@ -14,11 +14,11 @@ const Subsidy: React.FC = () => {
   ];
 
   const subsidySteps = [
-    "Registrujete se online přes datovou schránku nebo bankovní identitu",
-    "Zařadíte se do evidence zájemců o zaměstnání (po kurzu se můžete odhlásit)",
-    "Požádáte o dotaci minimálně 30 dní před kurzem",
-    "Zaplatíte jen 18% (2 700 Kč) před začátkem kurzu",
-    "Absolvujete kurz s min. 80% účastí",
+    "Kontaktujete nás a potvrdíte zájem o kurz",
+    "Požádáte o dotaci na Úřadu práce minimálně 30 dní před kurzem",
+    "Úřad práce schválí vaši žádost o dotaci",
+    "Zaplatíte pouze spoluúčast 2 700 Kč před začátkem kurzu",
+    "Absolvujete kurz s minimálně 80% účastí",
     "Stát zaplatí zbytek (12 300 Kč) po úspěšném dokončení"
   ];
 

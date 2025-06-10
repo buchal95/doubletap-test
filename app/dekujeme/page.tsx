@@ -69,7 +69,7 @@ export default function ThankYouPage() {
                 </div>
                 <h3 className="font-anton text-brand-gray mb-2">Kontakt do 24-48 hodin</h3>
                 <p className="text-sm text-brand-gray/80 font-montserrat">
-                  Ozveme se vám s informacemi o dostupných termínech kurzu a procesu registrace
+                  Ozveme se vám s informacemi o dostupných termínech kurzu a procesu získání dotace
                 </p>
               </div>
               
@@ -77,9 +77,9 @@ export default function ThankYouPage() {
                 <div className="bg-brand-olive text-white rounded-full w-10 h-10 flex items-center justify-center font-anton text-lg mx-auto mb-3">
                   2
                 </div>
-                <h3 className="font-anton text-brand-gray mb-2">Registrace na ÚP</h3>
+                <h3 className="font-anton text-brand-gray mb-2">Žádost o dotaci</h3>
                 <p className="text-sm text-brand-gray/80 font-montserrat">
-                  Pomůžeme vám s registrací na Úřadu práce pro získání 82% dotace
+                  Pomůžeme vám s podáním žádosti o 82% dotaci na Úřadu práce
                 </p>
               </div>
               
@@ -95,14 +95,14 @@ export default function ThankYouPage() {
             </div>
           </div>
 
-          {/* Important information about Úřad práce */}
+          {/* Important information about application process */}
           <div className="bg-brand-red/10 border border-brand-red/20 rounded-xl p-6 mb-8">
             <div className="flex items-start">
               <FileText className="w-6 h-6 text-brand-red mt-1 mr-4 flex-shrink-0" />
               <div className="text-left">
-                <h3 className="font-anton text-lg text-brand-red mb-2">Registrace na Úřadu práce</h3>
+                <h3 className="font-anton text-lg text-brand-red mb-2">Žádost o dotaci</h3>
                 <p className="text-brand-gray/80 font-montserrat text-sm leading-relaxed">
-                  <strong>Důležité:</strong> Pro získání 82% dotace je nutná registrace na Úřadu práce minimálně 30 dní před začátkem kurzu. 
+                  <strong>Důležité:</strong> Žádost o 82% dotaci je nutné podat minimálně 30 dní před začátkem kurzu. 
                   Detailně vás provedeme celým procesem a pomůžeme s vyřízením všech náležitostí.
                 </p>
               </div>

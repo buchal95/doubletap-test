@@ -52,12 +52,12 @@ const FAQ: React.FC = () => {
       answer: "Maximálně 10. Každému se věnujeme individuálně, aby si každý účastník odnesl maximum."
     },
     {
-      question: "Musím být nezaměstnaný, abych získal dotaci?",
-      answer: "Ne! Dotaci může získat prakticky každý - zaměstnanci, OSVČ, studenti, rodiče na mateřské i důchodci. Stačí se zaregistrovat do evidence zájemců o zaměstnání, po kurzu se můžete odhlásit."
+      question: "Kdo může dotaci využít?",
+      answer: "Prakticky každý občan ČR starší 18 let - zaměstnanci, OSVČ, studenti, rodiče na mateřské i důchodci. Dotaci lze čerpat bez ohledu na současný pracovní status."
     },
     {
       question: "Jak dlouho trvá schválení dotace?",
-      answer: "Oficiálně má Úřad práce 30 dní, ale doporučujeme podat žádost co nejdříve. Registrace musí být minimálně 30 dní před začátkem kurzu."
+      answer: "Oficiálně má Úřad práce 30 dní na vyřízení žádosti, ale doporučujeme podat žádost co nejdříve. Žádost musí být podána minimálně 30 dní před začátkem kurzu."
     },
     {
       question: "Do kdy musím využít 82% dotaci?",
