@@ -419,13 +419,13 @@ const Contact: React.FC = () => {
           </div>
         </div>
 
-        {/* Location highlight */}
+        {/* Location highlight - removed specific venue details */}
         <div className="bg-brand-beige border border-brand-olive/20 rounded-xl p-6 mb-8 max-w-3xl mx-auto">
           <div className="flex items-center justify-center">
             <MapPin className="w-8 h-8 text-brand-olive mr-4" />
             <div className="text-center">
               <h4 className="font-anton text-xl text-brand-gray mb-1">Kurz se koná osobně v Praze</h4>
-              <p className="text-brand-gray/80 font-montserrat">Moderní prostory vybavené vším potřebným pro praktickou výuku</p>
+              <p className="text-brand-gray/80 font-montserrat">Přesnou adresu oznámíme po potvrzení registrace</p>
             </div>
           </div>
         </div>
