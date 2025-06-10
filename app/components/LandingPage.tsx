@@ -3,6 +3,7 @@ import Hero from './sections/Hero';
 import SocialProof from './sections/SocialProof';
 import PainPoints from './sections/PainPoints';
 import CourseOverview from './sections/CourseOverview';
+import Lectors from './sections/Lectors';
 import Benefits from './sections/Benefits';
 import Schedule from './sections/Schedule';
 import Testimonials from './sections/Testimonials';
@@ -19,6 +20,7 @@ const LandingPage: React.FC = () => {
       <Hero />
       <SocialProof />
       <CourseOverview />
+      <Lectors />
       <PainPoints />
       <Schedule />
       <Testimonials />
