@@ -82,10 +82,20 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative py-20 md:py-32 bg-brand-gray text-white overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/2833037/pexels-photo-2833037.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] opacity-20 bg-cover bg-center"></div>
+      {/* Hero background image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-30"
+        style={{
+          backgroundImage: "url('/hero-image.webp')"
+        }}
+      ></div>
+      
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-brand-gray/60 via-brand-gray/70 to-brand-gray/80"></div>
+      
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center mb-8 bg-brand-red bg-opacity-20 px-6 py-3 rounded-full transform transition-all duration-300 hover:scale-110 hover:bg-opacity-30">
+          <div className="inline-flex items-center justify-center mb-8 bg-brand-red bg-opacity-90 px-6 py-3 rounded-full transform transition-all duration-300 hover:scale-110 hover:bg-opacity-100 shadow-lg backdrop-blur-sm">
             <span className="text-lg font-montserrat font-bold">82% hradí stát. Platíte jen 2 700 Kč.</span>
           </div>
           
@@ -98,7 +108,7 @@ const Hero: React.FC = () => {
           </p>
 
           <div className="mb-8">
-            <div className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
+            <div className="inline-flex items-center justify-center bg-white/15 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20 shadow-lg">
               <MapPin className="w-5 h-5 mr-2 text-brand-olive" />
               <span className="font-montserrat font-semibold">Kurz se koná osobně v Praze</span>
             </div>
@@ -107,7 +117,7 @@ const Hero: React.FC = () => {
           <div className="mb-8">
             <CTAButton 
               text="Chci využít 82% dotaci" 
-              className="w-full sm:w-auto shadow-lg text-xl py-4 px-12 transform transition-all duration-300 hover:scale-110" 
+              className="w-full sm:w-auto shadow-2xl text-xl py-4 px-12 transform transition-all duration-300 hover:scale-110 backdrop-blur-sm" 
             />
           </div>
           
