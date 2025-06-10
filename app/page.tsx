@@ -1,15 +1,21 @@
+'use client';
+
+import { useEffect } from 'react';
 import LandingPage from './components/LandingPage';
 import { trackPageView, initializeDataLayer } from '../utils/dataLayer';
 
 export default function Home() {
-  // Initialize page tracking (this will run on client side)
-  if (typeof window !== 'undefined') {
+  useEffect(() => {
+    // Initialize dataLayer first
     initializeDataLayer();
+    
     // Track page view after component mount
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       trackPageView('home');
-    }, 1000);
-  }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return <LandingPage />;
 }

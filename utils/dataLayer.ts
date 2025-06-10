@@ -59,6 +59,16 @@ declare global {
 export const initializeDataLayer = () => {
   if (typeof window !== 'undefined') {
     window.dataLayer = window.dataLayer || [];
+    
+    // Push a test event immediately to verify dataLayer is working
+    console.log('🔥 DataLayer initialized - pushing test event');
+    pushToDataLayer({
+      event: 'datalayer_ready',
+      event_category: 'debug',
+      event_label: 'initialization',
+      page_title: document.title,
+      page_location: window.location.href
+    });
   }
 };
 
@@ -147,13 +157,17 @@ const createAdvancedMatching = (userData: {
 // Generic function to push events to dataLayer
 export const pushToDataLayer = (data: BaseEventData | FormEventData | ConversionEventData) => {
   if (typeof window !== 'undefined' && window.dataLayer) {
-    console.log('DataLayer Push:', data);
+    console.log('🚀 DataLayer Push:', data);
     window.dataLayer.push(data);
+  } else {
+    console.warn('⚠️ DataLayer not available:', data);
   }
 };
 
 // Track when user starts filling the form
 export const trackFormStart = (formData?: Partial<FormEventData['user_data']>) => {
+  console.log('📝 Form start tracked with data:', formData);
+  
   pushToDataLayer({
     event: 'form_start',
     event_category: 'engagement',
@@ -166,6 +180,8 @@ export const trackFormStart = (formData?: Partial<FormEventData['user_data']>) =
 
 // Track form field interactions
 export const trackFormInteraction = (fieldName: string, value?: string) => {
+  console.log(`⌨️ Form interaction: ${fieldName} = ${value ? 'filled' : 'empty'}`);
+  
   pushToDataLayer({
     event: 'form_interaction',
     event_category: 'engagement',
@@ -179,6 +195,8 @@ export const trackFormInteraction = (fieldName: string, value?: string) => {
 
 // Track form submission attempt
 export const trackFormSubmit = (formData: FormEventData['user_data']) => {
+  console.log('📤 Form submit tracked with data:', formData);
+  
   pushToDataLayer({
     event: 'form_submit',
     event_category: 'conversion',
@@ -198,12 +216,16 @@ export const trackFormSuccess = (orderData?: {
   phone?: string;
   preferredMonth?: string;
 }) => {
+  console.log('✅ Form success tracked with data:', orderData);
+  
   const advancedMatching = orderData ? createAdvancedMatching({
     email: orderData.email,
     firstName: orderData.firstName,
     lastName: orderData.lastName,
     phone: orderData.phone
   }) : {};
+
+  console.log('🎯 Advanced matching data:', advancedMatching);
 
   // Standard form success event
   pushToDataLayer({
@@ -234,6 +256,8 @@ export const trackFormSuccess = (orderData?: {
 
 // Track form errors
 export const trackFormError = (errorMessage: string, formData?: FormEventData['user_data']) => {
+  console.log('❌ Form error tracked:', errorMessage, formData);
+  
   pushToDataLayer({
     event: 'form_error',
     event_category: 'error',
@@ -247,6 +271,8 @@ export const trackFormError = (errorMessage: string, formData?: FormEventData['u
 
 // Track page views
 export const trackPageView = (pageName: string, additionalData?: Record<string, any>) => {
+  console.log('👁️ Page view tracked:', pageName);
+  
   pushToDataLayer({
     event: 'page_view',
     event_category: 'engagement',
@@ -259,6 +285,8 @@ export const trackPageView = (pageName: string, additionalData?: Record<string, 
 
 // Track CTA button clicks
 export const trackCTAClick = (buttonText: string, location: string) => {
+  console.log('🖱️ CTA click tracked:', buttonText, location);
+  
   pushToDataLayer({
     event: 'cta_click',
     event_category: 'engagement',
@@ -290,3 +318,38 @@ export const trackScrollDepth = (depth: 25 | 50 | 75 | 100) => {
     page_title: typeof document !== 'undefined' ? document.title : ''
   } as ConversionEventData);
 };
+
+// TEST FUNCTION - Use this to test dataLayer manually
+export const testDataLayerEvents = () => {
+  console.log('🧪 Testing dataLayer events...');
+  
+  // Test basic event
+  pushToDataLayer({
+    event: 'test_event',
+    event_category: 'test',
+    event_label: 'manual_test'
+  });
+  
+  // Test form start
+  trackFormStart({
+    email: 'test@example.com',
+    first_name: 'Jan',
+    last_name: 'Testovací',
+    phone: '+420123456789'
+  });
+  
+  // Test fb_lead event
+  trackFormSuccess({
+    orderId: 'TEST123',
+    email: 'test@example.com',
+    firstName: 'Jan',
+    lastName: 'Testovací', 
+    phone: '+420123456789',
+    preferredMonth: 'Leden'
+  });
+};
+
+// Make test function available globally for browser console
+if (typeof window !== 'undefined') {
+  (window as any).testDataLayerEvents = testDataLayerEvents;
+}
