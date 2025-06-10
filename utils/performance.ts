@@ -44,9 +44,9 @@ export const preloadRoute = (href: string) => {
 };
 
 // Debounce scroll events for performance
-export const debounce = (func: Function, wait: number) => {
+export const debounce = <T extends (...args: any[]) => any>(func: T, wait: number): ((...args: Parameters<T>) => void) => {
   let timeout: NodeJS.Timeout;
-  return function executedFunction(...args: any[]) {
+  return (...args: Parameters<T>) => {
     const later = () => {
       clearTimeout(timeout);
       func(...args);
@@ -57,11 +57,11 @@ export const debounce = (func: Function, wait: number) => {
 };
 
 // Throttle resize events
-export const throttle = (func: Function, limit: number) => {
+export const throttle = <T extends (...args: any[]) => any>(func: T, limit: number): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean;
-  return function(...args: any[]) {
+  return (...args: Parameters<T>) => {
     if (!inThrottle) {
-      func.apply(this, args);
+      func(...args);
       inThrottle = true;
       setTimeout(() => inThrottle = false, limit);
     }
