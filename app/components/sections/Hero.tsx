@@ -17,6 +17,7 @@ interface CalendarEvent {
 const Hero: React.FC = () => {
   const [nextEvent, setNextEvent] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [heroImageError, setHeroImageError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchNextEvent = async () => {
@@ -83,39 +84,41 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative py-20 md:py-32 bg-brand-gray text-white overflow-hidden">
-      {/* Hero background with gradient fallback */}
+      {/* Hero background with improved fallback */}
       <div className="absolute inset-0 bg-gradient-to-br from-brand-gray via-brand-gray/95 to-brand-olive/10">
-        <Image
-          src="/hero-image.webp"
-          alt="Profesionální tvorba videí"
-          fill
-          priority
-          quality={85}
-          sizes="100vw"
-          className="object-cover opacity-30 mix-blend-overlay"
-          placeholder="blur"
-          blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA"
-          onError={() => {
-            // If image fails to load, the gradient background will still be visible
-            console.log('Hero image failed to load, using gradient fallback');
-          }}
-        />
+        {!heroImageError && (
+          <Image
+            src="/hero-image.webp"
+            alt="Profesionální tvorba videí"
+            fill
+            priority
+            quality={85}
+            sizes="100vw"
+            className="object-cover opacity-30 mix-blend-overlay"
+            placeholder="blur"
+            blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VLIAAAA"
+            onError={() => {
+              setHeroImageError(true);
+              console.log('Hero image failed to load, using gradient fallback');
+            }}
+          />
+        )}
+        
+        {/* Enhanced gradient overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-gray/90 via-brand-gray/60 to-brand-gray/40"></div>
       </div>
-      
-      {/* Optimized dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-gray/60 via-brand-gray/70 to-brand-gray/80"></div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center mb-8 bg-brand-red bg-opacity-20 px-6 py-3 rounded-full transform transition-all duration-300 hover:scale-110 hover:bg-opacity-30">
+          <div className="inline-flex items-center justify-center mb-8 bg-brand-red bg-opacity-20 px-6 py-3 rounded-full transform transition-all duration-300 hover:scale-110 hover:bg-opacity-30 backdrop-blur-sm border border-white/20">
             <span className="text-lg font-montserrat font-bold">82% hradí stát. Platíte jen 2 700 Kč.</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-anton mb-6 leading-tight animate-fade-in">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-anton mb-6 leading-tight animate-fade-in drop-shadow-lg">
             Naučte se natáčet profesionální videa telefonem za 4 dny
           </h1>
           
-          <p className="text-xl md:text-2xl mb-8 text-brand-beige font-montserrat animate-fade-in font-semibold">
+          <p className="text-xl md:text-2xl mb-8 text-brand-beige font-montserrat animate-fade-in font-semibold drop-shadow-md">
             Státní dotace 82% končí koncem roku 2025. Neváhejte!
           </p>
 

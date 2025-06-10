@@ -18,6 +18,7 @@ const Lectors: React.FC = () => {
       nickname: "Marek",
       title: "Video marketing expert a kreativní guru",
       image: "/marek.webp",
+      fallbackUrl: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&dpr=1",
       expertise: ["Video produkce", "Social media", "Content strategy"],
       description: "Už přes 10 let dělá social media marketing a videa točí tak dobře, že by mu to záviděl i algoritmus. Pracoval pro ZOOT, Dáme jídlo nebo Zentivu. Baví ho kreativita, humor a hlavně nadchnout ostatní, aby se nebáli projevit.",
       highlight: "Algoritmus whisperer",
@@ -30,6 +31,7 @@ const Lectors: React.FC = () => {
       nickname: "Kačis",
       title: "Duše týmu a vizuální čarodějka",
       image: "/kata.webp",
+      fallbackUrl: "https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&dpr=1",
       expertise: ["Vizuální styl", "Trendy", "Výuka"],
       description: "Je duší celého týmu. Neumí improvizovat (ale zato umí všechno ostatní), má cit pro vizuálno, vtip a timing. Když vám něco vysvětluje, tak se to fakt naučíte.",
       highlight: "Učí tak, že to pochopíte",
@@ -42,6 +44,7 @@ const Lectors: React.FC = () => {
       nickname: "Honza", 
       title: "Stratég a perfekcionista",
       image: "/honza.webp",
+      fallbackUrl: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&dpr=1",
       expertise: ["Strategie", "Analýza", "Plánování"],
       description: "Neumí improvizovat, ale všechno ostatní mu jde skvěle. Je precizní, přemýšlí nad každým detailem a kdyby byl hashtagem, byl by to #strateg.",
       highlight: "Anti-improvizace",
@@ -69,14 +72,31 @@ const Lectors: React.FC = () => {
               <div className="relative overflow-hidden">
                 <div className="relative w-full h-80">
                   {imageErrors[lector.image] ? (
-                    // Enhanced fallback placeholder when image fails to load
-                    <div className="w-full h-full bg-gradient-to-br from-brand-beige via-brand-olive/10 to-brand-red/5 flex items-center justify-center">
-                      <div className="text-center">
-                        {lector.fallbackIcon}
-                        <p className="text-brand-gray/60 font-montserrat text-sm mt-2">{lector.name}</p>
-                        <p className="text-brand-gray/40 font-montserrat text-xs">{lector.nickname}</p>
+                    // Try fallback URL first, then enhanced placeholder
+                    imageErrors[lector.fallbackUrl] ? (
+                      <div className="w-full h-full bg-gradient-to-br from-brand-beige via-brand-olive/10 to-brand-red/5 flex items-center justify-center">
+                        <div className="text-center">
+                          {lector.fallbackIcon}
+                          <p className="text-brand-gray/60 font-montserrat text-sm mt-2">{lector.name}</p>
+                          <p className="text-brand-gray/40 font-montserrat text-xs">{lector.nickname}</p>
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <Image
+                        src={lector.fallbackUrl}
+                        alt={lector.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        style={{ objectPosition: lector.objectPosition }}
+                        priority={index === 0}
+                        loading={index === 0 ? "eager" : "lazy"}
+                        quality={80}
+                        placeholder="blur"
+                        blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA"
+                        onError={() => handleImageError(lector.fallbackUrl)}
+                      />
+                    )
                   ) : (
                     <Image
                       src={lector.image}
@@ -89,7 +109,7 @@ const Lectors: React.FC = () => {
                       loading={index === 0 ? "eager" : "lazy"}
                       quality={80}
                       placeholder="blur"
-                      blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA"
+                      blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VLIAAAA"
                       onError={() => handleImageError(lector.image)}
                     />
                   )}
