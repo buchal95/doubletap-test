@@ -94,31 +94,31 @@ const SocialProof: React.FC = () => {
           </h2>
         </div>
         
-        {/* Interactive logo container with responsive design */}
-        <div className="relative max-w-4xl mx-auto">
+        {/* Interactive logo container with colorful logos */}
+        <div className="relative max-w-5xl mx-auto">
           <div 
-            className="flex justify-center items-center gap-6 md:gap-12 lg:gap-20 mb-16 min-h-[100px] md:min-h-[120px] cursor-pointer select-none relative"
+            className="flex justify-center items-center gap-8 md:gap-16 lg:gap-20 mb-16 min-h-[120px] md:min-h-[140px] cursor-pointer select-none relative"
             onClick={handleDoubleTap}
           >
             {getCurrentLogos().map((logo, index) => (
               <div
                 key={`${currentLogoSet}-${index}`}
                 className={`transform transition-all duration-700 ${
-                  isAnimating ? 'scale-110 rotate-1' : 'scale-100 hover:scale-105'
-                } opacity-80 hover:opacity-100`}
+                  isAnimating ? 'scale-110 rotate-1' : 'scale-100 hover:scale-110'
+                } shadow-lg hover:shadow-xl`}
                 style={{
                   animationDelay: `${index * 150}ms`
                 }}
               >
-                <div className="w-24 h-12 sm:w-28 sm:h-14 md:w-32 md:h-16 lg:w-40 lg:h-20 flex items-center justify-center bg-white/50 rounded-lg backdrop-blur-sm border border-white/30 p-2 md:p-3">
+                <div className="w-28 h-16 sm:w-32 sm:h-18 md:w-40 md:h-22 lg:w-48 lg:h-28 flex items-center justify-center bg-white rounded-xl backdrop-blur-sm border-2 border-white/40 p-4 md:p-6 shadow-md hover:shadow-lg transition-all duration-300">
                   <Image 
                     src={logo.src} 
                     alt={logo.alt} 
-                    width={150}
-                    height={75}
+                    width={180}
+                    height={100}
                     loading="lazy"
-                    sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, (max-width: 1024px) 128px, 160px"
-                    className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                    sizes="(max-width: 640px) 112px, (max-width: 768px) 128px, (max-width: 1024px) 160px, 192px"
+                    className="max-w-full max-h-full object-contain transition-all duration-300 hover:scale-105"
                   />
                 </div>
               </div>
@@ -197,7 +197,7 @@ const SocialProof: React.FC = () => {
         
         {/* Stats section - responsive layout */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 text-center mb-8 max-w-4xl mx-auto">
-          <div className="p-4 md:p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
+          <div className="p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/60 shadow-md">
             <div className="text-3xl md:text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">24+</div>
             <div className="text-sm md:text-base text-brand-gray/80 font-montserrat text-center mb-3">let zkušeností z marketingu</div>
             <div className="text-xs md:text-sm text-brand-gray/50 font-montserrat italic text-center">
@@ -205,7 +205,7 @@ const SocialProof: React.FC = () => {
             </div>
           </div>
           
-          <div className="p-4 md:p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
+          <div className="p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/60 shadow-md">
             <div className="flex justify-center mb-3">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-5 h-5 md:w-6 md:h-6 text-brand-red fill-brand-red" />
@@ -217,7 +217,7 @@ const SocialProof: React.FC = () => {
             </div>
           </div>
           
-          <div className="p-4 md:p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
+          <div className="p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/60 shadow-md">
             <div className="text-3xl md:text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">82%</div>
             <div className="text-sm md:text-base text-brand-gray/80 font-montserrat text-center mb-3">dotace od státu</div>
             <div className="text-xs md:text-sm text-brand-gray/50 font-montserrat italic text-center">
