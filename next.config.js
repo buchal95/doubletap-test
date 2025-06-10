@@ -20,16 +20,27 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 31536000, // 1 year for static images
   },
+  
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['lucide-react'],
+    // Removed optimizeCss as it can cause SWC issues
   },
-  // Disable SWC minifier if it causes issues and fallback to Terser
+  
+  // SWC Configuration - prefer native SWC but fallback gracefully
   swcMinify: true,
+  compiler: {
+    // Remove console.logs in production
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  
   // Production optimizations
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  
+  // Output configuration for better compatibility
+  output: 'standalone',
   
   // Performance headers
   async headers() {
