@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Clock, AlertTriangle, X } from 'lucide-react';
 
 const StickyCountdown: React.FC = () => {
@@ -73,9 +74,19 @@ const StickyCountdown: React.FC = () => {
       <div className="bg-gradient-to-r from-brand-red to-brand-red/90 text-white shadow-2xl border-t-2 border-white/20">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            {/* Left side - Alert */}
+            {/* Left side - Logo + Alert */}
             <div className="flex items-center">
-              <AlertTriangle className="w-6 h-6 mr-3 animate-pulse flex-shrink-0" />
+              {/* Logo with white background for visibility */}
+              <div className="bg-white rounded-lg p-2 mr-4 hidden sm:block">
+                <Image
+                  src="/doubletap-logo.webp"
+                  alt="Double Tap Logo"
+                  width={80}
+                  height={36}
+                  className="h-6 w-auto"
+                />
+              </div>
+              <AlertTriangle className="w-6 h-6 mr-3 animate-pulse flex-shrink-0 sm:hidden" />
               <div>
                 <div className="font-anton text-lg">82% DOTACE KONČÍ!</div>
                 <div className="text-sm opacity-90">Registrace nutná do 31. 10. 2025</div>

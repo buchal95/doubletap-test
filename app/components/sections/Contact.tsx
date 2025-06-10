@@ -265,7 +265,7 @@ const Contact: React.FC = () => {
         
         <div className="max-w-2xl mx-auto mb-12">
           <div className="bg-brand-beige p-8 md:p-10 rounded-2xl shadow-md">
-            {/* Logo in contact form */}
+            {/* Logo in contact form with beige background - no extra background needed */}
             <div className="text-center mb-8">
               <Image
                 src="/doubletap-logo.webp"

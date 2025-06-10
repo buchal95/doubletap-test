@@ -9,14 +9,17 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <div>
+            {/* Logo with white background for visibility */}
             <div className="mb-6">
-              <Image
-                src="/doubletap-logo.webp"
-                alt="Double Tap Logo"
-                width={200}
-                height={90}
-                className="h-16 w-auto mb-4"
-              />
+              <div className="bg-white rounded-xl p-4 inline-block">
+                <Image
+                  src="/doubletap-logo.webp"
+                  alt="Double Tap Logo"
+                  width={200}
+                  height={90}
+                  className="h-16 w-auto"
+                />
+              </div>
             </div>
             <p className="text-brand-beige font-montserrat mb-4 max-w-md">
               Naučíme vás řemeslo videa. Profesionálně, s humorem a se srdcem.

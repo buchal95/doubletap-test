@@ -9,7 +9,7 @@ export default function ThankYouPage() {
       <div className="max-w-2xl mx-auto text-center">
         <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
           <div className="mb-8">
-            {/* Logo */}
+            {/* Logo with white background - no extra background needed since it's on white */}
             <div className="mb-6">
               <Image
                 src="/doubletap-logo.webp"
