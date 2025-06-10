@@ -131,15 +131,15 @@ export default function ThankYouPage() {
             </div>
           </div>
 
-          {/* Call to action */}
+          {/* Call to action - without specific numbers */}
           <div className="space-y-4">
             <div className="bg-brand-beige rounded-lg p-4">
               <div className="flex items-center justify-center mb-2">
                 <Users className="w-5 h-5 text-brand-olive mr-2" />
-                <span className="font-anton text-brand-gray">Připojte se k 100+ spokojeným absolventům</span>
+                <span className="font-anton text-brand-gray">Připojte se k našim spokojeným absolventům</span>
               </div>
               <p className="text-sm text-brand-gray/80 font-montserrat">
-                Každý měsíc pomáháme desítkám lidí naučit se profesionální tvorbu videí
+                Pomáháme lidem naučit se profesionální tvorbu videí a rozvíjet jejich kreativní dovednosti
               </p>
             </div>
             
