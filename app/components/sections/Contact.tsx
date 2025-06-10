@@ -139,9 +139,9 @@ const ContactForm: React.FC = () => {
       consent: formDataSubmit.get('consent') === 'on'
     };
 
-    // Validate consent
-    if (!data.consent) {
-      const errorMsg = 'Musíte souhlasit se zpracováním osobních údajů';
+    // Validate required fields
+    if (!data.firstName || !data.lastName || !data.email || !phoneNumber) {
+      const errorMsg = 'Všechna povinná pole musí být vyplněna';
       setSubmitMessage(errorMsg);
       trackFormError(errorMsg, {
         email: data.email,
@@ -153,9 +153,9 @@ const ContactForm: React.FC = () => {
       return;
     }
 
-    // Validate required fields
-    if (!data.firstName || !data.lastName || !data.email || !phoneNumber) {
-      const errorMsg = 'Všechna povinná pole musí být vyplněna';
+    // Validate consent
+    if (!data.consent) {
+      const errorMsg = 'Musíte souhlasit se zpracováním osobních údajů';
       setSubmitMessage(errorMsg);
       trackFormError(errorMsg, {
         email: data.email,
@@ -176,22 +176,40 @@ const ContactForm: React.FC = () => {
     });
 
     try {
-      // Simulate a brief processing delay for UX
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Track successful interest registration
-      trackFormSuccess({
-        orderId: `INTEREST_${Date.now()}`, // Generate unique interest ID
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        phone: data.phone,
-        preferredMonth: data.preferredMonth
+      // Call BRJ API to create order in system for tracking
+      const response = await fetch('/api/proxy/order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
 
-      // Redirect to thank you page
-      window.location.href = '/dekujeme';
+      const result = await response.json();
 
+      if (response.ok && result.success) {
+        // Track successful registration with order ID
+        trackFormSuccess({
+          orderId: result.orderNumber || result.hash || `LEAD_${Date.now()}`,
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phone: data.phone,
+          preferredMonth: data.preferredMonth
+        });
+
+        // ✅ KEY CHANGE: Redirect to thank you page instead of payment
+        window.location.href = '/dekujeme';
+      } else {
+        const errorMsg = result.error || 'Došlo k chybě při odesílání formuláře';
+        setSubmitMessage(errorMsg);
+        trackFormError(errorMsg, {
+          email: data.email,
+          first_name: data.firstName,
+          last_name: data.lastName,
+          phone: data.phone
+        });
+      }
     } catch (error) {
       console.error('Form submission error:', error);
       const errorMsg = 'Došlo k neočekávané chybě. Zkuste to prosím znovu.';
@@ -202,6 +220,7 @@ const ContactForm: React.FC = () => {
         last_name: data.lastName,
         phone: data.phone
       });
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -382,10 +401,10 @@ const ContactForm: React.FC = () => {
         {isSubmitting ? (
           <>
             <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-            Zpracovávám váš zájem...
+            Zpracovávám registraci...
           </>
         ) : (
-          'Projevit zájem o kurz'
+          'Registrovat zájem o kurz'
         )}
       </button>
     </form>
@@ -397,8 +416,8 @@ const Contact: React.FC = () => {
     <section id="contact" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <SectionHeading 
-          title="Využijte 82% státní dotaci" 
-          subtitle="Platíte jen 2 700 Kč místo 15 000 Kč • Registrace nutná do 31. 10. 2025"
+          title="Registrace zájmu o kurz s 82% dotací" 
+          subtitle="Po registraci vás budeme kontaktovat s dalšími informacemi o termínech a procesu"
         />
 
         {/* Warning about program ending */}
@@ -414,7 +433,7 @@ const Contact: React.FC = () => {
           </div>
         </div>
 
-        {/* Location highlight - removed specific venue details */}
+        {/* Location highlight */}
         <div className="bg-brand-beige border border-brand-olive/20 rounded-xl p-6 mb-8 max-w-3xl mx-auto">
           <div className="flex items-center justify-center">
             <MapPin className="w-8 h-8 text-brand-olive mr-4" />
@@ -437,9 +456,9 @@ const Contact: React.FC = () => {
                 className="mx-auto h-12 w-auto mb-4"
                 loading="lazy"
               />
-              <h3 className="text-2xl font-anton text-brand-gray">Projev zájmu o kurz s 82% dotací</h3>
+              <h3 className="text-2xl font-anton text-brand-gray">Registrace zájmu o kurz s 82% dotací</h3>
               <p className="text-brand-gray/60 font-montserrat mt-2">
-                Po odeslání formuláře vás budeme kontaktovat s dalšími informacemi
+                Po odeslání vás budeme kontaktovat s dalšími informacemi
               </p>
             </div>
             
