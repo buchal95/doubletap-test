@@ -17,7 +17,6 @@ interface CalendarEvent {
 const Hero: React.FC = () => {
   const [nextEvent, setNextEvent] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [heroImageError, setHeroImageError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchNextEvent = async () => {
@@ -82,31 +81,25 @@ const Hero: React.FC = () => {
     fetchNextEvent();
   }, []);
 
-  const handleHeroImageError = () => {
-    setHeroImageError(true);
-  };
-
   return (
     <section className="relative py-20 md:py-32 bg-brand-gray text-white overflow-hidden">
-      {/* Hero background image with fallback */}
-      <div className="absolute inset-0 bg-brand-gray">
-        {!heroImageError ? (
-          <Image
-            src="/hero-image.webp"
-            alt="Profesionální tvorba videí"
-            fill
-            priority
-            quality={85}
-            sizes="100vw"
-            className="object-cover opacity-30"
-            placeholder="blur"
-            blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA"
-            onError={handleHeroImageError}
-          />
-        ) : (
-          // Fallback gradient background when image fails
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-gray via-brand-gray/90 to-brand-olive/20"></div>
-        )}
+      {/* Hero background with gradient fallback */}
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-gray via-brand-gray/95 to-brand-olive/10">
+        <Image
+          src="/hero-image.webp"
+          alt="Profesionální tvorba videí"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover opacity-30 mix-blend-overlay"
+          placeholder="blur"
+          blurDataURL="data:image/webp;base64,UklGRpABAABXRUJQVlA4WAoAAAABAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA"
+          onError={() => {
+            // If image fails to load, the gradient background will still be visible
+            console.log('Hero image failed to load, using gradient fallback');
+          }}
+        />
       </div>
       
       {/* Optimized dark overlay */}

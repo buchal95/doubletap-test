@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Performance utilities for optimizing Core Web Vitals
 
 // Lazy load components after critical content
