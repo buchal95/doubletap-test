@@ -121,11 +121,11 @@ export default function ThankYouPage() {
                 <ul className="text-left space-y-2">
                   <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
                     <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
-                    Zaplatíte pouze <strong className="text-brand-red">2 700 Kč</strong> (18% z celkové ceny)
+                    Zaplatíte pouze <strong className="text-brand-red">2 700 Kč</strong> (18 % z celkové ceny)
                   </li>
                   <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
                     <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
-                    Stát uhradí zbývajících <strong>12 300 Kč</strong> (82% dotace)
+                    Stát uhradí zbývajících <strong>12 300 Kč</strong> (82 % dotace)
                   </li>
                   <li className="flex items-center text-sm text-brand-gray/80 font-montserrat">
                     <span className="w-2 h-2 bg-brand-olive rounded-full mr-3 flex-shrink-0"></span>
