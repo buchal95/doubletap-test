@@ -177,12 +177,14 @@ const SocialProof: React.FC = () => {
           </div>
         </div>
         
-        {/* Stats section - Updated with additional details */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-6 max-w-4xl mx-auto">
+        {/* Stats section - Updated with playful footnotes */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-8 max-w-4xl mx-auto">
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
             <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">24+</div>
-            <div className="text-brand-gray/80 font-montserrat text-center mb-1">let zkušeností z marketingu</div>
-            <div className="text-brand-gray/60 font-montserrat text-sm text-center">* a tisíce videí</div>
+            <div className="text-brand-gray/80 font-montserrat text-center mb-3">let zkušeností z marketingu</div>
+            <div className="text-xs text-brand-gray/50 font-montserrat italic text-center">
+              * počítat přestáváme
+            </div>
           </div>
           
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
@@ -196,14 +198,16 @@ const SocialProof: React.FC = () => {
           
           <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/50">
             <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">82%</div>
-            <div className="text-brand-gray/80 font-montserrat text-center mb-1">dotace od státu</div>
-            <div className="text-brand-gray/60 font-montserrat text-sm text-center">* do konce roku 2025</div>
+            <div className="text-brand-gray/80 font-montserrat text-center mb-3">dotace od státu</div>
+            <div className="text-xs text-brand-gray/50 font-montserrat italic text-center">
+              * rychle, než to změní
+            </div>
           </div>
         </div>
         
-        {/* Playful footnote */}
-        <div className="text-center">
-          <p className="text-xs text-brand-gray/50 font-montserrat italic">
+        {/* Main playful footnote - now more prominent */}
+        <div className="text-center bg-white/60 backdrop-blur-sm rounded-lg py-4 px-6 max-w-2xl mx-auto border border-white/40">
+          <p className="text-sm text-brand-gray/60 font-montserrat italic leading-relaxed">
             * sami tomu věříme těžko, ale je to pravda
           </p>
         </div>
