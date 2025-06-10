@@ -6,7 +6,7 @@ const Benefits: React.FC = () => {
   const benefits = [
     {
       title: "Více sledujících",
-      description: "Díky profesionálním videím zvýšíte počet sledujících i jejich interakci."
+      description: "Díky profesionálním videím zvýšíte počet sledujících i jejich interakci na sociálních sítích."
     },
     {
       title: "Profesionální vizuál",

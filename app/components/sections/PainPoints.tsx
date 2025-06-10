@@ -7,17 +7,17 @@ const PainPoints: React.FC = () => {
     {
       icon: <Smartphone className="w-12 h-12 text-brand-olive" />,
       title: "Váš telefon",
-      description: "iPhone nebo Android z posledních 3-4 let. Pokud s ním fotíte, zvládnete s ním i točit."
+      description: "iPhone nebo Android z posledních 3-4 let. Pokud s ním fotíte, určitě s ním i točíte."
     },
     {
       icon: <CheckCircle className="w-12 h-12 text-brand-olive" />,
-      title: "Chuť učit se",
+      title: "Chuť se učit",
       description: "4 dny intenzivní práce. Točíte od první hodiny, dokončujete poslední den."
     },
     {
       icon: <CheckCircle className="w-12 h-12 text-brand-olive" />,
-      title: "To je vše",
-      description: "Žádné další vybavení, žádné placené aplikace. Všechno v telefonu."
+      title: "A to je vše",
+      description: "Žádné další vybavení, žádné placené aplikace. Všechno máte v telefonu."
     }
   ];
 

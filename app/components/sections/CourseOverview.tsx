@@ -7,8 +7,8 @@ const CourseOverview: React.FC = () => {
   const modules = [
     {
       icon: <Smartphone className="w-8 h-8 text-brand-olive" />,
-      title: "Profesionální nastavení telefonu",
-      description: "Jak vytěžit maximum z kamery, kterou nosíte v kapse. Nastavení, o kterých jste nevěděli."
+      title: "Profi nastavení telefonu",
+      description: "Vyždímáme maximum z kamery, kterou nosíte v kapse. Nastavení, která změní všechno."
     },
     {
       icon: <BookOpen className="w-8 h-8 text-brand-olive" />,
@@ -23,12 +23,12 @@ const CourseOverview: React.FC = () => {
     {
       icon: <Scissors className="w-8 h-8 text-brand-olive" />,
       title: "Obsah pro sociální sítě",
-      description: "Co funguje, co ne. Trendy, analýza publika, struktura videí. Zkrátka jak zaujmout."
+      description: "Co funguje na Instagramu, TikToku a YouTube. Trendy, analýza publika, struktura videí."
     },
     {
       icon: <Target className="w-8 h-8 text-brand-olive" />,
       title: "Váš finální projekt",
-      description: "Během kurzu natočíte vlastní video. Od scénáře po finální export. Hotové, připravené k publikaci."
+      description: "Během kurzu natočíte vlastní video. Od scénáře po finální export. Hotové k publikaci."
     }
   ];
 
@@ -37,7 +37,7 @@ const CourseOverview: React.FC = () => {
       <div className="container mx-auto px-4">
         <SectionHeading 
           title="Řemeslo videa. S telefonem v ruce." 
-          subtitle="4 dny intenzivní praxe. Od základů po hotové video."
+          subtitle="4 dny intenzivní praxe. Od základů po hotové video, které můžete hned použít."
         />
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
@@ -58,7 +58,7 @@ const CourseOverview: React.FC = () => {
             <div className="mb-6 md:mb-0 md:mr-8">
               <h3 className="text-2xl font-anton text-brand-gray mb-2">Řemeslo má svá pravidla. Naučíme vás je.</h3>
               <p className="text-brand-gray/80 font-montserrat">
-                Nejde o teoretický kurz - budete natáčet, stříhat a publikovat reálná videa pod vedením expertů.
+                Nejde o nudný teoretický kurz - budete natáčet, stříhat a publikovat reálná videa pod vedením expertů.
               </p>
             </div>
             <CTAButton text="Chci využít dotaci" className="whitespace-nowrap text-lg py-4 px-8" />

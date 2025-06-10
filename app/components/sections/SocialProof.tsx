@@ -17,25 +17,23 @@ const SocialProof: React.FC = () => {
           <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/MALL.svg/512px-MALL.svg.png" alt="MALL" width={120} height={32} className="h-6 md:h-8 w-auto transform transition-all duration-300 hover:scale-110" />
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div className="p-6 bg-white rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">1 000+</div>
-            <div className="text-brand-gray/80 font-montserrat">absolventů</div>
+            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">24+</div>
+            <div className="text-brand-gray/80 font-montserrat">let zkušeností z marketingu</div>
           </div>
           
           <div className="p-6 bg-white rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">+80%</div>
-            <div className="text-brand-gray/80 font-montserrat">vyšší engagement</div>
+            <div className="text-4xl font-anton text-brand-red mb-1 animate-fade-in">5/5</div>
+            <div className="text-brand-gray/80 font-montserrat mb-1">hodnocení kurzu</div>
+            <div className="text-xs text-brand-gray/60 font-montserrat italic">
+              samotným nám to přijde nereálné, ale zatím to tak je
+            </div>
           </div>
           
           <div className="p-6 bg-white rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">4.9/5</div>
-            <div className="text-brand-gray/80 font-montserrat">hodnocení kurzu</div>
-          </div>
-          
-          <div className="p-6 bg-white rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">92%</div>
-            <div className="text-brand-gray/80 font-montserrat">zvýšení konverzí</div>
+            <div className="text-4xl font-anton text-brand-red mb-2 animate-fade-in">82%</div>
+            <div className="text-brand-gray/80 font-montserrat">dotace od státu</div>
           </div>
         </div>
       </div>

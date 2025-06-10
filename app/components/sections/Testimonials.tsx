@@ -44,21 +44,21 @@ const Testimonials: React.FC = () => {
     {
       name: "Jana Veselá",
       role: "Marketingová manažerka",
-      quote: "Za 4 dny jsem se naučila víc než za rok zkoušení na vlastní pěst. Dosahy vzrostly o 120 % během měsíce. Kurz se vyplatil.",
+      quote: "Za 4 dny jsem se naučila víc než za rok zkoušení na vlastní pěst. Dosahy vzrostly o 120 % během měsíce. Kurz se vyplatil, stoprocentně.",
       image: "https://images.pexels.com/photos/762080/pexels-photo-762080.jpeg?auto=compress&cs=tinysrgb&w=150",
       stars: 5
     },
     {
       name: "Tomáš Svoboda",
       role: "Majitel e-shopu",
-      quote: "Investice se vrátila za 14 dní. Produktová videa mají 3x vyšší konverze. Zákazníci konečně vidí, co prodávám.",
+      quote: "Investice se vrátila za 14 dní. Produktová videa mají 3x vyšší konverze. Zákazníci konečně vidí, co vlastně prodávám.",
       image: "https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=150",
       stars: 5
     },
     {
       name: "Martina Dvořáková",
       role: "Content creator",
-      quote: "Konečně vím, co dělám. Videa vypadají profesionálně bez drahého vybavení. Stačí telefon a správný postup.",
+      quote: "Konečně vím, co dělám. Videa vypadají profesionálně bez drahého vybavení. Stačí telefon a správný postup - úžasné.",
       image: "https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg?auto=compress&cs=tinysrgb&w=150",
       stars: 5
     }
@@ -89,7 +89,7 @@ const Testimonials: React.FC = () => {
           
           <p className="text-brand-gray/80 font-montserrat max-w-2xl mx-auto">
             "Kurz byl přesně to, co jsem potřebovala. Dnes si vydělávám tvorbou videí. 
-            Živím se tím, co mě baví."
+            Živím se tím, co mě baví. A to je k nezaplacení."
           </p>
           <p className="font-anton mt-2 text-brand-gray">Lucie Pokorná, freelancer</p>
         </div>

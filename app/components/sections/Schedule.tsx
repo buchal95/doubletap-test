@@ -15,7 +15,7 @@ const Schedule: React.FC = () => {
       ]
     },
     {
-      day: "Den 2",
+      day: "Den 2", 
       title: "Zvuk, efekty a scénář",
       topics: [
         "Kvalitní zvuk pomocí základní postprodukce",
@@ -28,7 +28,7 @@ const Schedule: React.FC = () => {
       day: "Den 3",
       title: "Obsah, který zaujme",
       topics: [
-        "Co a jak točit pro sociální sítě",
+        "Co a jak točit pro Instagram, TikTok a YouTube",
         "Práce s aktuálními trendy",
         "Analýza publika a cílení obsahu",
         "Start natáčení vlastního projektu"
@@ -91,7 +91,7 @@ const Schedule: React.FC = () => {
             <div>
               <h4 className="font-anton text-lg text-brand-red mb-2">Důležité</h4>
               <p className="text-brand-gray/80 font-montserrat">
-                Úspěšné dokončení projektu je podmínkou pro získání dotace
+                Pro získání dotace je nutná minimálně 80% účast a úspěšné dokončení finálního projektu
               </p>
             </div>
           </div>

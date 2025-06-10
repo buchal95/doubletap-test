@@ -106,7 +106,7 @@ const Subsidy: React.FC = () => {
             <div>
               <h4 className="font-anton text-lg text-white mb-2">Dotační program končí koncem roku 2025</h4>
               <p className="text-brand-beige font-montserrat">
-                Státní dotace z Národního plánu obnovy EU jsou omezené a brzy skončí.
+                Státní dotace z Národního plánu obnovy EU jsou omezené a brzy skončí. Neváhejte.
               </p>
             </div>
           </div>

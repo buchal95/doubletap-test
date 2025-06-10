@@ -41,11 +41,11 @@ const FAQ: React.FC = () => {
   const faqs = [
     {
       question: "Kde kurz probíhá?",
-      answer: "Kurz probíhá osobně v Praze v moderních prostorách vybavených vším potřebným pro praktickou výuku. Přesnou adresu a pokyny k dopravě zašleme po potvrzení registrace."
+      answer: "Kurz se koná osobně v Praze v moderních prostorách vybavených vším potřebným pro praktickou výuku. Přesnou adresu a pokyny k dopravě zašleme po potvrzení registrace."
     },
     {
       question: "Kolik je v kurzu lidí?",
-      answer: "Maximálně 10. Každému se věnujeme individuálně."
+      answer: "Maximálně 10. Každému se věnujeme individuálně, aby si každý účastník odnesl maximum."
     },
     {
       question: "Musím být nezaměstnaný, abych získal dotaci?",
@@ -61,11 +61,11 @@ const FAQ: React.FC = () => {
     },
     {
       question: "Dostanu certifikát?",
-      answer: "Ano, oficiální certifikát o absolvování kurzu."
+      answer: "Ano, oficiální certifikát o absolvování kurzu, který můžete použít v životopisu nebo při žádosti o práci."
     },
     {
       question: "Jaké aplikace používáte?",
-      answer: "CapCut, InShot a další - všechny zdarma. Naučíme vás v nich pracovat."
+      answer: "CapCut, InShot a další - všechny zdarma. Naučíme vás v nich pracovat jako profíci."
     }
   ];
 

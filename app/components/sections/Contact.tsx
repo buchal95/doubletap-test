@@ -256,7 +256,7 @@ const Contact: React.FC = () => {
           <div className="flex items-center justify-center">
             <MapPin className="w-8 h-8 text-brand-olive mr-4" />
             <div className="text-center">
-              <h4 className="font-anton text-xl text-brand-gray mb-1">Kurz probíhá osobně v Praze</h4>
+              <h4 className="font-anton text-xl text-brand-gray mb-1">Kurz se koná osobně v Praze</h4>
               <p className="text-brand-gray/80 font-montserrat">Moderní prostory vybavené vším potřebným pro praktickou výuku</p>
             </div>
           </div>

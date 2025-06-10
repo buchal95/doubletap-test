@@ -123,7 +123,7 @@ const UpcomingEvents: React.FC = () => {
           {isLoading ? (
             <div className="text-center py-12">
               <div className="inline-block w-8 h-8 border-4 border-brand-olive border-t-transparent rounded-full animate-spin"></div>
-              <p className="mt-4 text-brand-gray/80 font-montserrat">Načítání termínů...</p>
+              <p className="mt-4 text-brand-gray/80 font-montserrat">Zjišťujeme termíny...</p>
             </div>
           ) : error ? (
             <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-brand-gray/10">

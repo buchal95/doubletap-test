@@ -105,18 +105,18 @@ const Hero: React.FC = () => {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-anton mb-6 leading-tight animate-fade-in">
-            Naučte se točit profesionální videa telefonem za 4 dny
+            Naučte se natáčet profesionální videa telefonem za 4 dny
           </h1>
           
           <p className="text-xl md:text-2xl mb-8 text-brand-beige font-montserrat animate-fade-in font-semibold">
-            Státní dotace brzy končí. Využijte je, dokud existují.
+            Státní dotace brzy končí. Neváhejte, dokud jsou ještě k dispozici.
           </p>
 
           {/* Location info */}
           <div className="mb-6">
             <div className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
               <MapPin className="w-5 h-5 mr-2 text-brand-olive" />
-              <span className="font-montserrat font-semibold">Kurz probíhá osobně v Praze</span>
+              <span className="font-montserrat font-semibold">Kurz se koná osobně v Praze</span>
             </div>
           </div>
           
@@ -131,19 +131,19 @@ const Hero: React.FC = () => {
           {/* Dynamic next event display with error handling */}
           {isLoading ? (
             <p className="mt-6 text-brand-beige/60 font-montserrat animate-pulse">
-              Načítání termínů...
+              Zjišťujeme nejbližší termíny...
             </p>
           ) : error ? (
             <p className="mt-6 text-brand-beige/80 font-montserrat animate-fade-in">
-              Nové termíny budou brzy vyhlášeny
+              Nové termíny oznámíme brzy
             </p>
           ) : nextEvent ? (
             <p className="mt-6 text-brand-beige font-montserrat animate-fade-in">
-              Příští termín: {nextEvent}
+              Nejbližší termín: {nextEvent}
             </p>
           ) : (
             <p className="mt-6 text-brand-beige/80 font-montserrat animate-fade-in">
-              Nové termíny budou brzy vyhlášeny
+              Nové termíny oznámíme brzy
             </p>
           )}
         </div>
