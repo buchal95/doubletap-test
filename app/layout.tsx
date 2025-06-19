@@ -146,18 +146,16 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Set strict consent defaults - everything denied except essential
+              // Set strict consent defaults - only essential consent types
               gtag('consent', 'default', {
                 'analytics_storage': 'denied',
                 'ad_storage': 'denied',
                 'ad_user_data': 'denied',
                 'ad_personalization': 'denied',
-                'functionality_storage': 'denied',
-                'personalization_storage': 'denied',
                 'security_storage': 'granted'
               });
               
-              console.log('🔒 Consent defaults set: All marketing/analytics DENIED by default');
+              console.log('🔒 Consent defaults set: Marketing/analytics DENIED, security GRANTED');
             `
           }}
         />
