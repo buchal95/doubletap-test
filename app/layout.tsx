@@ -131,27 +131,41 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         
-        {/* Initialize dataLayer ONCE - only in production */}
+        {/* Initialize GTM and dataLayer ONCE - only in production */}
         {process.env.NODE_ENV === 'production' && (
           <>
             <script
               dangerouslySetInnerHTML={{
                 __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                `
-              }}
-            />
-            
-            {/* Google Tag Manager - only in production */}
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                  // Prevent duplicate GTM loading
+                  if (!window.gtmLoaded) {
+                    window.gtmLoaded = true;
+                    
+                    // Initialize dataLayer
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    
+                    // Set default consent states BEFORE GTM loads
+                    gtag('consent', 'default', {
+                      'analytics_storage': 'denied',
+                      'ad_storage': 'denied',
+                      'ad_user_data': 'denied',
+                      'ad_personalization': 'denied',
+                      'functionality_storage': 'denied',
+                      'personalization_storage': 'denied',
+                      'security_storage': 'granted'
+                    });
+                    
+                    gtag('js', new Date());
+                    
+                    // Load GTM
+                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-M3ZNVD4K');`
+})(window,document,'script','dataLayer','GTM-M3ZNVD4K');
+                  }
+                `
               }}
             />
           </>

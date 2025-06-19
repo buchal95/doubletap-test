@@ -53,6 +53,7 @@ declare global {
     dataLayer: any[];
     gtag?: (...args: any[]) => void;
     dataLayerInitialized?: boolean;
+    gtmLoaded?: boolean;
   }
 }
 
@@ -82,6 +83,54 @@ export const initializeDataLayer = () => {
     // In development, create a mock dataLayer to prevent errors
     window.dataLayer = window.dataLayer || [];
     window.dataLayerInitialized = true;
+  }
+};
+
+// Helper function to update consent for analytics
+export const updateAnalyticsConsent = (granted: boolean = true) => {
+  if (typeof window !== 'undefined' && window.gtag && process.env.NODE_ENV === 'production') {
+    console.log(`🍪 Updating analytics consent: ${granted ? 'granted' : 'denied'}`);
+    
+    window.gtag('consent', 'update', {
+      'analytics_storage': granted ? 'granted' : 'denied'
+    });
+    
+    // Push consent update event
+    pushToDataLayer({
+      event: 'consent_update',
+      event_category: 'consent',
+      event_label: `analytics_${granted ? 'granted' : 'denied'}`,
+      analytics_storage: granted ? 'granted' : 'denied'
+    });
+  } else if (process.env.NODE_ENV === 'development') {
+    console.log(`🚧 Development mode - Analytics consent would be: ${granted ? 'granted' : 'denied'}`);
+  }
+};
+
+// Helper function to update all marketing consent
+export const updateMarketingConsent = (granted: boolean = true) => {
+  if (typeof window !== 'undefined' && window.gtag && process.env.NODE_ENV === 'production') {
+    console.log(`🎯 Updating marketing consent: ${granted ? 'granted' : 'denied'}`);
+    
+    window.gtag('consent', 'update', {
+      'analytics_storage': granted ? 'granted' : 'denied',
+      'ad_storage': granted ? 'granted' : 'denied',
+      'ad_user_data': granted ? 'granted' : 'denied',
+      'ad_personalization': granted ? 'granted' : 'denied'
+    });
+    
+    // Push consent update event
+    pushToDataLayer({
+      event: 'consent_update',
+      event_category: 'consent',
+      event_label: `marketing_${granted ? 'granted' : 'denied'}`,
+      analytics_storage: granted ? 'granted' : 'denied',
+      ad_storage: granted ? 'granted' : 'denied',
+      ad_user_data: granted ? 'granted' : 'denied',
+      ad_personalization: granted ? 'granted' : 'denied'
+    });
+  } else if (process.env.NODE_ENV === 'development') {
+    console.log(`🚧 Development mode - Marketing consent would be: ${granted ? 'granted' : 'denied'}`);
   }
 };
 
@@ -334,6 +383,61 @@ export const trackScrollDepth = (depth: 25 | 50 | 75 | 100) => {
   } as ConversionEventData);
 };
 
+// Listen for Usercentrics consent changes
+export const listenForConsentChanges = () => {
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
+    // Listen for Usercentrics events
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'usercentrics-consent-given') {
+        console.log('🍪 Usercentrics consent received:', event.data);
+        
+        // Update GTM consent based on Usercentrics data
+        if (event.data.services) {
+          const services = event.data.services;
+          
+          // Check for analytics consent
+          const analyticsConsent = services.some((service: any) => 
+            service.name === 'Google Analytics 4' || 
+            service.id === 'google-analytics-4' ||
+            service.name === 'analytics_storage'
+          );
+          
+          // Check for marketing consent  
+          const marketingConsent = services.some((service: any) => 
+            service.name === 'Google Ads' || 
+            service.name === 'Facebook Pixel' ||
+            service.id === 'google-ads' ||
+            service.id === 'facebook-pixel'
+          );
+          
+          if (analyticsConsent) {
+            updateAnalyticsConsent(true);
+          }
+          
+          if (marketingConsent) {
+            updateMarketingConsent(true);
+          }
+        }
+      }
+    });
+    
+    // Also listen for UC_UI events (alternative Usercentrics API)
+    if (typeof window.UC_UI !== 'undefined') {
+      window.UC_UI.on('consent_status_update', (data: any) => {
+        console.log('🍪 UC_UI consent update:', data);
+        
+        if (data.analytics_storage === true) {
+          updateAnalyticsConsent(true);
+        }
+        
+        if (data.ad_storage === true) {
+          updateMarketingConsent(true);
+        }
+      });
+    }
+  }
+};
+
 // TEST FUNCTION - Use this to test dataLayer manually (only in development)
 export const testDataLayerEvents = () => {
   if (process.env.NODE_ENV === 'development') {
@@ -345,6 +449,10 @@ export const testDataLayerEvents = () => {
       event_category: 'test',
       event_label: 'manual_test'
     });
+    
+    // Test consent updates
+    updateAnalyticsConsent(true);
+    updateMarketingConsent(true);
     
     // Test form start
     trackFormStart({
@@ -368,7 +476,19 @@ export const testDataLayerEvents = () => {
   }
 };
 
-// Make test function available globally for browser console (only in development)
+// Make test function and consent functions available globally for browser console (only in development)
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   (window as any).testDataLayerEvents = testDataLayerEvents;
+  (window as any).updateAnalyticsConsent = updateAnalyticsConsent;
+  (window as any).updateMarketingConsent = updateMarketingConsent;
+}
+
+// Auto-initialize consent listener when module loads
+if (typeof window !== 'undefined') {
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', listenForConsentChanges);
+  } else {
+    listenForConsentChanges();
+  }
 }
