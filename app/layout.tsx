@@ -149,16 +149,11 @@ export default function RootLayout({
                 'ad_personalization': 'denied',
                 'non_personalized_ads': 'denied'
               });
-              
-              // Set development config
-              gtag('config', 'G-XXXXXXXXXX', {
-                'debug_mode': false
-              });
             `
           }}
         />
         
-        {/* STEP 2: Load GTM after consent defaults are set */}
+        {/* STEP 2: Google Tag Manager - Standard implementation from documentation */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -256,7 +251,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
       </head>
       <body className="font-montserrat text-brand-gray antialiased">
-        {/* Google Tag Manager (noscript) - GTM-M3ZNVD4K */}
+        {/* Google Tag Manager (noscript) - Standard implementation */}
         <noscript>
           <iframe 
             src="https://www.googletagmanager.com/ns.html?id=GTM-M3ZNVD4K"
