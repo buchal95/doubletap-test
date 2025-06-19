@@ -164,6 +164,55 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
         
+        {/* STEP 3: Usercentrics consent update function */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              function updateConsent() {
+                if (typeof UC_UI === 'undefined') return;
+                
+                var consentedServices = UC_UI.getServicesBaseInfo().filter(function(service) {
+                  return service.consent.status === true;
+                });
+                
+                var categories = [];
+                for (var i = 0; i < consentedServices.length; i++) {
+                  var category = consentedServices[i].categorySlug || consentedServices[i].category;
+                  if (categories.indexOf(category) === -1) {
+                    categories.push(category);
+                  }
+                }
+                
+                var hasMarketing = categories.indexOf('marketing') !== -1;
+                var hasFunctional = categories.indexOf('functional') !== -1;
+                var hasEssential = categories.indexOf('essential') !== -1;
+                
+                gtag('consent', 'update', {
+                  'analytics_storage': hasMarketing ? 'granted' : 'denied',
+                  'ad_storage': hasMarketing ? 'granted' : 'denied',
+                  'ad_user_data': hasMarketing ? 'granted' : 'denied',
+                  'ad_personalization': hasMarketing ? 'granted' : 'denied',
+                  'functionality_storage': hasFunctional ? 'granted' : 'denied',
+                  'personalization_storage': hasFunctional ? 'granted' : 'denied',
+                  'security_storage': 'granted'
+                });
+                
+                gtag('set', {
+                  'non_personalized_ads': hasMarketing ? false : true
+                });
+              }
+
+              window.addEventListener("UC_UI_CMP_EVENT", function(event) {
+                setTimeout(updateConsent, 500);
+              });
+
+              if (typeof UC_UI !== 'undefined') {
+                setTimeout(updateConsent, 1000);
+              }
+            `
+          }}
+        />
+        
         <link rel="icon" type="image/png" sizes="16x16" href="/fav16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/fav32.png" />
         <link rel="shortcut icon" href="/fav16.png" />
