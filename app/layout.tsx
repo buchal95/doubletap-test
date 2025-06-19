@@ -142,18 +142,16 @@ export default function RootLayout({
           }}
         />
         
-        {/* Google Consent Defaults - MUST be before GTM */}
+        {/* Google Consent Defaults - POUZE standardní Google consent typy */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Consent defaults
+              // Consent defaults - jen standardní Google typy
               gtag('consent', 'default', {
                 'analytics_storage': 'denied',
                 'ad_storage': 'denied',
                 'ad_user_data': 'denied',
                 'ad_personalization': 'denied',
-                'functionality_storage': 'denied',
-                'personalization_storage': 'denied',
                 'security_storage': 'granted'
               });
               
@@ -169,8 +167,6 @@ export default function RootLayout({
                 'consent_ad_storage': 'denied',
                 'consent_ad_user_data': 'denied',
                 'consent_ad_personalization': 'denied',
-                'consent_functionality_storage': 'denied',
-                'consent_personalization_storage': 'denied',
                 'consent_security_storage': 'granted',
                 'non_personalized_ads': true
               });
