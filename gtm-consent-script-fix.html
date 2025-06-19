@@ -1,0 +1,46 @@
+<!-- This should be the content of your GTM Custom HTML tag -->
+<script>
+function updateConsent() { 
+  if (typeof UC_UI === 'undefined') return; 
+  
+  // Získat povolené kategorie 
+  var consentedServices = UC_UI.getServicesBaseInfo().filter(function(service) { 
+    return service.consent.status === true; 
+  }); 
+  
+  var categories = []; 
+  for (var i = 0; i < consentedServices.length; i++) { 
+    var category = consentedServices[i].categorySlug || consentedServices[i].category; 
+    if (categories.indexOf(category) === -1) { 
+      categories.push(category); 
+    } 
+  } 
+  
+  // Mapování kategorií Usercentrics na Google consent typy 
+  var hasMarketing = categories.indexOf('marketing') !== -1; 
+  var hasFunctional = categories.indexOf('functional') !== -1; 
+  var hasEssential = categories.indexOf('essential') !== -1; 
+  
+  gtag('consent', 'update', { 
+    'analytics_storage': hasMarketing ? 'granted' : 'denied', 
+    'ad_storage': hasMarketing ? 'granted' : 'denied', 
+    'ad_user_data': hasMarketing ? 'granted' : 'denied', 
+    'ad_personalization': hasMarketing ? 'granted' : 'denied', 
+    'functionality_storage': hasFunctional ? 'granted' : 'denied', 
+    'personalization_storage': hasFunctional ? 'granted' : 'denied', 
+    'security_storage': hasEssential ? 'granted' : 'denied' 
+  }); 
+  
+  gtag('set', { 
+    'non_personalized_ads': !hasMarketing 
+  }); 
+}
+
+// Call the function when Usercentrics is ready
+if (typeof UC_UI !== 'undefined') {
+  updateConsent();
+} else {
+  // Wait for Usercentrics to load
+  window.addEventListener('UC_UI_VIEW_AFTER_RENDER', updateConsent);
+}
+</script>
