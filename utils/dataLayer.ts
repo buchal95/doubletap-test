@@ -1,5 +1,4 @@
 // DataLayer utility for tracking events to Google Tag Manager
-// Consent management is handled entirely by GTM - this only pushes business events
 
 interface BaseEventData {
   event: string;
@@ -53,38 +52,8 @@ declare global {
     dataLayer: any[];
     gtag?: (...args: any[]) => void;
     dataLayerInitialized?: boolean;
-    gtmLoaded?: boolean;
   }
 }
-
-// Initialize dataLayer if it doesn't exist - only run once and only in production
-export const initializeDataLayer = () => {
-  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
-    // Only initialize once
-    if (window.dataLayerInitialized) {
-      console.log('🔄 DataLayer already initialized, skipping...');
-      return;
-    }
-    
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayerInitialized = true;
-    
-    // Push a test event only on first initialization
-    console.log('🔥 DataLayer initialized - pushing test event');
-    pushToDataLayer({
-      event: 'datalayer_ready',
-      event_category: 'debug',
-      event_label: 'initialization',
-      page_title: document.title,
-      page_location: window.location.href
-    });
-  } else if (process.env.NODE_ENV === 'development') {
-    console.log('🚧 Development mode - GTM tracking disabled');
-    // In development, create a mock dataLayer to prevent errors
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayerInitialized = true;
-  }
-};
 
 // Helper function to format phone number for advanced matching
 const formatPhoneForMatching = (phone: string): string => {
@@ -168,22 +137,23 @@ const createAdvancedMatching = (userData: {
   return matching;
 };
 
-// Generic function to push events to dataLayer - only in production
+// Initialize dataLayer if it doesn't exist
+export const initializeDataLayer = () => {
+  if (typeof window !== 'undefined') {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayerInitialized = true;
+  }
+};
+
+// Generic function to push events to dataLayer
 export const pushToDataLayer = (data: BaseEventData | FormEventData | ConversionEventData) => {
-  if (typeof window !== 'undefined' && window.dataLayer && process.env.NODE_ENV === 'production') {
-    console.log('🚀 DataLayer Push:', data);
+  if (typeof window !== 'undefined' && window.dataLayer) {
     window.dataLayer.push(data);
-  } else if (process.env.NODE_ENV === 'development') {
-    console.log('🚧 Development mode - Event would be pushed:', data);
-  } else {
-    console.warn('⚠️ DataLayer not available or not in production:', data);
   }
 };
 
 // Track when user starts filling the form
 export const trackFormStart = (formData?: Partial<FormEventData['user_data']>) => {
-  console.log('📝 Form start tracked with data:', formData);
-  
   pushToDataLayer({
     event: 'form_start',
     event_category: 'engagement',
@@ -196,8 +166,6 @@ export const trackFormStart = (formData?: Partial<FormEventData['user_data']>) =
 
 // Track form field interactions
 export const trackFormInteraction = (fieldName: string, value?: string) => {
-  console.log(`⌨️ Form interaction: ${fieldName} = ${value ? 'filled' : 'empty'}`);
-  
   pushToDataLayer({
     event: 'form_interaction',
     event_category: 'engagement',
@@ -211,8 +179,6 @@ export const trackFormInteraction = (fieldName: string, value?: string) => {
 
 // Track form submission attempt
 export const trackFormSubmit = (formData: FormEventData['user_data']) => {
-  console.log('📤 Form submit tracked with data:', formData);
-  
   pushToDataLayer({
     event: 'form_submit',
     event_category: 'conversion',
@@ -232,16 +198,12 @@ export const trackFormSuccess = (orderData?: {
   phone?: string;
   preferredMonth?: string;
 }) => {
-  console.log('✅ Form success tracked with data:', orderData);
-  
   const advancedMatching = orderData ? createAdvancedMatching({
     email: orderData.email,
     firstName: orderData.firstName,
     lastName: orderData.lastName,
     phone: orderData.phone
   }) : {};
-
-  console.log('🎯 Advanced matching data:', advancedMatching);
 
   // Standard form success event
   pushToDataLayer({
@@ -259,7 +221,7 @@ export const trackFormSuccess = (orderData?: {
     } : {}
   } as FormEventData);
 
-  // Meta Pixel Lead event with advanced matching - ONLY Meta event
+  // Meta Pixel Lead event with advanced matching
   pushToDataLayer({
     event: 'fb_lead',
     fb_event_parameters: {
@@ -272,8 +234,6 @@ export const trackFormSuccess = (orderData?: {
 
 // Track form errors
 export const trackFormError = (errorMessage: string, formData?: FormEventData['user_data']) => {
-  console.log('❌ Form error tracked:', errorMessage, formData);
-  
   pushToDataLayer({
     event: 'form_error',
     event_category: 'error',
@@ -287,8 +247,6 @@ export const trackFormError = (errorMessage: string, formData?: FormEventData['u
 
 // Track page views
 export const trackPageView = (pageName: string, additionalData?: Record<string, any>) => {
-  console.log('👁️ Page view tracked:', pageName);
-  
   pushToDataLayer({
     event: 'page_view',
     event_category: 'engagement',
@@ -301,8 +259,6 @@ export const trackPageView = (pageName: string, additionalData?: Record<string, 
 
 // Track CTA button clicks
 export const trackCTAClick = (buttonText: string, location: string) => {
-  console.log('🖱️ CTA click tracked:', buttonText, location);
-  
   pushToDataLayer({
     event: 'cta_click',
     event_category: 'engagement',
@@ -312,7 +268,7 @@ export const trackCTAClick = (buttonText: string, location: string) => {
   } as FormEventData);
 };
 
-// Track video interactions (if you add videos later)
+// Track video interactions
 export const trackVideoInteraction = (action: 'play' | 'pause' | 'complete', videoName: string, progress?: number) => {
   pushToDataLayer({
     event: 'video_interaction',
@@ -334,42 +290,3 @@ export const trackScrollDepth = (depth: 25 | 50 | 75 | 100) => {
     page_title: typeof document !== 'undefined' ? document.title : ''
   } as ConversionEventData);
 };
-
-// TEST FUNCTION - Use this to test dataLayer manually (only in development)
-export const testDataLayerEvents = () => {
-  if (process.env.NODE_ENV === 'development') {
-    console.log('🧪 Testing dataLayer events...');
-    
-    // Test basic event
-    pushToDataLayer({
-      event: 'test_event',
-      event_category: 'test',
-      event_label: 'manual_test'
-    });
-    
-    // Test form start
-    trackFormStart({
-      email: 'test@example.com',
-      first_name: 'Jan',
-      last_name: 'Testovací',
-      phone: '+420123456789'
-    });
-    
-    // Test fb_lead event
-    trackFormSuccess({
-      orderId: 'TEST123',
-      email: 'test@example.com',
-      firstName: 'Jan',
-      lastName: 'Testovací', 
-      phone: '+420123456789',
-      preferredMonth: 'Leden'
-    });
-  } else {
-    console.log('🚫 Test function only available in development mode');
-  }
-};
-
-// Make test function available globally for browser console (only in development)
-if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-  (window as any).testDataLayerEvents = testDataLayerEvents;
-}

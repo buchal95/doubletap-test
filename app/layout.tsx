@@ -131,46 +131,37 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         
-        {/* 🔥 FIX: Initialize dataLayer ONLY - consent handled by GTM + Usercentrics */}
-        {process.env.NODE_ENV === 'production' && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                // Initialize dataLayer and gtag function
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                
-                // ⚠️ REMOVED CONSENT DEFAULTS - Usercentrics + GTM handles this!
-                // The problematic consent 'default' call was here causing analytics_storage: denied
-                
-                console.log('🚀 DataLayer initialized - consent managed by Usercentrics + GTM');
-              `
-            }}
-          />
-        )}
+        {/* Initialize dataLayer and set consent defaults BEFORE GTM */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              
+              gtag('consent', 'default', {
+                'analytics_storage': 'denied',
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'functionality_storage': 'denied',
+                'personalization_storage': 'denied',
+                'security_storage': 'granted',
+                'non_personalized_ads': true
+              });
+            `
+          }}
+        />
         
-        {/* Load GTM without any consent interference */}
-        {process.env.NODE_ENV === 'production' && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                // Prevent duplicate GTM loading
-                if (!window.gtmLoaded) {
-                  window.gtmLoaded = true;
-                  
-                  // Load GTM - let it handle consent with Usercentrics
-                  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        {/* Google Tag Manager */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-M3ZNVD4K');
-                  
-                  console.log('🚀 GTM loaded - consent fully managed by GTM + Usercentrics');
-                }
-              `
-            }}
-          />
-        )}
+})(window,document,'script','dataLayer','GTM-M3ZNVD4K');`
+          }}
+        />
         
         <link rel="icon" type="image/png" sizes="16x16" href="/fav16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/fav32.png" />
@@ -259,17 +250,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
       </head>
       <body className="font-montserrat text-brand-gray antialiased">
-        {/* Google Tag Manager (noscript) - only in production */}
-        {process.env.NODE_ENV === 'production' && (
-          <noscript>
-            <iframe 
-              src="https://www.googletagmanager.com/ns.html?id=GTM-M3ZNVD4K"
-              height="0" 
-              width="0" 
-              style={{display:'none', visibility:'hidden'}}
-            ></iframe>
-          </noscript>
-        )}
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe 
+            src="https://www.googletagmanager.com/ns.html?id=GTM-M3ZNVD4K"
+            height="0" 
+            width="0" 
+            style={{display:'none', visibility:'hidden'}}
+          ></iframe>
+        </noscript>
         
         {children}
       </body>
