@@ -52,15 +52,23 @@ declare global {
   interface Window {
     dataLayer: any[];
     gtag?: (...args: any[]) => void;
+    dataLayerInitialized?: boolean;
   }
 }
 
-// Initialize dataLayer if it doesn't exist
+// Initialize dataLayer if it doesn't exist - only run once
 export const initializeDataLayer = () => {
   if (typeof window !== 'undefined') {
-    window.dataLayer = window.dataLayer || [];
+    // Only initialize once
+    if (window.dataLayerInitialized) {
+      console.log('🔄 DataLayer already initialized, skipping...');
+      return;
+    }
     
-    // Push a test event immediately to verify dataLayer is working
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayerInitialized = true;
+    
+    // Push a test event only on first initialization
     console.log('🔥 DataLayer initialized - pushing test event');
     pushToDataLayer({
       event: 'datalayer_ready',
