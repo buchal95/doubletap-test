@@ -131,34 +131,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         
-        {/* Initialize dataLayer and gtag FIRST - before GTM */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Initialize dataLayer
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              
-              // Set consent defaults - POUZE standardní Google typy
-              gtag('consent', 'default', {
-                'analytics_storage': 'denied',
-                'ad_storage': 'denied', 
-                'ad_user_data': 'denied',
-                'ad_personalization': 'denied',
-                'security_storage': 'granted'
-              });
-              
-              // Set non-personalized ads
-              gtag('set', {
-                'non_personalized_ads': true
-              });
-              
-              // Initialize timestamp
-              gtag('js', new Date());
-            `
-          }}
-        />
-        
         {/* Google Tag Manager - GTM-M3ZNVD4K */}
         <script
           dangerouslySetInnerHTML={{
