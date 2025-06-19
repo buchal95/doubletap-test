@@ -146,6 +146,7 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              // Consent defaults
               gtag('consent', 'default', {
                 'analytics_storage': 'denied',
                 'ad_storage': 'denied',
@@ -155,7 +156,22 @@ export default function RootLayout({
                 'personalization_storage': 'denied',
                 'security_storage': 'granted'
               });
+              
+              // Non-personalized ads configuration
               gtag('set', {
+                'non_personalized_ads': true
+              });
+              
+              // Push to dataLayer pro debug
+              window.dataLayer.push({
+                'event': 'consent_defaults_set',
+                'consent_analytics_storage': 'denied',
+                'consent_ad_storage': 'denied',
+                'consent_ad_user_data': 'denied',
+                'consent_ad_personalization': 'denied',
+                'consent_functionality_storage': 'denied',
+                'consent_personalization_storage': 'denied',
+                'consent_security_storage': 'granted',
                 'non_personalized_ads': true
               });
             `
