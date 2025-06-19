@@ -131,7 +131,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         
-        {/* Initialize GTM and dataLayer ONCE - only in production */}
+        {/* Simple GTM initialization - only in production */}
         {process.env.NODE_ENV === 'production' && (
           <>
             <script
@@ -143,22 +143,8 @@ export default function RootLayout({
                     
                     // Initialize dataLayer
                     window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
                     
-                    // Set default consent states BEFORE GTM loads
-                    gtag('consent', 'default', {
-                      'analytics_storage': 'denied',
-                      'ad_storage': 'denied',
-                      'ad_user_data': 'denied',
-                      'ad_personalization': 'denied',
-                      'functionality_storage': 'denied',
-                      'personalization_storage': 'denied',
-                      'security_storage': 'granted'
-                    });
-                    
-                    gtag('js', new Date());
-                    
-                    // Load GTM
+                    // Load GTM - consent is handled by GTM tags
                     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
