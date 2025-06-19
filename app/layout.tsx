@@ -131,87 +131,78 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         
-        {/* STEP 1: Initialize dataLayer and consent defaults BEFORE GTM */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              
-              // Set consent defaults BEFORE GTM loads
-              gtag('consent', 'default', {
-                'ad_storage': 'denied',
-                'analytics_storage': 'denied',
-                'functionality_storage': 'denied',
-                'personalization_storage': 'denied',
-                'security_storage': 'granted',
-                'ad_user_data': 'denied',
-                'ad_personalization': 'denied',
-                'non_personalized_ads': 'denied'
-              });
-            `
-          }}
-        />
+        {/* Initialize dataLayer and set consent defaults */}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              'ad_storage': 'denied',
+              'analytics_storage': 'denied',
+              'functionality_storage': 'denied',
+              'personalization_storage': 'denied',
+              'security_storage': 'granted',
+              'ad_user_data': 'denied',
+              'ad_personalization': 'denied',
+              'non_personalized_ads': 'denied'
+            });
+          `
+        }} />
         
-        {/* STEP 2: Google Tag Manager - Standard implementation from documentation */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        {/* Google Tag Manager */}
+        <script dangerouslySetInnerHTML={{
+          __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-M3ZNVD4K');`
-          }}
-        />
+        }} />
         
-        {/* STEP 3: Usercentrics consent update function */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              function updateConsent() {
-                if (typeof UC_UI === 'undefined') return;
-                
-                var consentedServices = UC_UI.getServicesBaseInfo().filter(function(service) {
-                  return service.consent.status === true;
-                });
-                
-                var categories = [];
-                for (var i = 0; i < consentedServices.length; i++) {
-                  var category = consentedServices[i].categorySlug || consentedServices[i].category;
-                  if (categories.indexOf(category) === -1) {
-                    categories.push(category);
-                  }
-                }
-                
-                var hasMarketing = categories.indexOf('marketing') !== -1;
-                var hasFunctional = categories.indexOf('functional') !== -1;
-                var hasEssential = categories.indexOf('essential') !== -1;
-                
-                gtag('consent', 'update', {
-                  'analytics_storage': hasMarketing ? 'granted' : 'denied',
-                  'ad_storage': hasMarketing ? 'granted' : 'denied',
-                  'ad_user_data': hasMarketing ? 'granted' : 'denied',
-                  'ad_personalization': hasMarketing ? 'granted' : 'denied',
-                  'functionality_storage': hasFunctional ? 'granted' : 'denied',
-                  'personalization_storage': hasFunctional ? 'granted' : 'denied',
-                  'security_storage': 'granted'
-                });
-                
-                gtag('set', {
-                  'non_personalized_ads': hasMarketing ? false : true
-                });
-              }
-
-              window.addEventListener("UC_UI_CMP_EVENT", function(event) {
-                setTimeout(updateConsent, 500);
+        {/* Usercentrics consent update handler */}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            function updateConsent() {
+              if (typeof UC_UI === 'undefined') return;
+              
+              var consentedServices = UC_UI.getServicesBaseInfo().filter(function(service) {
+                return service.consent.status === true;
               });
-
-              if (typeof UC_UI !== 'undefined') {
-                setTimeout(updateConsent, 1000);
+              
+              var categories = [];
+              for (var i = 0; i < consentedServices.length; i++) {
+                var category = consentedServices[i].categorySlug || consentedServices[i].category;
+                if (categories.indexOf(category) === -1) {
+                  categories.push(category);
+                }
               }
-            `
-          }}
-        />
+              
+              var hasMarketing = categories.indexOf('marketing') !== -1;
+              var hasFunctional = categories.indexOf('functional') !== -1;
+              
+              gtag('consent', 'update', {
+                'analytics_storage': hasMarketing ? 'granted' : 'denied',
+                'ad_storage': hasMarketing ? 'granted' : 'denied',
+                'ad_user_data': hasMarketing ? 'granted' : 'denied',
+                'ad_personalization': hasMarketing ? 'granted' : 'denied',
+                'functionality_storage': hasFunctional ? 'granted' : 'denied',
+                'personalization_storage': hasFunctional ? 'granted' : 'denied',
+                'security_storage': 'granted'
+              });
+              
+              gtag('set', {
+                'non_personalized_ads': hasMarketing ? false : true
+              });
+            }
+
+            window.addEventListener("UC_UI_CMP_EVENT", function(event) {
+              setTimeout(updateConsent, 500);
+            });
+
+            if (typeof UC_UI !== 'undefined') {
+              setTimeout(updateConsent, 1000);
+            }
+          `
+        }} />
         
         <link rel="icon" type="image/png" sizes="16x16" href="/fav16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/fav32.png" />
@@ -300,7 +291,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
       </head>
       <body className="font-montserrat text-brand-gray antialiased">
-        {/* Google Tag Manager (noscript) - Standard implementation */}
+        {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe 
             src="https://www.googletagmanager.com/ns.html?id=GTM-M3ZNVD4K"
