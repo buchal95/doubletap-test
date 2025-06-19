@@ -48,23 +48,46 @@ const Hero: React.FC = () => {
           if (futureEvents.length > 0) {
             const nextEventData = futureEvents[0];
             const startDate = new Date(nextEventData.startTime);
-            const endDate = new Date(nextEventData.endTime);
+            let endDate = new Date(nextEventData.endTime);
             
-            // Simple date formatting - just show the date
-            if (nextEventData.isAllDay || startDate.toDateString() === endDate.toDateString()) {
+            // For all-day events, Google Calendar uses exclusive end dates
+            // So we need to subtract one day to get the actual inclusive end date
+            if (nextEventData.isAllDay) {
+              endDate = new Date(endDate.getTime() - 24 * 60 * 60 * 1000); // Subtract one day
+            }
+            
+            // Check if it's a single day or multi-day event
+            if (startDate.toDateString() === endDate.toDateString()) {
+              // Single day event
               setNextEvent(startDate.toLocaleDateString('cs-CZ', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric'
               }));
             } else {
-              // Multi-day event
+              // Multi-day event - format with proper Czech grammar
               const startDay = startDate.getDate();
               const endDay = endDate.getDate();
-              const month = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
-              const year = startDate.getFullYear();
+              const startMonth = startDate.getMonth();
+              const endMonth = endDate.getMonth();
+              const startYear = startDate.getFullYear();
+              const endYear = endDate.getFullYear();
               
-              setNextEvent(`${startDay}. - ${endDay}. ${month} ${year}`);
+              // If same month and year
+              if (startMonth === endMonth && startYear === endYear) {
+                const month = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
+                setNextEvent(`${startDay}.–${endDay}. ${month} ${startYear}`);
+              } else if (startYear === endYear) {
+                // Same year, different months
+                const startMonthName = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
+                const endMonthName = endDate.toLocaleDateString('cs-CZ', { month: 'long' });
+                setNextEvent(`${startDay}. ${startMonthName} – ${endDay}. ${endMonthName} ${startYear}`);
+              } else {
+                // Different years
+                const startMonthName = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
+                const endMonthName = endDate.toLocaleDateString('cs-CZ', { month: 'long' });
+                setNextEvent(`${startDay}. ${startMonthName} ${startYear} – ${endDay}. ${endMonthName} ${endYear}`);
+              }
             }
           } else {
             setNextEvent(null);

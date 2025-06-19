@@ -65,10 +65,16 @@ const UpcomingEvents: React.FC = () => {
 
   const formatDateRange = (startDateString: string, endDateString: string, isAllDay: boolean) => {
     const startDate = new Date(startDateString);
-    const endDate = new Date(endDateString);
+    let endDate = new Date(endDateString);
     
-    // For all-day events or if dates are the same day
-    if (isAllDay || startDate.toDateString() === endDate.toDateString()) {
+    // For all-day events, Google Calendar uses exclusive end dates
+    // So we need to subtract one day to get the actual inclusive end date
+    if (isAllDay) {
+      endDate = new Date(endDate.getTime() - 24 * 60 * 60 * 1000); // Subtract one day
+    }
+    
+    // Check if it's a single day event
+    if (startDate.toDateString() === endDate.toDateString()) {
       return startDate.toLocaleDateString('cs-CZ', {
         day: 'numeric',
         month: 'long',
@@ -76,13 +82,31 @@ const UpcomingEvents: React.FC = () => {
       });
     }
     
-    // For multi-day events
+    // For multi-day events, format with proper Czech grammar
     const startDay = startDate.getDate();
     const endDay = endDate.getDate();
-    const month = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
-    const year = startDate.getFullYear();
+    const startMonth = startDate.getMonth();
+    const endMonth = endDate.getMonth();
+    const startYear = startDate.getFullYear();
+    const endYear = endDate.getFullYear();
     
-    return `${startDay}. - ${endDay}. ${month} ${year}`;
+    // If same month and year
+    if (startMonth === endMonth && startYear === endYear) {
+      const month = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
+      return `${startDay}.–${endDay}. ${month} ${startYear}`;
+    }
+    
+    // If same year but different months
+    if (startYear === endYear) {
+      const startMonthName = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
+      const endMonthName = endDate.toLocaleDateString('cs-CZ', { month: 'long' });
+      return `${startDay}. ${startMonthName} – ${endDay}. ${endMonthName} ${startYear}`;
+    }
+    
+    // Different years
+    const startMonthName = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
+    const endMonthName = endDate.toLocaleDateString('cs-CZ', { month: 'long' });
+    return `${startDay}. ${startMonthName} ${startYear} – ${endDay}. ${endMonthName} ${endYear}`;
   };
 
   const formatTime = (startDateString: string, endDateString: string, isAllDay: boolean) => {
@@ -100,7 +124,7 @@ const UpcomingEvents: React.FC = () => {
       minute: '2-digit' 
     });
     
-    return `${startTime} - ${endTime}`;
+    return `${startTime}–${endTime}`;
   };
 
   return (
