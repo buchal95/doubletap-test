@@ -34,7 +34,7 @@ export default function PrivacyPage() {
                   Zásady ochrany osobních údajů
                 </h1>
                 <p className="text-brand-gray/60 font-montserrat mt-2">
-                  Účinné od: 8. dubna 2025
+                  Účinné od: 19. června 2025
                 </p>
               </div>
             </div>
@@ -120,45 +120,134 @@ export default function PrivacyPage() {
                 </ul>
               </section>
 
-              {/* Section 5 */}
+              {/* Section 5 - Updated with all Usercentrics detected services */}
               <section className="mb-8">
                 <h2 className="text-2xl font-anton text-brand-gray mb-4">5. Nástroje třetích stran, které využíváme</h2>
                 <p className="font-montserrat text-brand-gray/80 mb-4">Na webu používáme nástroje, které mohou shromažďovat cookies a další údaje:</p>
-                <div className="space-y-4">
-                  <div className="bg-brand-beige rounded-lg p-4">
-                    <h4 className="font-anton text-brand-gray mb-2">Google Analytics 4</h4>
-                    <p className="font-montserrat text-brand-gray/80 text-sm">
-                      Slouží k měření a analýze chování uživatelů na webu. 
-                      <a href="#" className="text-brand-olive hover:underline ml-1">Zásady Google</a>
-                    </p>
+                
+                {/* Essential Services */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-anton text-brand-gray mb-3">Nezbytné služby</h3>
+                  <div className="space-y-3">
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">Google Tag Manager</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Spravuje měřicí kódy bez zásahu do kódu webu. Sám údaje neukládá.
+                        <a href="https://policies.google.com/privacy" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Podmínky Google</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">Usercentrics Consent Management</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Platforma pro správu souhlasů s cookies a ochranou osobních údajů.
+                        <a href="https://usercentrics.com/privacy-policy/" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Usercentrics</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">gstatic.com</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        CDN síť Google pro rychlé načítání statických souborů (fonty, skripty).
+                        <a href="https://policies.google.com/privacy" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Google</a>
+                      </p>
+                    </div>
                   </div>
-                  <div className="bg-brand-beige rounded-lg p-4">
-                    <h4 className="font-anton text-brand-gray mb-2">Google Ads</h4>
-                    <p className="font-montserrat text-brand-gray/80 text-sm">
-                      Používáme pro cílenou reklamu a měření kampaní. 
-                      <a href="#" className="text-brand-olive hover:underline ml-1">Podmínky reklam Google</a>
-                    </p>
+                </div>
+
+                {/* Functional Services */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-anton text-brand-gray mb-3">Funkční služby</h3>
+                  <div className="space-y-3">
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">Cloudflare</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        CDN síť a ochrana webu před útoky. Může zpracovávat IP adresy a technické údaje.
+                        <a href="https://www.cloudflare.com/privacy/" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Cloudflare</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">Google Fonts</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Načítání webových fontů. Může zaznamenávat IP adresu při stažení fontů.
+                        <a href="https://policies.google.com/privacy" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Google</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">reCAPTCHA</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Ochrana formulářů před spamem. Analyzuje chování uživatele na stránce.
+                        <a href="https://policies.google.com/privacy" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Google</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">YouTube Video</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Vkládání videí z YouTube. Může sledovat interakce s videem.
+                        <a href="https://policies.google.com/privacy" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady YouTube</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">Google AJAX</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        CDN pro načítání JavaScript knihoven. Technická služba pro funkcionalitu webu.
+                        <a href="https://policies.google.com/privacy" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Google</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">Google Play</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Služby související s Google Play pro mobilní aplikace a integrace.
+                        <a href="https://policies.google.com/privacy" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Google</a>
+                      </p>
+                    </div>
                   </div>
-                  <div className="bg-brand-beige rounded-lg p-4">
-                    <h4 className="font-anton text-brand-gray mb-2">Google Tag Manager</h4>
-                    <p className="font-montserrat text-brand-gray/80 text-sm">
-                      Spravuje měřicí kódy bez zásahu do kódu webu. Sám údaje neukládá. 
-                      <a href="#" className="text-brand-olive hover:underline ml-1">Podmínky GTM</a>
-                    </p>
-                  </div>
-                  <div className="bg-brand-beige rounded-lg p-4">
-                    <h4 className="font-anton text-brand-gray mb-2">Sklik (Seznam.cz)</h4>
-                    <p className="font-montserrat text-brand-gray/80 text-sm">
-                      Nástroj pro zobrazování a měření českých reklamních kampaní. 
-                      <a href="#" className="text-brand-olive hover:underline ml-1">Zásady Sklik</a>
-                    </p>
-                  </div>
-                  <div className="bg-brand-beige rounded-lg p-4">
-                    <h4 className="font-anton text-brand-gray mb-2">Meta (Facebook a Instagram)</h4>
-                    <p className="font-montserrat text-brand-gray/80 text-sm">
-                      Využíváme pixel Meta pro měření účinnosti reklam. 
-                      <a href="#" className="text-brand-olive hover:underline ml-1">Zásady Meta</a>
-                    </p>
+                </div>
+
+                {/* Marketing Services */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-anton text-brand-gray mb-3">Marketingové služby</h3>
+                  <div className="space-y-3">
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">Google Analytics 4</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Slouží k měření a analýze chování uživatelů na webu.
+                        <a href="https://policies.google.com/privacy" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Google</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">Google Ads</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Používáme pro cílenou reklamu a měření kampaní.
+                        <a href="https://policies.google.com/privacy" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Podmínky reklam Google</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">DoubleClick Ad</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Reklamní síť Google pro zobrazování a měření bannerové reklamy.
+                        <a href="https://policies.google.com/privacy" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Google</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">Facebook Pixel</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Využíváme pixel Meta pro měření účinnosti reklam.
+                        <a href="https://www.facebook.com/privacy/explanation" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Meta</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">Facebook Social Plugins</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Sociální tlačítka a pluginy pro sdílení obsahu na Facebooku.
+                        <a href="https://www.facebook.com/privacy/explanation" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Meta</a>
+                      </p>
+                    </div>
+                    <div className="bg-brand-beige rounded-lg p-4">
+                      <h4 className="font-anton text-brand-gray mb-2">Sklik (Seznam.cz)</h4>
+                      <p className="font-montserrat text-brand-gray/80 text-sm">
+                        Nástroj pro zobrazování a měření českých reklamních kampaní.
+                        <a href="https://o.seznam.cz/ochrana-udaju/" className="text-brand-olive hover:underline ml-1" target="_blank" rel="noopener noreferrer">Zásady Seznam.cz</a>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -195,7 +284,7 @@ export default function PrivacyPage() {
               <section className="mb-8">
                 <h2 className="text-2xl font-anton text-brand-gray mb-4">8. Přenos do třetích zemí</h2>
                 <p className="font-montserrat text-brand-gray/80">
-                  Některé nástroje (např. Google, Meta) mohou přenášet údaje mimo EU. Děje se tak na základě tzv. standardních smluvních doložek nebo jiných záruk dle GDPR.
+                  Některé nástroje (např. Google, Meta, Cloudflare) mohou přenášet údaje mimo EU. Děje se tak na základě tzv. standardních smluvních doložek nebo jiných záruk dle GDPR.
                 </p>
               </section>
 
@@ -283,6 +372,13 @@ export default function PrivacyPage() {
                   </div>
                 </div>
               </section>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-8 pt-8 border-t border-brand-gray/10 text-center">
+              <p className="text-brand-gray/60 font-montserrat text-sm md:text-base">
+                <strong>Datum poslední aktualizace:</strong> 19. června 2025
+              </p>
             </div>
           </div>
         </div>
