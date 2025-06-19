@@ -50,19 +50,21 @@ const Hero: React.FC = () => {
             const startDate = new Date(nextEventData.startTime);
             const endDate = new Date(nextEventData.endTime);
             
-            if (startDate.toDateString() !== endDate.toDateString()) {
+            // Simple date formatting - just show the date
+            if (nextEventData.isAllDay || startDate.toDateString() === endDate.toDateString()) {
+              setNextEvent(startDate.toLocaleDateString('cs-CZ', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+              }));
+            } else {
+              // Multi-day event
               const startDay = startDate.getDate();
               const endDay = endDate.getDate();
               const month = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
               const year = startDate.getFullYear();
               
               setNextEvent(`${startDay}. - ${endDay}. ${month} ${year}`);
-            } else {
-              setNextEvent(startDate.toLocaleDateString('cs-CZ', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-              }));
             }
           } else {
             setNextEvent(null);
@@ -136,7 +138,7 @@ const Hero: React.FC = () => {
             </p>
           ) : nextEvent ? (
             <p className="mt-6 text-brand-beige font-montserrat animate-fade-in">
-              Nejbližší termín: {nextEvent}
+              Nejbližší termín: <span className="font-semibold">{nextEvent}</span>
             </p>
           ) : (
             <p className="mt-6 text-brand-beige/80 font-montserrat animate-fade-in">

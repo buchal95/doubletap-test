@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
-import { Calendar, RefreshCw, MapPin } from 'lucide-react';
+import { Calendar, RefreshCw, MapPin, Clock } from 'lucide-react';
 
 interface CalendarEvent {
   id: string;
@@ -63,11 +63,12 @@ const UpcomingEvents: React.FC = () => {
     fetchEvents();
   }, []);
 
-  const formatDateRange = (startDateString: string, endDateString: string) => {
+  const formatDateRange = (startDateString: string, endDateString: string, isAllDay: boolean) => {
     const startDate = new Date(startDateString);
     const endDate = new Date(endDateString);
     
-    if (startDate.toDateString() === endDate.toDateString()) {
+    // For all-day events or if dates are the same day
+    if (isAllDay || startDate.toDateString() === endDate.toDateString()) {
       return startDate.toLocaleDateString('cs-CZ', {
         day: 'numeric',
         month: 'long',
@@ -75,12 +76,31 @@ const UpcomingEvents: React.FC = () => {
       });
     }
     
+    // For multi-day events
     const startDay = startDate.getDate();
     const endDay = endDate.getDate();
     const month = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
     const year = startDate.getFullYear();
     
     return `${startDay}. - ${endDay}. ${month} ${year}`;
+  };
+
+  const formatTime = (startDateString: string, endDateString: string, isAllDay: boolean) => {
+    if (isAllDay) return null;
+    
+    const startDate = new Date(startDateString);
+    const endDate = new Date(endDateString);
+    
+    const startTime = startDate.toLocaleTimeString('cs-CZ', { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
+    const endTime = endDate.toLocaleTimeString('cs-CZ', { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
+    
+    return `${startTime} - ${endTime}`;
   };
 
   return (
@@ -124,27 +144,53 @@ const UpcomingEvents: React.FC = () => {
             </div>
           ) : (
             <div className="space-y-6">
-              {events.map((event) => (
-                <div 
-                  key={event.id} 
-                  className="bg-white rounded-xl shadow-sm border border-brand-gray/10 p-6 transition-all duration-300 hover:shadow-md"
-                >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between">
-                    <div className="mb-4 md:mb-0">
-                      <h3 className="text-xl font-anton text-brand-gray mb-2">{event.title}</h3>
-                      <div className="flex items-center text-brand-gray/80 font-montserrat mb-2">
-                        <Calendar className="w-5 h-5 mr-2 text-brand-olive flex-shrink-0" />
-                        <span>{formatDateRange(event.startTime, event.endTime)}</span>
+              {events.map((event) => {
+                const timeInfo = formatTime(event.startTime, event.endTime, event.isAllDay);
+                
+                return (
+                  <div 
+                    key={event.id} 
+                    className="bg-white rounded-xl shadow-sm border border-brand-gray/10 p-6 transition-all duration-300 hover:shadow-md"
+                  >
+                    <div className="flex flex-col md:flex-row md:items-center justify-between">
+                      <div className="mb-4 md:mb-0">
+                        <h3 className="text-xl font-anton text-brand-gray mb-3">{event.title}</h3>
+                        
+                        <div className="space-y-2">
+                          {/* Date */}
+                          <div className="flex items-center text-brand-gray/80 font-montserrat">
+                            <Calendar className="w-5 h-5 mr-2 text-brand-olive flex-shrink-0" />
+                            <span>{formatDateRange(event.startTime, event.endTime, event.isAllDay)}</span>
+                          </div>
+                          
+                          {/* Time (if not all-day) */}
+                          {timeInfo && (
+                            <div className="flex items-center text-brand-gray/80 font-montserrat">
+                              <Clock className="w-5 h-5 mr-2 text-brand-olive flex-shrink-0" />
+                              <span>{timeInfo}</span>
+                            </div>
+                          )}
+                          
+                          {/* Location */}
+                          <div className="flex items-start text-brand-gray/80 font-montserrat">
+                            <MapPin className="w-5 h-5 mr-2 text-brand-olive mt-0.5 flex-shrink-0" />
+                            <span>
+                              {event.locationTitle || 'Praha'}
+                              {!event.locationTitle && (
+                                <span className="text-brand-gray/60 text-sm block">
+                                  Přesná adresa po registraci
+                                </span>
+                              )}
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex items-start text-brand-gray/80 font-montserrat">
-                        <MapPin className="w-5 h-5 mr-2 text-brand-olive mt-0.5 flex-shrink-0" />
-                        <span>Osobně v Praze{event.locationTitle ? ` - ${event.locationTitle}` : ''}</span>
-                      </div>
+                      
+                      <CTAButton text="Rezervovat" className="whitespace-nowrap" />
                     </div>
-                    <CTAButton text="Rezervovat" className="whitespace-nowrap" />
                   </div>
-                </div>
-              ))}
+                );
+              })}
               
               <div className="text-center mt-8">
                 <CTAButton 
