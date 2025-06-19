@@ -19,6 +19,12 @@ const UpcomingEvents: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Czech month names in genitive case (for dates)
+  const CZECH_MONTHS_GENITIVE = [
+    'ledna', 'února', 'března', 'dubna', 'května', 'června',
+    'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'
+  ];
+
   const fetchEvents = async () => {
     try {
       setIsLoading(true);
@@ -75,11 +81,10 @@ const UpcomingEvents: React.FC = () => {
     
     // Check if it's a single day event
     if (startDate.toDateString() === endDate.toDateString()) {
-      return startDate.toLocaleDateString('cs-CZ', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      });
+      const day = startDate.getDate();
+      const month = CZECH_MONTHS_GENITIVE[startDate.getMonth()];
+      const year = startDate.getFullYear();
+      return `${day}. ${month} ${year}`;
     }
     
     // For multi-day events, format with proper Czech grammar
@@ -92,20 +97,20 @@ const UpcomingEvents: React.FC = () => {
     
     // If same month and year
     if (startMonth === endMonth && startYear === endYear) {
-      const month = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
+      const month = CZECH_MONTHS_GENITIVE[startMonth];
       return `${startDay}.–${endDay}. ${month} ${startYear}`;
     }
     
     // If same year but different months
     if (startYear === endYear) {
-      const startMonthName = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
-      const endMonthName = endDate.toLocaleDateString('cs-CZ', { month: 'long' });
+      const startMonthName = CZECH_MONTHS_GENITIVE[startMonth];
+      const endMonthName = CZECH_MONTHS_GENITIVE[endMonth];
       return `${startDay}. ${startMonthName} – ${endDay}. ${endMonthName} ${startYear}`;
     }
     
     // Different years
-    const startMonthName = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
-    const endMonthName = endDate.toLocaleDateString('cs-CZ', { month: 'long' });
+    const startMonthName = CZECH_MONTHS_GENITIVE[startMonth];
+    const endMonthName = CZECH_MONTHS_GENITIVE[endMonth];
     return `${startDay}. ${startMonthName} ${startYear} – ${endDay}. ${endMonthName} ${endYear}`;
   };
 

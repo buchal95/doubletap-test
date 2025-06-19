@@ -18,6 +18,12 @@ const Hero: React.FC = () => {
   const [nextEvent, setNextEvent] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  // Czech month names in genitive case (for dates)
+  const CZECH_MONTHS_GENITIVE = [
+    'ledna', 'února', 'března', 'dubna', 'května', 'června',
+    'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'
+  ];
+
   useEffect(() => {
     const fetchNextEvent = async () => {
       try {
@@ -59,11 +65,10 @@ const Hero: React.FC = () => {
             // Check if it's a single day or multi-day event
             if (startDate.toDateString() === endDate.toDateString()) {
               // Single day event
-              setNextEvent(startDate.toLocaleDateString('cs-CZ', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-              }));
+              const day = startDate.getDate();
+              const month = CZECH_MONTHS_GENITIVE[startDate.getMonth()];
+              const year = startDate.getFullYear();
+              setNextEvent(`${day}. ${month} ${year}`);
             } else {
               // Multi-day event - format with proper Czech grammar
               const startDay = startDate.getDate();
@@ -75,17 +80,17 @@ const Hero: React.FC = () => {
               
               // If same month and year
               if (startMonth === endMonth && startYear === endYear) {
-                const month = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
+                const month = CZECH_MONTHS_GENITIVE[startMonth];
                 setNextEvent(`${startDay}.–${endDay}. ${month} ${startYear}`);
               } else if (startYear === endYear) {
                 // Same year, different months
-                const startMonthName = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
-                const endMonthName = endDate.toLocaleDateString('cs-CZ', { month: 'long' });
+                const startMonthName = CZECH_MONTHS_GENITIVE[startMonth];
+                const endMonthName = CZECH_MONTHS_GENITIVE[endMonth];
                 setNextEvent(`${startDay}. ${startMonthName} – ${endDay}. ${endMonthName} ${startYear}`);
               } else {
                 // Different years
-                const startMonthName = startDate.toLocaleDateString('cs-CZ', { month: 'long' });
-                const endMonthName = endDate.toLocaleDateString('cs-CZ', { month: 'long' });
+                const startMonthName = CZECH_MONTHS_GENITIVE[startMonth];
+                const endMonthName = CZECH_MONTHS_GENITIVE[endMonth];
                 setNextEvent(`${startDay}. ${startMonthName} ${startYear} – ${endDay}. ${endMonthName} ${endYear}`);
               }
             }
@@ -105,6 +110,13 @@ const Hero: React.FC = () => {
     
     fetchNextEvent();
   }, []);
+
+  const handleClick = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section className="relative py-20 md:py-32 bg-brand-gray text-white overflow-hidden">
