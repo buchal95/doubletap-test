@@ -131,45 +131,30 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         
-        {/* Initialize dataLayer first */}
+        {/* Initialize dataLayer and gtag FIRST - before GTM */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              // Initialize dataLayer
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-            `
-          }}
-        />
-        
-        {/* Google Consent Defaults - POUZE standardní Google consent typy */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Consent defaults - jen standardní Google typy
+              
+              // Set consent defaults - POUZE standardní Google typy
               gtag('consent', 'default', {
                 'analytics_storage': 'denied',
-                'ad_storage': 'denied',
+                'ad_storage': 'denied', 
                 'ad_user_data': 'denied',
                 'ad_personalization': 'denied',
                 'security_storage': 'granted'
               });
               
-              // Non-personalized ads configuration
+              // Set non-personalized ads
               gtag('set', {
                 'non_personalized_ads': true
               });
               
-              // Push to dataLayer pro debug
-              window.dataLayer.push({
-                'event': 'consent_defaults_set',
-                'consent_analytics_storage': 'denied',
-                'consent_ad_storage': 'denied',
-                'consent_ad_user_data': 'denied',
-                'consent_ad_personalization': 'denied',
-                'consent_security_storage': 'granted',
-                'non_personalized_ads': true
-              });
+              // Initialize timestamp
+              gtag('js', new Date());
             `
           }}
         />
