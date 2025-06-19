@@ -131,7 +131,34 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         
-        {/* Google Tag Manager - GTM-M3ZNVD4K */}
+        {/* STEP 1: Initialize dataLayer and consent defaults BEFORE GTM */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              
+              // Set consent defaults BEFORE GTM loads
+              gtag('consent', 'default', {
+                'ad_storage': 'denied',
+                'analytics_storage': 'denied',
+                'functionality_storage': 'denied',
+                'personalization_storage': 'denied',
+                'security_storage': 'granted',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'non_personalized_ads': 'denied'
+              });
+              
+              // Set development config
+              gtag('config', 'G-XXXXXXXXXX', {
+                'debug_mode': false
+              });
+            `
+          }}
+        />
+        
+        {/* STEP 2: Load GTM after consent defaults are set */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
