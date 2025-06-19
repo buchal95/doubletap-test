@@ -55,6 +55,75 @@ declare global {
   }
 }
 
+// ✅ NEW: Consent update function
+export const updateConsent = (consentSettings: {
+  analytics_storage?: 'granted' | 'denied';
+  ad_storage?: 'granted' | 'denied';
+  ad_user_data?: 'granted' | 'denied';
+  ad_personalization?: 'granted' | 'denied';
+  functionality_storage?: 'granted' | 'denied';
+  personalization_storage?: 'granted' | 'denied';
+  security_storage?: 'granted' | 'denied';
+  non_personalized_ads?: boolean;
+}) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('consent', 'update', consentSettings);
+  }
+};
+
+// ✅ NEW: Convenience functions for common consent scenarios
+export const grantAllConsents = () => {
+  updateConsent({
+    analytics_storage: 'granted',
+    ad_storage: 'granted',
+    ad_user_data: 'granted',
+    ad_personalization: 'granted',
+    functionality_storage: 'granted',
+    personalization_storage: 'granted',
+    security_storage: 'granted',
+    non_personalized_ads: false
+  });
+};
+
+export const denyAllConsents = () => {
+  updateConsent({
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    functionality_storage: 'denied',
+    personalization_storage: 'denied',
+    security_storage: 'granted', // Security always granted
+    non_personalized_ads: true
+  });
+};
+
+export const grantAnalyticsOnly = () => {
+  updateConsent({
+    analytics_storage: 'granted',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    functionality_storage: 'granted',
+    personalization_storage: 'denied',
+    security_storage: 'granted',
+    non_personalized_ads: true
+  });
+};
+
+export const grantMarketingOnly = () => {
+  updateConsent({
+    analytics_storage: 'denied',
+    ad_storage: 'granted',
+    ad_user_data: 'granted',
+    ad_personalization: 'granted',
+    functionality_storage: 'granted',
+    personalization_storage: 'granted',
+    security_storage: 'granted',
+    non_personalized_ads: false
+  });
+};
+
 // Helper function to format phone number for advanced matching
 const formatPhoneForMatching = (phone: string): string => {
   // Remove all spaces, dashes, parentheses
@@ -290,3 +359,12 @@ export const trackScrollDepth = (depth: 25 | 50 | 75 | 100) => {
     page_title: typeof document !== 'undefined' ? document.title : ''
   } as ConversionEventData);
 };
+
+// ✅ NEW: Make consent functions globally available for Usercentrics or other scripts
+if (typeof window !== 'undefined') {
+  (window as any).updateConsent = updateConsent;
+  (window as any).grantAllConsents = grantAllConsents;
+  (window as any).denyAllConsents = denyAllConsents;
+  (window as any).grantAnalyticsOnly = grantAnalyticsOnly;
+  (window as any).grantMarketingOnly = grantMarketingOnly;
+}
