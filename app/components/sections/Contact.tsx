@@ -427,7 +427,7 @@ const Contact: React.FC = () => {
             <div className="text-center w-full">
               <h4 className="font-anton text-lg text-brand-red mb-2">⏰ 82% dotace končí koncem roku 2025</h4>
               <p className="text-brand-gray/80 font-montserrat">
-                Po ukončení dotačního programu bude kurz stát plných 15 000 Kč
+                Po ukončení dotačního programu bude kurz stát plných <span className="whitespace-nowrap">15 000 Kč</span>
               </p>
             </div>
           </div>

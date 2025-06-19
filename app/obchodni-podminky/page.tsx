@@ -117,7 +117,7 @@ export default function TermsPage() {
                   <div className="flex items-start gap-3 md:gap-4">
                     <span className="bg-brand-olive text-white rounded-full w-6 h-6 md:w-8 md:h-8 flex items-center justify-center font-anton text-xs md:text-sm flex-shrink-0 mt-1">2.3</span>
                     <p className="font-montserrat text-brand-gray/80 text-sm md:text-base leading-relaxed min-w-0">
-                      Klient hradí Poskytovateli pouze spoluúčast ve výši <strong className="text-brand-red whitespace-nowrap">2 700 Kč</strong>
+                      Klient hradí Poskytovateli pouze spoluúčast ve výši <strong className="text-brand-red"><span className="whitespace-nowrap">2 700 Kč</span></strong>
                     </p>
                   </div>
                 </div>

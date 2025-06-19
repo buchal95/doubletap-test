@@ -36,7 +36,7 @@ const Subsidy: React.FC = () => {
             <div className="p-8 md:p-10">
               <h3 className="text-2xl font-anton mb-6">Běžná cena kurzu</h3>
               <div className="mb-6">
-                <p className="text-4xl font-anton text-brand-gray/40 line-through">15 000 Kč</p>
+                <p className="text-4xl font-anton text-brand-gray/40 line-through"><span className="whitespace-nowrap">15 000 Kč</span></p>
                 <p className="text-brand-gray/60 font-montserrat mt-2">bez dotace</p>
               </div>
               
@@ -65,9 +65,9 @@ const Subsidy: React.FC = () => {
                 DOTACE 82%
               </div>
               
-              <h3 className="text-2xl font-anton mb-6">Dotace od státu: 12 300 Kč</h3>
+              <h3 className="text-2xl font-anton mb-6">Dotace od státu: <span className="whitespace-nowrap">12 300 Kč</span></h3>
               <div className="mb-6">
-                <p className="text-5xl font-anton text-brand-red">2 700 Kč</p>
+                <p className="text-5xl font-anton text-brand-red"><span className="whitespace-nowrap">2 700 Kč</span></p>
                 <p className="text-brand-olive font-montserrat font-semibold mt-2">Vaše investice</p>
               </div>
               
@@ -145,7 +145,7 @@ const Subsidy: React.FC = () => {
           <div className="bg-brand-red/20 border border-brand-red/30 rounded-xl p-6 text-center">
             <AlertTriangle className="w-8 h-8 text-brand-red mx-auto mb-4" />
             <p className="text-brand-beige font-montserrat">
-              <strong>Pozor:</strong> Můžete čerpat max. 50 000 Kč za 3 roky na vzdělávací kurzy
+              <strong>Pozor:</strong> Můžete čerpat max. <span className="whitespace-nowrap">50 000 Kč</span> za 3 roky na vzdělávací kurzy
             </p>
           </div>
         </div>

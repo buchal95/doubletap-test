@@ -89,7 +89,7 @@ export default function ThankYouPage() {
                 </div>
                 <h3 className="font-anton text-brand-gray mb-2">Platba a kurz</h3>
                 <p className="text-sm text-brand-gray/80 font-montserrat">
-                  Po schválení dotace zaplatíte pouze 2 700 Kč a můžete začít kurz
+                  Po schválení dotace zaplatíte pouze <span className="whitespace-nowrap">2 700 Kč</span> a můžete začít kurz
                 </p>
               </div>
             </div>
@@ -128,7 +128,7 @@ export default function ThankYouPage() {
                         Zaplatíte pouze
                       </p>
                       <p className="text-3xl font-anton text-brand-red mb-2">
-                        2 700 Kč
+                        <span className="whitespace-nowrap">2 700 Kč</span>
                       </p>
                       <p className="text-brand-gray/60 font-montserrat text-sm">
                         (18 % z celkové ceny)
@@ -143,7 +143,7 @@ export default function ThankYouPage() {
                         Stát uhradí zbývajících
                       </p>
                       <p className="text-3xl font-anton text-brand-olive mb-2">
-                        12 300 Kč
+                        <span className="whitespace-nowrap">12 300 Kč</span>
                       </p>
                       <p className="text-brand-gray/60 font-montserrat text-sm">
                         (82 % dotace)
