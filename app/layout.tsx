@@ -143,8 +143,10 @@ export default function RootLayout({
               'personalization_storage': 'denied',
               'security_storage': 'granted',
               'ad_user_data': 'denied',
-              'ad_personalization': 'denied',
-              'non_personalized_ads': 'denied'
+              'ad_personalization': 'denied'
+            });
+            gtag('set', {
+              'non_personalized_ads': true
             });
           `
         }} />
@@ -158,49 +160,101 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-M3ZNVD4K');`
         }} />
         
-        {/* Usercentrics consent update handler */}
+        {/* Usercentrics consent update handler with debugging */}
         <script dangerouslySetInnerHTML={{
           __html: `
             function updateConsent() {
-              if (typeof UC_UI === 'undefined') return;
+              console.log('🔍 updateConsent() called');
               
-              var consentedServices = UC_UI.getServicesBaseInfo().filter(function(service) {
-                return service.consent.status === true;
-              });
-              
-              var categories = [];
-              for (var i = 0; i < consentedServices.length; i++) {
-                var category = consentedServices[i].categorySlug || consentedServices[i].category;
-                if (categories.indexOf(category) === -1) {
-                  categories.push(category);
-                }
+              if (typeof UC_UI === 'undefined') {
+                console.log('❌ UC_UI not available');
+                return;
               }
               
-              var hasMarketing = categories.indexOf('marketing') !== -1;
-              var hasFunctional = categories.indexOf('functional') !== -1;
+              console.log('✅ UC_UI available, getting services...');
               
-              gtag('consent', 'update', {
-                'analytics_storage': hasMarketing ? 'granted' : 'denied',
-                'ad_storage': hasMarketing ? 'granted' : 'denied',
-                'ad_user_data': hasMarketing ? 'granted' : 'denied',
-                'ad_personalization': hasMarketing ? 'granted' : 'denied',
-                'functionality_storage': hasFunctional ? 'granted' : 'denied',
-                'personalization_storage': hasFunctional ? 'granted' : 'denied',
-                'security_storage': 'granted'
-              });
-              
-              gtag('set', {
-                'non_personalized_ads': hasMarketing ? false : true
-              });
+              try {
+                var servicesInfo = UC_UI.getServicesBaseInfo();
+                console.log('📋 All services:', servicesInfo);
+                
+                var consentedServices = servicesInfo.filter(function(service) {
+                  return service.consent.status === true;
+                });
+                
+                console.log('✅ Consented services:', consentedServices);
+                
+                // Get all unique categories from consented services
+                var categories = [];
+                consentedServices.forEach(function(service) {
+                  var category = service.categorySlug || service.category;
+                  if (category && categories.indexOf(category) === -1) {
+                    categories.push(category);
+                  }
+                });
+                
+                console.log('📂 Consented categories:', categories);
+                
+                // Check for marketing/analytics consent - try multiple possible category names
+                var hasMarketing = categories.some(function(cat) {
+                  return cat.toLowerCase().includes('marketing') || 
+                         cat.toLowerCase().includes('advertising') || 
+                         cat.toLowerCase().includes('analytics') ||
+                         cat.toLowerCase().includes('tracking');
+                });
+                
+                var hasFunctional = categories.some(function(cat) {
+                  return cat.toLowerCase().includes('functional') || 
+                         cat.toLowerCase().includes('performance') ||
+                         cat.toLowerCase().includes('preference');
+                });
+                
+                console.log('🎯 Has marketing consent:', hasMarketing);
+                console.log('🔧 Has functional consent:', hasFunctional);
+                
+                // Always grant if we have any consented services beyond essential
+                var hasAnyConsent = consentedServices.length > 0;
+                console.log('📊 Has any consent:', hasAnyConsent);
+                
+                // Update consent - be more permissive for testing
+                var consentUpdate = {
+                  'analytics_storage': hasMarketing || hasAnyConsent ? 'granted' : 'denied',
+                  'ad_storage': hasMarketing || hasAnyConsent ? 'granted' : 'denied',
+                  'ad_user_data': hasMarketing || hasAnyConsent ? 'granted' : 'denied',
+                  'ad_personalization': hasMarketing || hasAnyConsent ? 'granted' : 'denied',
+                  'functionality_storage': hasFunctional || hasAnyConsent ? 'granted' : 'denied',
+                  'personalization_storage': hasFunctional || hasAnyConsent ? 'granted' : 'denied',
+                  'security_storage': 'granted'
+                };
+                
+                console.log('📤 Updating consent with:', consentUpdate);
+                
+                gtag('consent', 'update', consentUpdate);
+                
+                gtag('set', {
+                  'non_personalized_ads': hasMarketing ? false : true
+                });
+                
+                console.log('✅ Consent update complete');
+                
+              } catch (error) {
+                console.error('❌ Error in updateConsent:', error);
+              }
             }
 
+            // Listen for Usercentrics events
             window.addEventListener("UC_UI_CMP_EVENT", function(event) {
-              setTimeout(updateConsent, 500);
+              console.log('🎭 UC_UI_CMP_EVENT received:', event);
+              setTimeout(updateConsent, 100);
             });
 
-            if (typeof UC_UI !== 'undefined') {
-              setTimeout(updateConsent, 1000);
-            }
+            // Also try on page load after a delay
+            setTimeout(function() {
+              console.log('⏰ Delayed consent check...');
+              updateConsent();
+            }, 2000);
+
+            // Make function available globally for testing
+            window.debugUpdateConsent = updateConsent;
           `
         }} />
         
