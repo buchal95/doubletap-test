@@ -66,7 +66,7 @@ const Lectors: React.FC = () => {
           {lectors.map((lector, index) => (
             <div 
               key={index}
-              className="group bg-white rounded-2xl shadow-lg border border-brand-gray/10 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:scale-[1.03] transform"
+              className="bg-white rounded-2xl shadow-lg border border-brand-gray/10 overflow-hidden transition-all duration-300 hover:shadow-xl"
             >
               {/* Photo section */}
               <div className="relative overflow-hidden">
@@ -87,7 +87,7 @@ const Lectors: React.FC = () => {
                         alt={lector.name}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="object-cover"
                         style={{ objectPosition: lector.objectPosition }}
                         priority={index === 0}
                         loading={index === 0 ? "eager" : "lazy"}
@@ -101,7 +101,7 @@ const Lectors: React.FC = () => {
                       alt={lector.name}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="object-cover"
                       style={{ objectPosition: lector.objectPosition }}
                       priority={index === 0}
                       loading={index === 0 ? "eager" : "lazy"}
@@ -112,12 +112,12 @@ const Lectors: React.FC = () => {
                 </div>
                 
                 {/* Fun highlight badge */}
-                <div className="absolute top-4 left-4 bg-brand-red text-white px-4 py-2 rounded-full text-sm font-anton shadow-lg transform rotate-2 group-hover:rotate-0 transition-transform duration-300">
+                <div className="absolute top-4 left-4 bg-brand-red text-white px-4 py-2 rounded-full text-sm font-anton shadow-lg">
                   {lector.highlight}
                 </div>
                 
                 {/* Personality badge */}
-                <div className="absolute top-4 right-4 bg-brand-olive text-white px-3 py-1 rounded-full text-xs font-montserrat font-semibold transform -rotate-2 group-hover:rotate-0 transition-transform duration-300">
+                <div className="absolute top-4 right-4 bg-brand-olive text-white px-3 py-1 rounded-full text-xs font-montserrat font-semibold">
                   {lector.personality}
                 </div>
               </div>

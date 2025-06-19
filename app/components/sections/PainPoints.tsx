@@ -1,6 +1,6 @@
 import React from 'react';
 import SectionHeading from '../common/SectionHeading';
-import { Smartphone, CheckCircle, Users } from 'lucide-react';
+import { Smartphone, CheckCircle, Users, Zap, BookOpen } from 'lucide-react';
 
 const PainPoints: React.FC = () => {
   const requirements = [
@@ -10,12 +10,12 @@ const PainPoints: React.FC = () => {
       description: "iPhone nebo Android z posledních 3-4 let. Pokud s ním fotíte, určitě s ním i točíte."
     },
     {
-      icon: <CheckCircle className="w-12 h-12 text-brand-olive" />,
+      icon: <Zap className="w-12 h-12 text-brand-olive" />,
       title: "Chuť se učit",
       description: "4 dny intenzivní práce. Točíte od první hodiny, dokončujete poslední den."
     },
     {
-      icon: <CheckCircle className="w-12 h-12 text-brand-olive" />,
+      icon: <BookOpen className="w-12 h-12 text-brand-olive" />,
       title: "A to je vše",
       description: "Žádné další vybavení, žádné placené aplikace. Všechno máte v telefonu."
     }
@@ -35,7 +35,7 @@ const PainPoints: React.FC = () => {
             {requirements.map((req, index) => (
               <div 
                 key={index} 
-                className="text-center p-8 bg-brand-beige rounded-2xl shadow-sm transition-all duration-300 hover:shadow-lg hover:scale-[1.02] transform"
+                className="text-center p-8 bg-brand-beige rounded-2xl shadow-sm transition-all duration-300 hover:shadow-lg"
               >
                 <div className="mb-6">
                   {req.icon}

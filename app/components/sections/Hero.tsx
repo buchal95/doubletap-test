@@ -140,7 +140,7 @@ const Hero: React.FC = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center mb-8 bg-brand-red/25 backdrop-blur-sm px-6 py-3 rounded-full transform transition-all duration-300 hover:scale-105 hover:bg-brand-red/30 border border-white/20">
+          <div className="inline-flex items-center justify-center mb-8 bg-brand-red/25 backdrop-blur-sm px-6 py-3 rounded-full transition-all duration-300 hover:bg-brand-red/30 border border-white/20">
             <span className="text-lg font-montserrat font-bold text-white drop-shadow-sm">82% hradí stát. Platíte jen <span className="whitespace-nowrap">2 700 Kč.</span></span>
           </div>
           
@@ -162,7 +162,7 @@ const Hero: React.FC = () => {
           <div className="mb-8">
             <CTAButton 
               text="Chci využít 82% dotaci" 
-              className="w-full sm:w-auto shadow-2xl text-xl py-4 px-12 transform transition-all duration-300 hover:scale-110"
+              className="w-full sm:w-auto shadow-2xl text-xl py-4 px-12"
               location="hero"
             />
           </div>

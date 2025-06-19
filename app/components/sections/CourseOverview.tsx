@@ -44,7 +44,7 @@ const CourseOverview: React.FC = () => {
           {modules.map((module, index) => (
             <div 
               key={index} 
-              className="bg-white p-8 rounded-2xl shadow-md border border-brand-gray/10 transition-all duration-300 hover:shadow-lg hover:scale-105"
+              className="bg-white p-8 rounded-2xl shadow-md border border-brand-gray/10 transition-all duration-300 hover:shadow-lg"
             >
               <div className="mb-4">{module.icon}</div>
               <h3 className="text-xl font-anton mb-3 text-brand-gray">{module.title}</h3>

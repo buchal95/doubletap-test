@@ -123,7 +123,7 @@ const StickyCountdown: React.FC = () => {
             <div className="flex items-center space-x-3">
               <button
                 onClick={handleClick}
-                className="bg-white text-brand-red font-anton py-3 px-6 rounded-lg hover:bg-brand-beige transition-all duration-300 transform hover:scale-105 whitespace-nowrap"
+                className="bg-white text-brand-red font-anton py-3 px-6 rounded-lg hover:bg-brand-beige transition-all duration-300 whitespace-nowrap"
               >
                 Využít dotaci
               </button>

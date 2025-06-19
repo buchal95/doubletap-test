@@ -1,30 +1,36 @@
 import React from 'react';
 import SectionHeading from '../common/SectionHeading';
-import { CheckCircle, AlertTriangle } from 'lucide-react';
+import { TrendingUp, AlertTriangle, Eye, Clock, Trophy, Plus } from 'lucide-react';
 
 const Benefits: React.FC = () => {
   const benefits = [
     {
+      icon: <TrendingUp className="w-6 h-6 text-brand-olive" />,
       title: "Více sledujících",
       description: "Díky profesionálním videím zvýšíte počet sledujících i jejich interakci na sociálních sítích."
     },
     {
+      icon: <Eye className="w-6 h-6 text-brand-olive" />,
       title: "Profesionální vizuál",
       description: "Vaše videa budou vypadat jako od profesionálního studia i s omezeným rozpočtem."
     },
     {
+      icon: <Trophy className="w-6 h-6 text-brand-olive" />,
       title: "Rychlá návratnost investice",
       description: "Investice do kurzu se vám vrátí díky novým klientům a příležitostem."
     },
     {
+      icon: <Clock className="w-6 h-6 text-brand-olive" />,
       title: "Ušetření času",
       description: "Naučíte se efektivní postupy, které vám ušetří desítky hodin měsíčně."
     },
     {
+      icon: <TrendingUp className="w-6 h-6 text-brand-olive" />,
       title: "Konkurenční výhoda",
       description: "Získáte náskok před konkurencí, která stále používá amatérské postupy."
     },
     {
+      icon: <Plus className="w-6 h-6 text-brand-olive" />,
       title: "Rozšíření nabídky služeb",
       description: "Budete moci nabízet video služby svým stávajícím klientům."
     }
@@ -45,7 +51,7 @@ const Benefits: React.FC = () => {
             <AlertTriangle className="w-8 h-8 text-brand-red mr-4" />
             <div className="text-center">
               <h4 className="font-anton text-xl text-brand-red mb-1">Využijte 82% státní dotaci</h4>
-              <p className="text-brand-gray/80 font-montserrat">Místo 15 000 Kč zaplatíte pouze 2 700 Kč • Dotace končí koncem roku 2025</p>
+              <p className="text-brand-gray/80 font-montserrat">Místo <span className="whitespace-nowrap">15 000 Kč</span> zaplatíte pouze <span className="whitespace-nowrap">2 700 Kč</span> • Dotace končí koncem roku 2025</p>
             </div>
           </div>
         </div>
@@ -54,9 +60,11 @@ const Benefits: React.FC = () => {
           {benefits.map((benefit, index) => (
             <div 
               key={index} 
-              className="flex transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg p-4 rounded-lg"
+              className="flex transition-all duration-300 hover:shadow-lg p-4 rounded-lg"
             >
-              <CheckCircle className="w-6 h-6 text-brand-olive mt-1 mr-4 flex-shrink-0 animate-pulse-custom" />
+              <div className="mr-4 mt-1 flex-shrink-0">
+                {benefit.icon}
+              </div>
               <div>
                 <h3 className="text-xl font-anton mb-2 text-brand-gray">{benefit.title}</h3>
                 <p className="text-brand-gray/80 font-montserrat">{benefit.description}</p>
@@ -65,7 +73,7 @@ const Benefits: React.FC = () => {
           ))}
         </div>
         
-        <div className="mt-16 text-center transform transition-all duration-300 hover:scale-105">
+        <div className="mt-16 text-center transition-all duration-300">
           <p className="text-xl text-brand-gray/80 font-montserrat max-w-3xl mx-auto mb-6">
             "Naši absolventi v průměru zvyšují své dosahy na sociálních sítích o 80 % během prvních 30 dnů po dokončení kurzu."
           </p>

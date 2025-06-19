@@ -92,7 +92,7 @@ const SocialProof: React.FC = () => {
         containerClass: "w-32 h-20 sm:w-36 sm:h-24 md:w-44 md:h-28 lg:w-52 lg:h-32",
         imageWidth: 200,
         imageHeight: 120,
-        imageClass: "max-w-full max-h-full object-contain transition-all duration-300 hover:scale-105 scale-110"
+        imageClass: "max-w-full max-h-full object-contain transition-all duration-300 hover:opacity-90"
       };
     }
     
@@ -100,7 +100,7 @@ const SocialProof: React.FC = () => {
       containerClass: "w-28 h-16 sm:w-32 sm:h-18 md:w-40 md:h-22 lg:w-48 lg:h-28",
       imageWidth: 180,
       imageHeight: 100,
-      imageClass: "max-w-full max-h-full object-contain transition-all duration-300 hover:scale-105"
+      imageClass: "max-w-full max-h-full object-contain transition-all duration-300 hover:opacity-90"
     };
   };
 
@@ -126,7 +126,7 @@ const SocialProof: React.FC = () => {
                 <div
                   key={`${currentLogoSet}-${index}`}
                   className={`transform transition-all duration-700 ${
-                    isAnimating ? 'scale-110 rotate-1' : 'scale-100 hover:scale-110'
+                    isAnimating ? 'rotate-1' : 'hover:rotate-1'
                   } shadow-lg hover:shadow-xl`}
                   style={{
                     animationDelay: `${index * 150}ms`
@@ -150,7 +150,7 @@ const SocialProof: React.FC = () => {
             {/* Animated finger - responsive size */}
             <div 
               className={`absolute pointer-events-none transition-all duration-500 z-10 ${
-                isAnimating ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
+                isAnimating ? 'opacity-100' : 'opacity-0'
               }`}
               style={{
                 left: `calc(50% + ${fingerPosition.x}px)`,
@@ -160,7 +160,7 @@ const SocialProof: React.FC = () => {
             >
               <div className="relative">
                 <div className={`text-2xl md:text-4xl transition-transform duration-200 ${
-                  isAnimating ? 'animate-pulse scale-90' : ''
+                  isAnimating ? 'animate-pulse' : ''
                 }`}>
                   👆
                 </div>
@@ -173,7 +173,7 @@ const SocialProof: React.FC = () => {
             {/* Instagram-style heart */}
             <div 
               className={`absolute pointer-events-none transition-all duration-500 z-10 ${
-                showHeart ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
+                showHeart ? 'opacity-100' : 'opacity-0'
               }`}
               style={{
                 left: `calc(50% + ${fingerPosition.x}px)`,
@@ -220,7 +220,7 @@ const SocialProof: React.FC = () => {
         
         {/* Stats section - responsive layout */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 text-center mb-8 max-w-4xl mx-auto">
-          <div className="p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/60 shadow-md">
+          <div className="p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-xl transition-all duration-300 hover:shadow-lg border border-white/60 shadow-md">
             <div className="text-3xl md:text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">24+</div>
             <div className="text-sm md:text-base text-brand-gray/80 font-montserrat text-center mb-3">let zkušeností z marketingu</div>
             <div className="text-xs md:text-sm text-brand-gray/50 font-montserrat italic text-center">
@@ -228,7 +228,7 @@ const SocialProof: React.FC = () => {
             </div>
           </div>
           
-          <div className="p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/60 shadow-md">
+          <div className="p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-xl transition-all duration-300 hover:shadow-lg border border-white/60 shadow-md">
             <div className="flex justify-center mb-3">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-5 h-5 md:w-6 md:h-6 text-brand-red fill-brand-red" />
@@ -240,7 +240,7 @@ const SocialProof: React.FC = () => {
             </div>
           </div>
           
-          <div className="p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-white/60 shadow-md">
+          <div className="p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-xl transition-all duration-300 hover:shadow-lg border border-white/60 shadow-md">
             <div className="text-3xl md:text-4xl font-anton text-brand-red mb-2 animate-fade-in text-center">82%</div>
             <div className="text-sm md:text-base text-brand-gray/80 font-montserrat text-center mb-3">dotace od státu</div>
             <div className="text-xs md:text-sm text-brand-gray/50 font-montserrat italic text-center">
