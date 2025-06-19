@@ -130,7 +130,6 @@ export default function RootLayout({
         {/* DNS prefetch for external domains */}
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
-        <link rel="dns-prefetch" href="//web.cmp.usercentrics.eu" />
         
         {/* Initialize dataLayer first */}
         <script
@@ -139,91 +138,6 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              
-              // Google Consent Mode v2 - Default consent state
-              gtag('consent', 'default', {
-                'analytics_storage': 'denied',
-                'ad_storage': 'denied',
-                'ad_user_data': 'denied',
-                'ad_personalization': 'denied',
-                'functionality_storage': 'denied',
-                'personalization_storage': 'denied',
-                'security_storage': 'granted'
-              });
-            `
-          }}
-        />
-        
-        {/* Usercentrics CMP - Load first to handle consent */}
-        <script
-          id="usercentrics-cmp"
-          src="https://web.cmp.usercentrics.eu/ui/loader.js"
-          data-settings-id="your-usercentrics-settings-id"
-          async
-        />
-        
-        {/* Usercentrics Consent Update Function - Properly embedded */}
-        <script
-          type="text/javascript"
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Function to update Google consent based on Usercentrics choices
-              function updateConsent() {
-                if (typeof UC_UI === 'undefined') return;
-                
-                // Get consented services
-                var consentedServices = UC_UI.getServicesBaseInfo().filter(function(service) {
-                  return service.consent.status === true;
-                });
-                
-                var categories = [];
-                for (var i = 0; i < consentedServices.length; i++) {
-                  var category = consentedServices[i].categorySlug || consentedServices[i].category;
-                  if (categories.indexOf(category) === -1) {
-                    categories.push(category);
-                  }
-                }
-                
-                // Map Usercentrics categories to Google consent types
-                var hasMarketing = categories.indexOf('marketing') !== -1;
-                var hasFunctional = categories.indexOf('functional') !== -1;
-                var hasEssential = categories.indexOf('essential') !== -1;
-                
-                // Update Google Analytics consent
-                gtag('consent', 'update', {
-                  'analytics_storage': hasMarketing ? 'granted' : 'denied',
-                  'ad_storage': hasMarketing ? 'granted' : 'denied',
-                  'ad_user_data': hasMarketing ? 'granted' : 'denied',
-                  'ad_personalization': hasMarketing ? 'granted' : 'denied',
-                  'functionality_storage': hasFunctional ? 'granted' : 'denied',
-                  'personalization_storage': hasFunctional ? 'granted' : 'denied',
-                  'security_storage': hasEssential ? 'granted' : 'denied'
-                });
-                
-                gtag('set', {
-                  'non_personalized_ads': !hasMarketing
-                });
-                
-                console.log('🍪 Consent updated:', {
-                  marketing: hasMarketing,
-                  functional: hasFunctional,
-                  essential: hasEssential
-                });
-              }
-              
-              // Listen for Usercentrics events
-              if (typeof window !== 'undefined') {
-                window.addEventListener('ucEvent', function (e) {
-                  if (e.detail && e.detail.event === 'consent_status') {
-                    updateConsent();
-                  }
-                });
-                
-                // Also update on page load if consent already exists
-                document.addEventListener('DOMContentLoaded', function() {
-                  setTimeout(updateConsent, 1000);
-                });
-              }
             `
           }}
         />
