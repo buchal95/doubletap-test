@@ -131,39 +131,25 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         
-        {/* STEP 1: Consent Default - Must load first, before any tracking */}
+        {/* 🔥 FIX: Initialize dataLayer ONLY - consent handled by GTM + Usercentrics */}
         {process.env.NODE_ENV === 'production' && (
           <script
             dangerouslySetInnerHTML={{
               __html: `
-                // Initialize dataLayer and gtag first
+                // Initialize dataLayer and gtag function
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 
-                // ⚡ FIX: Removed wait_for_update to prevent timeout issues
-                // Set consent defaults BEFORE any tracking loads
-                gtag('consent', 'default', {
-                  'analytics_storage': 'denied',
-                  'ad_storage': 'denied', 
-                  'ad_user_data': 'denied',
-                  'ad_personalization': 'denied',
-                  'functionality_storage': 'denied',
-                  'personalization_storage': 'denied',
-                  'security_storage': 'granted'
-                });
+                // ⚠️ REMOVED CONSENT DEFAULTS - Usercentrics + GTM handles this!
+                // The problematic consent 'default' call was here causing analytics_storage: denied
                 
-                // Set additional defaults
-                gtag('set', {
-                  'non_personalized_ads': true
-                });
-                
-                console.log('🔒 Consent defaults set (no timeout) - all denied except security_storage');
+                console.log('🚀 DataLayer initialized - consent managed by Usercentrics + GTM');
               `
             }}
           />
         )}
         
-        {/* STEP 2: Load GTM after consent defaults are set */}
+        {/* Load GTM without any consent interference */}
         {process.env.NODE_ENV === 'production' && (
           <script
             dangerouslySetInnerHTML={{
@@ -172,14 +158,14 @@ export default function RootLayout({
                 if (!window.gtmLoaded) {
                   window.gtmLoaded = true;
                   
-                  // Load GTM - consent is already set above
+                  // Load GTM - let it handle consent with Usercentrics
                   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-M3ZNVD4K');
                   
-                  console.log('🚀 GTM loaded with consent defaults already set');
+                  console.log('🚀 GTM loaded - consent fully managed by GTM + Usercentrics');
                 }
               `
             }}
