@@ -131,7 +131,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         
-        {/* Initialize dataLayer */}
+        {/* STEP 1: Initialize dataLayer and gtag FIRST */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -142,7 +142,27 @@ export default function RootLayout({
           }}
         />
         
-        {/* Google Tag Manager */}
+        {/* STEP 2: Set consent defaults BEFORE GTM loads */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Set strict consent defaults - everything denied except essential
+              gtag('consent', 'default', {
+                'analytics_storage': 'denied',
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'functionality_storage': 'denied',
+                'personalization_storage': 'denied',
+                'security_storage': 'granted'
+              });
+              
+              console.log('🔒 Consent defaults set: All marketing/analytics DENIED by default');
+            `
+          }}
+        />
+        
+        {/* STEP 3: Load GTM after consent defaults are set */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
