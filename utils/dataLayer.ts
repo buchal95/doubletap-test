@@ -56,9 +56,9 @@ declare global {
   }
 }
 
-// Initialize dataLayer if it doesn't exist - only run once
+// Initialize dataLayer if it doesn't exist - only run once and only in production
 export const initializeDataLayer = () => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
     // Only initialize once
     if (window.dataLayerInitialized) {
       console.log('🔄 DataLayer already initialized, skipping...');
@@ -77,6 +77,11 @@ export const initializeDataLayer = () => {
       page_title: document.title,
       page_location: window.location.href
     });
+  } else if (process.env.NODE_ENV === 'development') {
+    console.log('🚧 Development mode - GTM tracking disabled');
+    // In development, create a mock dataLayer to prevent errors
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayerInitialized = true;
   }
 };
 
@@ -162,13 +167,15 @@ const createAdvancedMatching = (userData: {
   return matching;
 };
 
-// Generic function to push events to dataLayer
+// Generic function to push events to dataLayer - only in production
 export const pushToDataLayer = (data: BaseEventData | FormEventData | ConversionEventData) => {
-  if (typeof window !== 'undefined' && window.dataLayer) {
+  if (typeof window !== 'undefined' && window.dataLayer && process.env.NODE_ENV === 'production') {
     console.log('🚀 DataLayer Push:', data);
     window.dataLayer.push(data);
+  } else if (process.env.NODE_ENV === 'development') {
+    console.log('🚧 Development mode - Event would be pushed:', data);
   } else {
-    console.warn('⚠️ DataLayer not available:', data);
+    console.warn('⚠️ DataLayer not available or not in production:', data);
   }
 };
 
@@ -327,37 +334,41 @@ export const trackScrollDepth = (depth: 25 | 50 | 75 | 100) => {
   } as ConversionEventData);
 };
 
-// TEST FUNCTION - Use this to test dataLayer manually
+// TEST FUNCTION - Use this to test dataLayer manually (only in development)
 export const testDataLayerEvents = () => {
-  console.log('🧪 Testing dataLayer events...');
-  
-  // Test basic event
-  pushToDataLayer({
-    event: 'test_event',
-    event_category: 'test',
-    event_label: 'manual_test'
-  });
-  
-  // Test form start
-  trackFormStart({
-    email: 'test@example.com',
-    first_name: 'Jan',
-    last_name: 'Testovací',
-    phone: '+420123456789'
-  });
-  
-  // Test fb_lead event
-  trackFormSuccess({
-    orderId: 'TEST123',
-    email: 'test@example.com',
-    firstName: 'Jan',
-    lastName: 'Testovací', 
-    phone: '+420123456789',
-    preferredMonth: 'Leden'
-  });
+  if (process.env.NODE_ENV === 'development') {
+    console.log('🧪 Testing dataLayer events...');
+    
+    // Test basic event
+    pushToDataLayer({
+      event: 'test_event',
+      event_category: 'test',
+      event_label: 'manual_test'
+    });
+    
+    // Test form start
+    trackFormStart({
+      email: 'test@example.com',
+      first_name: 'Jan',
+      last_name: 'Testovací',
+      phone: '+420123456789'
+    });
+    
+    // Test fb_lead event
+    trackFormSuccess({
+      orderId: 'TEST123',
+      email: 'test@example.com',
+      firstName: 'Jan',
+      lastName: 'Testovací', 
+      phone: '+420123456789',
+      preferredMonth: 'Leden'
+    });
+  } else {
+    console.log('🚫 Test function only available in development mode');
+  }
 };
 
-// Make test function available globally for browser console
-if (typeof window !== 'undefined') {
+// Make test function available globally for browser console (only in development)
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   (window as any).testDataLayerEvents = testDataLayerEvents;
 }
