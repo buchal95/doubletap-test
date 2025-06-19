@@ -140,6 +140,7 @@ export default function RootLayout({
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 
+                // ⚡ FIX: Removed wait_for_update to prevent timeout issues
                 // Set consent defaults BEFORE any tracking loads
                 gtag('consent', 'default', {
                   'analytics_storage': 'denied',
@@ -148,8 +149,7 @@ export default function RootLayout({
                   'ad_personalization': 'denied',
                   'functionality_storage': 'denied',
                   'personalization_storage': 'denied',
-                  'security_storage': 'granted',
-                  'wait_for_update': 2000
+                  'security_storage': 'granted'
                 });
                 
                 // Set additional defaults
@@ -157,7 +157,7 @@ export default function RootLayout({
                   'non_personalized_ads': true
                 });
                 
-                console.log('🔒 Consent defaults set - all denied except security_storage');
+                console.log('🔒 Consent defaults set (no timeout) - all denied except security_storage');
               `
             }}
           />
