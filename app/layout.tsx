@@ -128,7 +128,7 @@ export default function RootLayout({
         <link rel="preload" href="/hero-image.webp" as="image" type="image/webp" />
         
         {/* DNS prefetch for external domains */}
-        <link rel="dns-prefetch" href="//sgtm.doubletap.cz" />
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         
         {/* STEP 1: Initialize dataLayer and gtag FIRST */}
@@ -160,10 +160,10 @@ export default function RootLayout({
           }}
         />
         
-        {/* STEP 3: Load Server-Side GTM */}
+        {/* STEP 3: Load Standard GTM */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://sgtm.doubletap.cz/8qv49uwyvbplh.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','ajf7=aWQ9R1RNLU0zWk5WRDRL&sort=asc');`
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M3ZNVD4K');`
           }}
         />
         
@@ -254,10 +254,10 @@ export default function RootLayout({
         />
       </head>
       <body className="font-montserrat text-brand-gray antialiased">
-        {/* Google Tag Manager (noscript) - Server-Side */}
+        {/* Google Tag Manager (noscript) - Standard */}
         <noscript>
           <iframe 
-            src="https://sgtm.doubletap.cz/ns.html?id=GTM-M3ZNVD4K"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-M3ZNVD4K"
             height="0" 
             width="0" 
             style={{display:'none', visibility:'hidden'}}
