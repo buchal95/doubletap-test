@@ -129,6 +129,7 @@ export default function RootLayout({
         
         {/* DNS prefetch for external domains */}
         <link rel="dns-prefetch" href="//sgtm.doubletap.cz" />
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         
         {/* STEP 1: Initialize dataLayer and gtag FIRST */}
@@ -138,6 +139,9 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
+              
+              // Debug logging
+              console.log('🔧 DataLayer initialized');
             `
           }}
         />
@@ -160,10 +164,54 @@ export default function RootLayout({
           }}
         />
         
-        {/* STEP 3: Load Server-Side GTM */}
+        {/* STEP 3: Try Server-Side GTM with fallback to regular GTM */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://sgtm.doubletap.cz/8qv49uwyvbplh.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','ajf7=aWQ9R1RNLU0zWk5WRDRL&sort=asc');`
+            __html: `
+              // Primary: Server-Side GTM
+              (function(w,d,s,l,i,fallback){
+                w[l]=w[l]||[];
+                w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+                
+                var f=d.getElementsByTagName(s)[0];
+                var j=d.createElement(s);
+                var timeout;
+                
+                j.async=true;
+                j.src="https://sgtm.doubletap.cz/8qv49uwyvbplh.js?"+i;
+                
+                // Success handler
+                j.onload = function() {
+                  console.log('✅ Server-side GTM loaded successfully');
+                  clearTimeout(timeout);
+                };
+                
+                // Error handler - fallback to regular GTM
+                j.onerror = function() {
+                  console.warn('⚠️ Server-side GTM failed, falling back to regular GTM');
+                  clearTimeout(timeout);
+                  fallback();
+                };
+                
+                // Timeout fallback (3 seconds)
+                timeout = setTimeout(function() {
+                  console.warn('⏰ Server-side GTM timeout, falling back to regular GTM');
+                  fallback();
+                }, 3000);
+                
+                f.parentNode.insertBefore(j,f);
+                
+              })(window,document,'script','dataLayer','ajf7=aWQ9R1RNLU0zWk5WRDRL&sort=asc', function() {
+                // Fallback function - load regular GTM
+                var fallbackScript = document.createElement('script');
+                fallbackScript.async = true;
+                fallbackScript.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-M3ZNVD4K';
+                fallbackScript.onload = function() {
+                  console.log('✅ Fallback GTM loaded successfully');
+                };
+                document.head.appendChild(fallbackScript);
+              });
+            `
           }}
         />
         
@@ -254,13 +302,23 @@ export default function RootLayout({
         />
       </head>
       <body className="font-montserrat text-brand-gray antialiased">
-        {/* Google Tag Manager (noscript) - Server-Side */}
+        {/* Google Tag Manager (noscript) - Try Server-Side first, then fallback */}
         <noscript>
           <iframe 
             src="https://sgtm.doubletap.cz/ns.html?id=GTM-M3ZNVD4K"
             height="0" 
             width="0" 
             style={{display:'none', visibility:'hidden'}}
+            onError={() => {
+              // Fallback for noscript
+              const fallbackFrame = document.createElement('iframe');
+              fallbackFrame.src = 'https://www.googletagmanager.com/ns.html?id=GTM-M3ZNVD4K';
+              fallbackFrame.height = '0';
+              fallbackFrame.width = '0';
+              fallbackFrame.style.display = 'none';
+              fallbackFrame.style.visibility = 'hidden';
+              document.body.appendChild(fallbackFrame);
+            }}
           ></iframe>
         </noscript>
         
