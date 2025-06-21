@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://videokurz.cz'),
   alternates: {
     canonical: '/',
     languages: {
@@ -85,6 +85,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: 'Double Tap - Kurz profesionální tvorby videí telefonem s 82% státní dotací',
+        type: 'image/webp',
       },
     ],
   },
@@ -94,6 +95,7 @@ export const metadata: Metadata = {
     description: 'Naučte se natáčet profesionální videa telefonem za 4 dny s 82% státní dotací.',
     images: ['/social-share.webp'],
     creator: '@doubletap_cz',
+    site: '@doubletap_cz',
   },
   robots: {
     index: true,
@@ -113,6 +115,14 @@ export const metadata: Metadata = {
     yandex: 'your-yandex-verification-code',
   },
   category: 'education',
+  // Additional metadata for better LinkedIn support
+  other: {
+    'og:image:secure_url': (process.env.NEXT_PUBLIC_SITE_URL || 'https://videokurz.cz') + '/social-share.webp',
+    'og:updated_time': new Date().toISOString(),
+    'article:author': 'Double Tap',
+    'article:publisher': 'https://www.facebook.com/doubletap.kurzy',
+    'linkedin:owner': 'Double Tap',
+  },
 }
 
 export default function RootLayout({
@@ -120,12 +130,54 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://videokurz.cz';
+
   return (
     <html lang="cs" className={`${anton.variable} ${montserrat.variable}`}>
       <head>
+        {/* Explicit OpenGraph meta tags for better LinkedIn compatibility */}
+        <meta property="og:title" content="Kurz Profesionální Tvorby Videí | Double Tap" />
+        <meta property="og:description" content="Naučte se natáčet profesionální videa telefonem za 4 dny s 82% státní dotací. Platíte jen 2 700 Kč místo 15 000 Kč." />
+        <meta property="og:image" content={`${baseUrl}/social-share.webp`} />
+        <meta property="og:image:secure_url" content={`${baseUrl}/social-share.webp`} />
+        <meta property="og:image:type" content="image/webp" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Double Tap - Kurz profesionální tvorby videí telefonem s 82% státní dotací" />
+        <meta property="og:url" content={baseUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Double Tap" />
+        <meta property="og:locale" content="cs_CZ" />
+        <meta property="og:updated_time" content={new Date().toISOString()} />
+        
+        {/* LinkedIn specific meta tags */}
+        <meta name="linkedin:owner" content="Double Tap" />
+        <meta property="article:author" content="Double Tap" />
+        <meta property="article:publisher" content="https://www.facebook.com/doubletap.kurzy" />
+        
+        {/* Twitter Card meta tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@doubletap_cz" />
+        <meta name="twitter:creator" content="@doubletap_cz" />
+        <meta name="twitter:title" content="Kurz Profesionální Tvorby Videí | Double Tap" />
+        <meta name="twitter:description" content="Naučte se natáčet profesionální videa telefonem za 4 dny s 82% státní dotací." />
+        <meta name="twitter:image" content={`${baseUrl}/social-share.webp`} />
+        <meta name="twitter:image:alt" content="Double Tap - Kurz profesionální tvorby videí telefonem s 82% státní dotací" />
+
+        {/* Additional meta tags for better social sharing */}
+        <meta name="description" content="Naučte se natáčet profesionální videa telefonem za 4 dny s 82% státní dotací. Kurz pro začátečníky i pokročilé v Praze. Platíte jen 2 700 Kč místo 15 000 Kč." />
+        <meta name="author" content="Double Tap" />
+        <meta name="publisher" content="Double Tap" />
+        <meta name="copyright" content="Double Tap" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href={baseUrl} />
+        
         {/* Preload critical resources */}
         <link rel="preload" href="/doubletap-logo.webp" as="image" type="image/webp" />
         <link rel="preload" href="/hero-image.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/social-share.webp" as="image" type="image/webp" />
         
         {/* DNS prefetch for external domains */}
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
@@ -174,12 +226,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               "@graph": [
                 {
                   "@type": "Organization",
-                  "@id": "https://doubletap.cz/#organization",
+                  "@id": `${baseUrl}/#organization`,
                   "name": "Double Tap",
-                  "url": "https://doubletap.cz",
+                  "url": baseUrl,
                   "logo": {
                     "@type": "ImageObject",
-                    "url": "https://doubletap.cz/doubletap-logo.webp"
+                    "url": `${baseUrl}/doubletap-logo.webp`
                   },
                   "contactPoint": {
                     "@type": "ContactPoint",
@@ -196,11 +248,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 },
                 {
                   "@type": "Course",
-                  "@id": "https://doubletap.cz/#course",
+                  "@id": `${baseUrl}/#course`,
                   "name": "Kurz Profesionální Tvorby Videí",
                   "description": "4-denní intenzivní kurz tvorby profesionálních videí pomocí mobilního telefonu. Určeno pro začátečníky i pokročilé.",
                   "provider": {
-                    "@id": "https://doubletap.cz/#organization"
+                    "@id": `${baseUrl}/#organization`
                   },
                   "hasCourseInstance": {
                     "@type": "CourseInstance",
@@ -232,12 +284,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 },
                 {
                   "@type": "WebSite",
-                  "@id": "https://doubletap.cz/#website",
-                  "url": "https://doubletap.cz",
+                  "@id": `${baseUrl}/#website`,
+                  "url": baseUrl,
                   "name": "Double Tap - Kurz Profesionální Tvorby Videí",
                   "description": "Naučte se natáčet profesionální videa telefonem za 4 dny",
                   "publisher": {
-                    "@id": "https://doubletap.cz/#organization"
+                    "@id": `${baseUrl}/#organization`
                   },
                   "inLanguage": "cs"
                 }
