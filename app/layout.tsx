@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://videokurz.cz'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://doubletap.cz'),
   alternates: {
     canonical: '/',
     languages: {
@@ -117,7 +117,7 @@ export const metadata: Metadata = {
   category: 'education',
   // Additional metadata for better LinkedIn support
   other: {
-    'og:image:secure_url': (process.env.NEXT_PUBLIC_SITE_URL || 'https://videokurz.cz') + '/social-share.webp',
+    'og:image:secure_url': (process.env.NEXT_PUBLIC_SITE_URL || 'https://doubletap.cz') + '/social-share.webp',
     'og:updated_time': new Date().toISOString(),
     'article:author': 'Double Tap',
     'article:publisher': 'https://www.facebook.com/doubletap.kurzy',
@@ -130,7 +130,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://videokurz.cz';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://doubletap.cz';
 
   return (
     <html lang="cs" className={`${anton.variable} ${montserrat.variable}`}>
