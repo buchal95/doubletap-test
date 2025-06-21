@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Anton, Montserrat } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 
 // Optimize font loading with better performance settings
@@ -184,6 +185,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//images.pexels.com" />
         <link rel="dns-prefetch" href="//vitals.vercel-insights.com" />
+        <link rel="dns-prefetch" href="//vercel.live" />
         
         {/* Set default consent BEFORE GTM loads */}
         <script
@@ -314,7 +316,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         
         {children}
         
-        {/* Vercel Speed Insights */}
+        {/* Vercel Analytics & Performance Monitoring */}
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
