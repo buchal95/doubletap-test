@@ -17,17 +17,19 @@ import StickyCountdown from './common/StickyCountdown';
 const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
-      <Hero />
-      <SocialProof />
-      <CourseOverview />
-      <Lectors />
-      <PainPoints />
-      <Schedule />
-      <Testimonials />
-      <Subsidy />
-      <UpcomingEvents />
-      <FAQ />
-      <Contact />
+      <main id="main-content" role="main">
+        <Hero />
+        <SocialProof />
+        <CourseOverview />
+        <Lectors />
+        <PainPoints />
+        <Schedule />
+        <Testimonials />
+        <Subsidy />
+        <UpcomingEvents />
+        <FAQ />
+        <Contact />
+      </main>
       <Footer />
       <StickyCountdown />
     </div>

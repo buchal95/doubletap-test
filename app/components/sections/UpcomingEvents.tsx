@@ -5,19 +5,24 @@ import SectionHeading from '../common/SectionHeading';
 import CTAButton from '../common/CTAButton';
 import { Calendar, RefreshCw, MapPin, Clock } from 'lucide-react';
 
-interface CalendarEvent {
-  id: string;
-  title: string;
-  startTime: string;
-  endTime: string;
-  isAllDay: boolean;
-  locationTitle?: string;
-}
+// Import shared types and constants
+import type { CalendarEvent } from '../../../types';
+import { VALIDATION_MESSAGES, CZECH_MONTHS_GENITIVE } from '../../../constants';
+import { formatDateRange } from '../../../lib';
+import { useCalendarEvents } from '../../../hooks';
 
 const UpcomingEvents: React.FC = () => {
-  const [events, setEvents] = useState<CalendarEvent[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    events,
+    isLoading,
+    error,
+    refetch
+  } = useCalendarEvents({
+    limit: 3,
+    onError: (errorMessage) => {
+      console.error('Failed to load upcoming events:', errorMessage);
+    }
+  });
 
   // Czech month names in genitive case (for dates)
   const CZECH_MONTHS_GENITIVE = [
@@ -25,49 +30,7 @@ const UpcomingEvents: React.FC = () => {
     'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'
   ];
 
-  const fetchEvents = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      
-      const response = await fetch('/api/proxy/calendar', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        signal: AbortSignal.timeout(10000),
-      });
-      
-      if (!response.ok) {
-        setEvents([]);
-        setError('Nepodařilo se načíst události z kalendáře');
-        return;
-      }
-      
-      const data = await response.json();
-      
-      if (data && Array.isArray(data.events)) {
-        const sortedEvents = data.events
-          .filter((event: any) => new Date(event.startTime) > new Date())
-          .sort((a: any, b: any) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
-          .slice(0, 3);
-        
-        setEvents(sortedEvents);
-      } else {
-        setEvents([]);
-      }
-    } catch (err) {
-      console.error('Error fetching calendar events:', err);
-      setError('Nepodařilo se načíst události z kalendáře');
-      setEvents([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchEvents();
-  }, []);
+  // Events are now handled by the useCalendarEvents hook
 
   const formatDateRange = (startDateString: string, endDateString: string, isAllDay: boolean) => {
     const startDate = new Date(startDateString);
@@ -155,7 +118,7 @@ const UpcomingEvents: React.FC = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
-                  onClick={fetchEvents}
+                  onClick={refetch}
                   className="inline-flex items-center justify-center py-3 px-6 bg-brand-olive text-white rounded-lg font-montserrat font-semibold transition-all duration-300 hover:bg-opacity-90"
                 >
                   <RefreshCw className="w-5 h-5 mr-2" />

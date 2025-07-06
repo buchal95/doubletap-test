@@ -1,42 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Import shared types and constants
+import type {
+  GoogleCalendarEvent,
+  GoogleCalendarResponse,
+  CalendarEvent,
+  CalendarApiResponse
+} from '../../../../types';
+import { CORS_HEADERS, EXTERNAL_APIS } from '../../../../constants';
+import { convertGoogleCalendarEvents } from '../../../../lib';
+
 export const dynamic = 'force-dynamic';
-
-interface GoogleCalendarEvent {
-  id: string;
-  summary: string;
-  start: {
-    date?: string;
-    dateTime?: string;
-    timeZone?: string;
-  };
-  end: {
-    date?: string;
-    dateTime?: string;
-    timeZone?: string;
-  };
-  location?: string;
-  description?: string;
-}
-
-interface GoogleCalendarResponse {
-  items: GoogleCalendarEvent[];
-  nextPageToken?: string;
-  summary?: string;
-}
-
-interface BRJEvent {
-  id: string;
-  title: string;
-  startTime: string;
-  endTime: string;
-  isAllDay: boolean;
-  locationTitle?: string;
-}
-
-interface BRJApiResponse {
-  events: BRJEvent[];
-}
 
 // Handle CORS preflight requests
 export async function OPTIONS() {
@@ -78,13 +52,9 @@ export async function GET(request: NextRequest) {
       console.error('GOOGLE_CALENDAR_ID is not configured');
       return NextResponse.json(
         { error: 'Chyba konfigurace serveru - chybí ID kalendáře' },
-        { 
+        {
           status: 500,
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-          }
+          headers: CORS_HEADERS
         }
       );
     }
@@ -184,37 +154,11 @@ export async function GET(request: NextRequest) {
       googleResult = { items: [] };
     }
 
-    // Convert Google Calendar events to BRJ format for compatibility
-    const convertedEvents: BRJEvent[] = googleResult.items.map((event: GoogleCalendarEvent) => {
-      // Determine if event is all-day
-      const isAllDay = !!(event.start.date && event.end.date);
-      
-      // Get start and end times
-      let startTime: string;
-      let endTime: string;
-      
-      if (isAllDay) {
-        // For all-day events, use the date and add default times
-        startTime = new Date(event.start.date + 'T09:00:00').toISOString();
-        endTime = new Date(event.end.date + 'T17:00:00').toISOString();
-      } else {
-        // For timed events, use dateTime
-        startTime = event.start.dateTime || new Date().toISOString();
-        endTime = event.end.dateTime || new Date().toISOString();
-      }
+    // Convert Google Calendar events to internal format
+    const convertedEvents: CalendarEvent[] = convertGoogleCalendarEvents(googleResult.items);
 
-      return {
-        id: event.id,
-        title: event.summary || 'Kurz tvorby videí',
-        startTime: startTime,
-        endTime: endTime,
-        isAllDay: isAllDay,
-        locationTitle: event.location
-      };
-    });
-
-    // Create response in BRJ format for compatibility
-    const result: BRJApiResponse = {
+    // Create response
+    const result: CalendarApiResponse = {
       events: convertedEvents
     };
 

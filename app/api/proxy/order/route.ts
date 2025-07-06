@@ -1,64 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-interface OrderRequest {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  preferredMonth: string;
-  consent: boolean;
-}
-
-interface BRJOrderData {
-  customer: {
-    email: string;
-    name: string;
-    firstName: string;
-    lastName: string;
-    phone: string;
-    newsletter: boolean;
-    primaryLocale: string;
-    customerRealIp: string;
-  };
-  items: Array<{
-    label: string;
-    price: number;
-    vat: number;
-    count: number;
-    sale: number;
-    unit: string;
-  }>;
-  locale: string;
-  currency: string;
-  publicNotice: string;
-  internalNotice: string;
-  returnUrl: string;
-}
-
-interface BRJOrderResponse {
-  orderNumber: string;
-  hash: string;
-  links: {
-    payLink: string;
-    orderPageLink: string;
-  };
-}
-
-// Email validation regex
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-// Phone validation regex (Czech format)
-const phoneRegex = /^(\+420)?[0-9\s]{9,}$/;
+// Import shared types and constants
+import type {
+  OrderRequest,
+  BRJOrderData,
+  BRJOrderResponse,
+  OrderResponse
+} from '../../../../types';
+import {
+  REGEX_PATTERNS,
+  CORS_HEADERS,
+  VALIDATION_MESSAGES,
+  COURSE_CONFIG,
+  EXTERNAL_APIS
+} from '../../../../constants';
 
 // Handle CORS preflight requests
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    },
+    headers: CORS_HEADERS,
   });
 }
 
@@ -98,31 +59,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate email format
-    if (!emailRegex.test(email)) {
+    if (!REGEX_PATTERNS.EMAIL.test(email)) {
       return NextResponse.json(
-        { error: 'Neplatný formát e-mailové adresy' },
-        { 
+        { error: VALIDATION_MESSAGES.INVALID_EMAIL },
+        {
           status: 400,
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-          }
+          headers: CORS_HEADERS
         }
       );
     }
 
     // Validate phone format
-    if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
+    if (!REGEX_PATTERNS.PHONE_GENERAL.test(phone.replace(/\s/g, ''))) {
       return NextResponse.json(
-        { error: 'Neplatný formát telefonního čísla' },
-        { 
+        { error: VALIDATION_MESSAGES.INVALID_PHONE },
+        {
           status: 400,
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-          }
+          headers: CORS_HEADERS
         }
       );
     }

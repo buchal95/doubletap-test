@@ -29,8 +29,7 @@ const nextConfig = {
     // Removed optimizeCss as it can cause SWC issues
   },
   
-  // SWC Configuration - prefer native SWC but fallback gracefully
-  swcMinify: true,
+  // SWC Configuration (swcMinify is now enabled by default in Next.js 15+)
   compiler: {
     // Remove console.logs in production
     removeConsole: process.env.NODE_ENV === 'production',

@@ -1,50 +1,14 @@
 // DataLayer utility for tracking events to Google Tag Manager
 
-interface BaseEventData {
-  event: string;
-  event_category?: string;
-  event_label?: string;
-  fb_event_parameters?: any;
-  [key: string]: any;
-}
-
-interface MetaAdvancedMatching {
-  em?: string;        // Email - lowercase, bez mezer
-  fn?: string;        // Křestní jméno - lowercase, bez mezer  
-  ln?: string;        // Příjmení - lowercase, bez mezer
-  ph?: string;        // Telefon - s kódem země, bez mezer/pomlček
-  external_id?: string; // Externí ID
-}
-
-interface FormEventData extends BaseEventData {
-  form_name?: string;
-  form_step?: string;
-  field_name?: string;
-  field_value?: string;
-  error_message?: string;
-  button_text?: string;
-  button_location?: string;
-  user_data?: {
-    email?: string;
-    phone?: string;
-    first_name?: string;
-    last_name?: string;
-  };
-  fb_advanced_matching?: MetaAdvancedMatching;
-}
-
-interface ConversionEventData extends BaseEventData {
-  conversion_id?: string;
-  order_id?: string;
-  transaction_id?: string;
-  page_title?: string;
-  page_location?: string;
-  video_name?: string;
-  video_action?: string;
-  video_progress?: number;
-  scroll_depth?: number;
-  fb_advanced_matching?: MetaAdvancedMatching;
-}
+// Import shared types
+import type {
+  BaseEventData,
+  MetaAdvancedMatching,
+  FormEventData,
+  ConversionEventData,
+  FormSuccessData
+} from '../types/analytics';
+import { formatPhoneForMatching } from '../lib/phoneUtils';
 
 // Declare global dataLayer
 declare global {
@@ -55,46 +19,7 @@ declare global {
   }
 }
 
-// Helper function to format phone number for advanced matching
-const formatPhoneForMatching = (phone: string): string => {
-  // Remove all spaces, dashes, parentheses
-  let cleaned = phone.replace(/[\s\-\(\)]/g, '');
-  
-  // If starts with +, keep it
-  if (cleaned.startsWith('+')) {
-    return cleaned;
-  }
-  
-  // If starts with 420 or 421, add +
-  if (cleaned.startsWith('420') || cleaned.startsWith('421')) {
-    return '+' + cleaned;
-  }
-  
-  // If starts with 00420 or 00421, replace with +
-  if (cleaned.startsWith('00420')) {
-    return '+420' + cleaned.substring(5);
-  }
-  if (cleaned.startsWith('00421')) {
-    return '+421' + cleaned.substring(5);
-  }
-  
-  // If 9 digits and starts with 6,7,9 (Czech mobile), add +420
-  if (cleaned.length === 9 && /^[679]/.test(cleaned)) {
-    return '+420' + cleaned;
-  }
-  
-  // If 9 digits and starts with 9 (Slovak mobile), add +421
-  if (cleaned.length === 9 && cleaned.startsWith('9')) {
-    return '+421' + cleaned;
-  }
-  
-  // Default to +420 for other 9-digit numbers
-  if (cleaned.length === 9) {
-    return '+420' + cleaned;
-  }
-  
-  return cleaned;
-};
+// This function is now imported from lib/phoneUtils.ts
 
 // Helper function to generate external_id
 const generateExternalId = (email: string, phone?: string): string => {
@@ -190,14 +115,7 @@ export const trackFormSubmit = (formData: FormEventData['user_data']) => {
 };
 
 // Track successful registration - ONLY place where Meta Lead event is pushed
-export const trackFormSuccess = (orderData?: {
-  orderId?: string;
-  email?: string;
-  firstName?: string;
-  lastName?: string;
-  phone?: string;
-  preferredMonth?: string;
-}) => {
+export const trackFormSuccess = (orderData?: FormSuccessData) => {
   const advancedMatching = orderData ? createAdvancedMatching({
     email: orderData.email,
     firstName: orderData.firstName,

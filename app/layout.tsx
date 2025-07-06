@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Anton, Montserrat } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
+import PerformantLayout from './components/layout/PerformantLayout'
+import { generateMetadata as generateSEOMetadata, generateStructuredData } from '../lib/seo'
 import './globals.css'
 
 // Optimize font loading with better performance settings
@@ -23,109 +25,19 @@ const montserrat = Montserrat({
   fallback: ['system-ui', 'arial'],
 })
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Kurz Profesionální Tvorby Videí | Double Tap',
-    template: '%s | Double Tap'
-  },
+export const metadata: Metadata = generateSEOMetadata({
+  title: 'Kurz profesionální tvorby videí s 82% dotací od státu',
   description: 'Naučte se natáčet profesionální videa telefonem za 4 dny s 82% státní dotací. Kurz pro začátečníky i pokročilé v Praze. Platíte jen 2 700 Kč místo 15 000 Kč.',
   keywords: [
-    'kurz tvorby videí',
-    'profesionální videa',
     'video marketing',
     'sociální sítě',
     'dotovaný kurz',
-    'Praha',
     'smartphone video',
     'Instagram videa',
     'TikTok videa',
-    'YouTube videa',
-    'video produkce',
-    'Double Tap'
-  ],
-  authors: [{ name: 'Double Tap', url: 'https://doubletap.cz' }],
-  creator: 'Double Tap',
-  publisher: 'Double Tap',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://doubletap.cz'),
-  alternates: {
-    canonical: '/',
-    languages: {
-      'cs-CZ': '/',
-    },
-  },
-  icons: {
-    icon: [
-      {
-        url: '/fav16.png',
-        sizes: '16x16',
-        type: 'image/png',
-      },
-      {
-        url: '/fav32.png',
-        sizes: '32x32',
-        type: 'image/png',
-      },
-    ],
-    shortcut: '/fav16.png',
-    apple: '/fav32.png',
-  },
-  openGraph: {
-    title: 'Kurz Profesionální Tvorby Videí | Double Tap',
-    description: 'Naučte se natáčet profesionální videa telefonem za 4 dny s 82% státní dotací. Platíte jen 2 700 Kč místo 15 000 Kč.',
-    url: '/',
-    siteName: 'Double Tap',
-    locale: 'cs_CZ',
-    type: 'website',
-    images: [
-      {
-        url: '/social-share.webp',
-        width: 1200,
-        height: 630,
-        alt: 'Double Tap - Kurz profesionální tvorby videí telefonem s 82% státní dotací',
-        type: 'image/webp',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Kurz Profesionální Tvorby Videí | Double Tap',
-    description: 'Naučte se natáčet profesionální videa telefonem za 4 dny s 82% státní dotací.',
-    images: ['/social-share.webp'],
-    creator: '@doubletap_cz',
-    site: '@doubletap_cz',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    nocache: false,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: false,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  verification: {
-    google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
-  },
-  category: 'education',
-  // Additional metadata for better LinkedIn support
-  other: {
-    'og:image:secure_url': (process.env.NEXT_PUBLIC_SITE_URL || 'https://doubletap.cz') + '/social-share.webp',
-    'og:updated_time': new Date().toISOString(),
-    'article:author': 'Double Tap',
-    'article:publisher': 'https://www.facebook.com/doubletap.kurzy',
-    'linkedin:owner': 'Double Tap',
-  },
-}
+    'YouTube videa'
+  ]
+});
 
 export default function RootLayout({
   children,
@@ -313,9 +225,37 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           ></iframe>
         </noscript>
         {/* End Google Tag Manager (noscript) */}
-        
-        {children}
-        
+
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([
+              generateStructuredData({
+                type: 'Course',
+                name: 'Kurz profesionální tvorby videí',
+                description: 'Naučte se tvořit profesionální videa s 82% dotací od státu',
+                provider: 'DoubleTap',
+                location: 'Praha',
+                price: 2700,
+                currency: 'CZK'
+              }),
+              generateStructuredData({
+                type: 'Organization',
+                name: 'DoubleTap',
+                description: 'Kurzy profesionální tvorby videí'
+              }),
+              generateStructuredData({
+                type: 'WebSite'
+              })
+            ])
+          }}
+        />
+
+        <PerformantLayout>
+          {children}
+        </PerformantLayout>
+
         {/* Vercel Analytics & Performance Monitoring */}
         <Analytics />
         <SpeedInsights />
