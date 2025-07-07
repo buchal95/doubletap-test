@@ -26,22 +26,18 @@ const nextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['lucide-react'],
-    // Removed optimizeCss as it can cause SWC issues
   },
-  
+
   // SWC Configuration (swcMinify is now enabled by default in Next.js 15+)
   compiler: {
     // Remove console.logs in production
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  
+
   // Production optimizations
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  
-  // Output configuration for better compatibility
-  output: 'standalone',
   
   // Performance headers
   async headers() {
